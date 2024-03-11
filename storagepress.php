@@ -23,6 +23,8 @@ class StoragePress{
         add_filter('manage_storage_units_posts_columns', array($this, 'storage_units_columns'));
         add_action('manage_storage_units_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
 
+        //add inputs to storage unit create form
+        add_action('edit_form_after_editor', array($this, 'add_inputs_to_storage_unit_create_form'));
     }
 
     // add menu page for managing storage units
@@ -140,6 +142,11 @@ class StoragePress{
             'single' => true,
             'type' => 'string',
         ));
+    }
+
+    // add inputs to storage unit create form
+    public function add_inputs_to_storage_unit_create_form(){
+        require_once plugin_dir_path(__FILE__) . 'elements/create_storage_unit_meta_inputs.php';
     }
 
     // add fields to listing of storage units table
