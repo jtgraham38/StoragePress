@@ -13,6 +13,7 @@ class StoragePress{
 
     // constructor
     public function __construct(){
+        //create pages for managing storage units
         add_action('admin_menu', array($this, 'storagepress_setup_menu'));
 
         //register storage units post type
@@ -22,9 +23,6 @@ class StoragePress{
         add_filter('manage_storage_units_posts_columns', array($this, 'storage_units_columns'));
         add_action('manage_storage_units_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
 
-        //add price meta to the storage units
-        add_action('add_meta_boxes', array($this, 'register_price_meta_box'));
-        add_action('save_post', array($this, 'save_price_meta_box'));
     }
 
     // add menu page for managing storage units
@@ -136,34 +134,7 @@ class StoragePress{
         }
     }
 
-    // create a meta box to edit the "price" meta field of a storage unit
-    public function register_price_meta_box() {
-        add_meta_box('price_meta_box', 'Price', array($this, 'price_meta_box_callback'), 'storage_units', 'side', 'high');
-    }
 
-    // create a field for the price meta box
-    public function price_meta_box_callback($post) {
-        wp_nonce_field(basename(__FILE__), 'price_nonce');
-        $stored_meta = get_post_meta($post->ID);
-        $price = isset($stored_meta['price']) ? $stored_meta['price'][0] : '';
-        echo '<input type="number" name="price" value="' . esc_attr($price) . '"/>';
-    }
-
-    // save data from the price meta box to the database
-    public function save_price_meta_box($post_id) {
-        if (!isset($_POST['price_nonce']) || !wp_verify_nonce($_POST['price_nonce'], basename(__FILE__))) {
-            return $post_id;
-        }
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return $post_id;
-        }
-        if (!current_user_can('edit_post', $post_id)) {
-            return $post_id;
-        }
-        if (isset($_POST['price'])) {
-            update_post_meta($post_id, 'price', sanitize_text_field($_POST['price']));
-        }
-    }
 }
 
 $plugin = new StoragePress();
