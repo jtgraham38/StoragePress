@@ -9,6 +9,9 @@ Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
 */
 
+
+//HI! I'm a comment! I'm here to help you understand what's going on in this file.
+
 class StoragePress{
 
     // constructor
