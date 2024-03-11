@@ -65,6 +65,7 @@ class StoragePress{
 
     // create custom post type to represent storage units
     public function register_storage_units_post_type() {
+        //register storage unit post ype
         $args = array(
             'public' => true,
             'label'  => 'Storage Units',
@@ -101,7 +102,44 @@ class StoragePress{
                 'item_updated' => 'Storage unit updated.',
             )
         );
-        register_post_type('storage_units', $args);
+        register_post_type('sp_storage_units', $args);
+
+        //add attributes to storage unit post type
+        register_meta('sp_storage_units', 'sp_size', array(  //size
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_type', array(  //type
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_price', array(  //price
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'number',
+        ));
+        register_meta('sp_storage_units', 'sp_status', array(  //status
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_tenant', array(  //status
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'int',
+        ));
+        register_meta('sp_storage_units', 'sp_last_rental_date', array(  //date of last rental
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_last_payment_date', array(  //date of last payment
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
     }
 
     // add fields to listing of storage units table
