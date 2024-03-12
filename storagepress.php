@@ -154,9 +154,9 @@ class StoragePress{
             'single' => true,
             'type' => 'string',
         ));
-        register_meta('sp_storage_units', 'sp_type', array(  //type
+        register_meta('sp_storage_units', 'sp_features', array(  //type
             'show_in_rest' => true,
-            'single' => true,
+            'single' => false,
             'type' => 'string',
         ));
         register_meta('sp_storage_units', 'sp_price', array(  //price
@@ -214,10 +214,10 @@ class StoragePress{
                 update_post_meta($post_id, 'sp_unit', $unit);
             }
 
-            // save type
-            if(isset($_POST['sp_type'])){
-                $type = sanitize_text_field($_POST['sp_type']);
-                update_post_meta($post_id, 'sp_type', $type);
+            // get features from request, and save them
+            if(isset($_POST['sp_features'])){
+                $sp_features = array_map('sanitize_text_field', $_POST['sp_features']);
+                update_post_meta($post_id, 'sp_features', $sp_features, false);
             }
 
             // save price
