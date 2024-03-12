@@ -39,9 +39,9 @@ class StoragePress{
         global $post;   //get the post, if set
 
         //add settings styling if on storage unit settings page
-        if($post && 'sp_storage_units' === $post->post_type || 
-            ('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && 
-            isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']){
+        if(
+            ($post && 'sp_storage_units' === $post->post_type || (('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && (isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']))) ||
+            (isset($_GET['page']) && 'storagepress_settings' === $_GET['page'])){
             wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'assets/css/settings.css', array(), true);
         }
     }
