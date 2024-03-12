@@ -25,6 +25,9 @@ class StoragePress{
 
         //add inputs to storage unit create form
         add_action('edit_form_after_editor', array($this, 'add_inputs_to_storage_unit_create_form'));
+
+        //save the custom fields of the storage units when the unit is saved
+        add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
     }
 
     // add menu page for managing storage units
@@ -137,7 +140,7 @@ class StoragePress{
             'single' => true,
             'type' => 'string',
         ));
-        register_meta('sp_storage_units', 'sp_last_payment_date', array(  //date of last payment
+        register_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date of last payment
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
@@ -147,6 +150,53 @@ class StoragePress{
     // add inputs to storage unit create form
     public function add_inputs_to_storage_unit_create_form(){
         require_once plugin_dir_path(__FILE__) . 'elements/create_storage_unit_meta_inputs.php';
+    }
+
+    //save custom fields for storage units
+    function save_storage_unit_custom_fields($post_id){
+        if(isset($_POST['post_type']) && $_POST['post_type'] == 'sp_storage_units'){
+            // save size
+            if(isset($_POST['sp_size'])){
+                $size = sanitize_text_field($_POST['sp_size']);
+                update_post_meta($post_id, 'sp_size', $size);
+            }
+
+            // save type
+            if(isset($_POST['sp_type'])){
+                $type = sanitize_text_field($_POST['sp_type']);
+                update_post_meta($post_id, 'sp_type', $type);
+            }
+
+            // save price
+            if(isset($_POST['sp_price'])){
+                $price = floatval($_POST['sp_price']);
+                update_post_meta($post_id, 'sp_price', $price);
+            }
+
+            // save status
+            if(isset($_POST['sp_status'])){
+                $status = sanitize_text_field($_POST['sp_status']);
+                update_post_meta($post_id, 'sp_status', $status);
+            }
+
+            // save tenant
+            if(isset($_POST['sp_tenant'])){
+                $tenant = intval($_POST['sp_tenant']);
+                update_post_meta($post_id, 'sp_tenant', $tenant);
+            }
+
+            // save last rental date
+            if(isset($_POST['sp_last_rental_date'])){
+                $last_rental_date = sanitize_text_field($_POST['sp_last_rental_date']);
+                update_post_meta($post_id, 'sp_last_rental_date', $last_rental_date);
+            }
+
+            // save last payment date
+            if(isset($_POST['sp_last_payment_date'])){
+                $last_payment_date = sanitize_text_field($_POST['sp_last_payment_date']);
+                update_post_meta($post_id, 'sp_last_payment_date', $last_payment_date);
+            }
+        }
     }
 
     // add fields to listing of storage units table
