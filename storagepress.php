@@ -45,7 +45,7 @@ class StoragePress{
             wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'assets/css/settings.css', array(), true);
         }
     }
-    //hello
+    
     // add menu page for managing storage units
     public function storagepress_setup_menu(){
         /**
