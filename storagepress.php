@@ -15,6 +15,7 @@ class StoragePress{
     public function __construct(){
         //enqueue admin scripts and styles
         add_action('admin_enqueue_scripts', array($this, 'storagepress_admin_enqueue_assets'));
+        add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
 
         //create pages for managing storage units
         add_action('admin_menu', array($this, 'storagepress_setup_menu'));
@@ -39,11 +40,22 @@ class StoragePress{
         global $post;   //get the post, if set
 
         //add settings styling if on storage unit settings page
-        if(
-            ($post && 'sp_storage_units' === $post->post_type || (('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && (isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']))) ||
-            (isset($_GET['page']) && 'storagepress_settings' === $_GET['page'])){
+        if(($post && 'sp_storage_units' === $post->post_type || (('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && (isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']))) ||
+        (isset($_GET['page']) && 'storagepress_settings' === $_GET['page'])){
+            //enqueue styles
             wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'assets/css/settings.css', array(), true);
+
+            //enqueue scripts
+            wp_enqueue_script('storagepress_alpinejs', plugin_dir_url(__FILE__) . 'assets/js/alpine.min.js', array('jquery'), true);
         }
+    }
+
+    //add defer to the alpine js script
+    public function defer_alpinejs($tag, $handle, $src){
+        if('storagepress_alpinejs' === $handle){
+            $tag = str_replace(' src', ' defer src', $tag);
+        }
+        return $tag;
     }
     
     // add menu page for managing storage units
