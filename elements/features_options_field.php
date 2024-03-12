@@ -1,3 +1,10 @@
+<?php 
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
+
 features options
 <?php
 $options = get_option('storagepress_feature_options');
