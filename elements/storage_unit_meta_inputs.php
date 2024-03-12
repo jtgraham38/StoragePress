@@ -1,4 +1,11 @@
-<?php global $post; //get the post being edited ?>
+<?php 
+
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+global $post; //get the post being edited 
+?>
 
 <style>
     .sp_input_group{

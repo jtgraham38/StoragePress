@@ -19,6 +19,7 @@ class StoragePress{
 
         //create pages for managing storage units
         add_action('admin_menu', array($this, 'storagepress_setup_menu'));
+        add_action('admin_init', array($this, 'settings_init'));    //set up plugin settings
 
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
@@ -33,6 +34,7 @@ class StoragePress{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
+        
     }
 
     //enqueue admin scripts and styles
@@ -89,7 +91,7 @@ class StoragePress{
             'StoragePress Settings', // $page_title
             'Settings', // $menu_title
             'manage_options', // $capability
-            'storagepress_settings', // $menu_slug
+            'storagepress_settings_page', // $menu_slug
             function(){
                 require_once plugin_dir_path(__FILE__) . 'elements/storagepress_settings_page.php';
             } // $function
@@ -276,7 +278,38 @@ class StoragePress{
         }
     }
 
+    //initialize plugin settings
+    public function settings_init(){
+        // create section for settings
+        add_settings_section(
+            'storagepress_settings',        //id
+            'StoragePress Settings',        //title
+            function(){                     //callback
+                echo 'Configure reference format and theme for Bible Buddy!';
+            },
+            'storagepress_settings_page'         //page to appear on
+        );
 
+        // create the settings fields
+        add_settings_field(
+            'storagepress_features_field',  //id
+            'Storage Unit Features:',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/theme_select_option.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings'  //section id to appear on (optional)
+        );
+
+        // create the settings themselves
+        register_setting(
+            'storagepress_settings',    //option group
+            'stoargepress_features',    //option name
+            array(                    //args
+                'default' => ''
+            )
+        );
+    }
 }
 
 $plugin = new StoragePress();
