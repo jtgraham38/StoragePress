@@ -75,6 +75,7 @@ class StoragePress{
             'public' => true,
             'label'  => 'Storage Units',
             'show_in_menu' => 'storagepress',
+            'supports' => array('title', 'thumbnail'),
             'labels' => array(
                 'name' => 'Storage Units',
                 'singular_name' => 'Storage Unit',
