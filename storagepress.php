@@ -139,7 +139,17 @@ class StoragePress{
         register_post_type('sp_storage_units', $args);
 
         //add attributes to storage unit post type
-        register_meta('sp_storage_units', 'sp_size', array(  //size
+        register_meta('sp_storage_units', 'sp_length', array(  //length
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_length', array(  //width
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'string',
+        ));
+        register_meta('sp_storage_units', 'sp_unit', array(  //unit
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
@@ -153,11 +163,6 @@ class StoragePress{
             'show_in_rest' => true,
             'single' => true,
             'type' => 'number',
-        ));
-        register_meta('sp_storage_units', 'sp_status', array(  //status
-            'show_in_rest' => true,
-            'single' => true,
-            'type' => 'string',
         ));
         register_meta('sp_storage_units', 'sp_tenant', array(  //status
             'show_in_rest' => true,
@@ -193,10 +198,20 @@ class StoragePress{
     //save custom fields for storage units
     function save_storage_unit_custom_fields($post_id){
         if(isset($_POST['post_type']) && $_POST['post_type'] == 'sp_storage_units'){
-            // save size
-            if(isset($_POST['sp_size'])){
-                $size = sanitize_text_field($_POST['sp_size']);
-                update_post_meta($post_id, 'sp_size', $size);
+            // save length
+            if(isset($_POST['sp_length'])){
+                $length = floatval($_POST['sp_length']);
+                update_post_meta($post_id, 'sp_length', $length);
+            }
+            //save width
+            if(isset($_POST['sp_width'])){
+                $width = floatval($_POST['sp_width']);
+                update_post_meta($post_id, 'sp_width', $width);
+            }
+            // save unit
+            if(isset($_POST['sp_unit'])){
+                $unit = sanitize_text_field($_POST['sp_unit']);
+                update_post_meta($post_id, 'sp_unit', $unit);
             }
 
             // save type
@@ -209,12 +224,6 @@ class StoragePress{
             if(isset($_POST['sp_price'])){
                 $price = floatval($_POST['sp_price']);
                 update_post_meta($post_id, 'sp_price', $price);
-            }
-
-            // save status
-            if(isset($_POST['sp_status'])){
-                $status = sanitize_text_field($_POST['sp_status']);
-                update_post_meta($post_id, 'sp_status', $status);
             }
 
             // save tenant
@@ -230,9 +239,9 @@ class StoragePress{
             }
 
             // save last payment date
-            if(isset($_POST['sp_last_payment_date'])){
-                $last_payment_date = sanitize_text_field($_POST['sp_last_payment_date']);
-                update_post_meta($post_id, 'sp_last_payment_date', $last_payment_date);
+            if(isset($_POST['sp_last_vacant_date'])){
+                $last_payment_date = sanitize_text_field($_POST['sp_last_vacant_date']);
+                update_post_meta($post_id, 'sp_last_vacant_date', $last_payment_date);
             }
         }
     }
