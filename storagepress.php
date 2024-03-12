@@ -222,7 +222,7 @@ class StoragePress{
 
             // save price
             if(isset($_POST['sp_price'])){
-                $price = floatval($_POST['sp_price']);
+                $price = floatval($_POST['sp_price']) * 100;
                 update_post_meta($post_id, 'sp_price', $price);
             }
 
