@@ -10,8 +10,8 @@ if (!defined('ABSPATH')) {
     <form method="post" action="options.php">
         <?php
         // Output the settings fields.
-        settings_fields('storagepress_settings');
-        do_settings_sections('storagepress_settings');
+        settings_fields('storagepress_settings_group');
+        do_settings_sections('storagepress_settings_page');
         submit_button();
         ?>
     </form>

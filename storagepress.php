@@ -282,7 +282,7 @@ class StoragePress{
     public function settings_init(){
         // create section for settings
         add_settings_section(
-            'storagepress_settings',        //id
+            'storagepress_settings_section',        //id
             'StoragePress Settings',        //title
             function(){                     //callback
                 echo 'Configure reference format and theme for Bible Buddy!';
@@ -295,18 +295,24 @@ class StoragePress{
             'storagepress_features_field',  //id
             'Storage Unit Features:',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/theme_select_option.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/features_options_field.php';
             },  //callback
             'storagepress_settings_page',     //page
-            'storagepress_settings'  //section id to appear on (optional)
+            'storagepress_settings_section'  //section id to appear on (optional)
         );
 
         // create the settings themselves
         register_setting(
-            'storagepress_settings',    //option group
-            'stoargepress_features',    //option name
+            'storagepress_settings_group',    //option group
+            'storagepress_feature_options',    //option name
             array(                    //args
-                'default' => ''
+                'default' => array(), //default value
+                'sanitize_callback' => function($input){ 
+                    foreach($input as $key => $value){
+                        $input[$key] = sanitize_text_field($value);
+                    }
+                    return $input;
+                 } //sanitize callback
             )
         );
     }
