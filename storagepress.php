@@ -13,6 +13,9 @@ class StoragePress{
 
     // constructor
     public function __construct(){
+        //enqueue admin scripts and styles
+        add_action('admin_enqueue_scripts', array($this, 'storagepress_admin_enqueue_assets'));
+
         //create pages for managing storage units
         add_action('admin_menu', array($this, 'storagepress_setup_menu'));
 
@@ -29,6 +32,18 @@ class StoragePress{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
+    }
+
+    //enqueue admin scripts and styles
+    public function storagepress_admin_enqueue_assets($hook){
+        global $post;   //get the post, if set
+
+        //add settings styling if on storage unit settings page
+        if($post && 'sp_storage_units' === $post->post_type || 
+            ('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && 
+            isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']){
+            wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'assets/css/settings.css', array(), true);
+        }
     }
 
     // add menu page for managing storage units
