@@ -25,6 +25,7 @@ class StoragePress{
 
         //add inputs to storage unit create form
         add_action('edit_form_after_editor', array($this, 'add_inputs_to_storage_unit_create_form'));
+        add_filter( 'enter_title_here', array($this, 'change_title_label') );   //change title field placeholder
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
@@ -146,6 +147,15 @@ class StoragePress{
             'single' => true,
             'type' => 'string',
         ));
+    }
+
+    //change the label of the title field for storage units
+    public function change_title_label($title){
+        $screen = get_current_screen();
+        if('sp_storage_units' == $screen->post_type){
+            $title = 'Enter storage unit label...';
+        }
+        return $title;
     }
 
     // add inputs to storage unit create form
