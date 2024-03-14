@@ -285,12 +285,57 @@ class StoragePress{
             'storagepress_settings_section',        //id
             'StoragePress Settings',        //title
             function(){                     //callback
-                echo 'Configure reference format and theme for Bible Buddy!';
+                echo 'Configure settings for your self-storage business.';
             },
             'storagepress_settings_page'         //page to appear on
         );
 
         // create the settings fields
+        add_settings_field(
+            'storagepress_name_field',  //id
+            'Business NAme',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/name_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
+        add_settings_field(
+            'storagepress_address_field',  //id
+            'Business Address',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/address_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
+        add_settings_field(
+            'storagepress_email_field',  //id
+            'Business Email',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/email_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
+        add_settings_field(
+            'storagepress_phone_field',  //id
+            'Business Phone',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/phone_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
+        add_settings_field(
+            'storagepress_rental_terms_field',  //id
+            'Rental Terms',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/rental_terms_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
         add_settings_field(
             'storagepress_features_field',  //id
             'Storage Unit Features:',       //title
@@ -301,7 +346,49 @@ class StoragePress{
             'storagepress_settings_section'  //section id to appear on (optional)
         );
 
+
+
         // create the settings themselves
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_name',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_address',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_email',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_phone',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_rental_terms',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
         register_setting(
             'storagepress_settings_group',    //option group
             'storagepress_feature_options',    //option name
