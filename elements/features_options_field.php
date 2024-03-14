@@ -13,8 +13,9 @@ if (!defined('ABSPATH')) {
         align-items: center;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
-        box-shadow: 0 0.2rem 0.5rem #ccc;
-        margin-top: 0.2rem;
+        box-shadow: 0 0.25rem 0.5rem #ccc;
+        margin-top: 0.4rem;
+        margin-right: 0.2rem;
     }
 
     .feature_option button {
@@ -70,50 +71,21 @@ $options = get_option('storagepress_feature_options', []);
     </div>
 </template>
 
-<div id="storagepress_add_feature_option_container">
-    <input type="text" id="storagepress_add_feature_option" placeholder="Add a feature option">
-    <button type="button" id="storagepress_add_feature_option_button">Add</button>
-</div>
+<div x-data="{ feature_options: JSON.parse('<?php echo htmlspecialchars(json_encode($options)) ?>'), new_value: '' }">
+    <div id="storagepress_add_feature_option_container">
+        <input type="text" id="storagepress_add_feature_option" x-model="new_value" placeholder="Add a feature option">
+        <button type="button" id="storagepress_add_feature_option_button" @click="if (new_value) {feature_options.push(new_value); new_value = ''}">Add</button>
+    </div>
 
-<script>
-    document.getElementById('storagepress_add_feature_option_button').addEventListener('click', function() {
-        let feature_option = document.getElementById('storagepress_add_feature_option').value;
-        if(feature_option) {
+    <span x-text="new_value"></span>
 
-            //generate a random id
-            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let id_str = ''
-            for (var i = 0; i < 16; i++) {
-                id_str += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-
-            //clone the template and add it to the container
-            let new_feature_option_input = document.importNode(document.getElementById('feature_option_template').content, true)
-            console.log(new_feature_option_input)
-            new_feature_option_input.querySelector('label').textContent = feature_option;
-            new_feature_option_input.querySelector('input').value = feature_option;
-            new_feature_option_input.querySelector('div').id = 'storagepress_feature_option_' + feature_option + "_" + id_str;
-            new_feature_option_input.querySelector('button').addEventListener('click', function(event) {
-                event.target.parentNode.remove()
-            });
-            
-            document.getElementById('storagepress_feature_options_container').appendChild(new_feature_option_input);
-            document.getElementById('storagepress_add_feature_option').value = '';
-
-        }
-    });
-</script>
-
-<div id="storagepress_feature_options_container"><?php
-if(!empty($options)) {
-    foreach($options as $key => $value) { ?>
-        <div class="feature_option" id="storagepress_feature_option_<?php echo $key ?>">
-            <label for="storagepress_feature_options[]"><?php echo $value ?></label>
-            <button type="button" onclick="document.getElementById('storagepress_feature_option_<?php echo $key ?>').remove()">&times;</button>
-            <input type="hidden" name="storagepress_feature_options[]" value="<?php echo $value ?>">
-        </div>
-<?php
-    }
-}
-?>
+    <div id="storagepress_feature_options_container">
+        <template x-for="(value, key) in feature_options" :key="key">
+            <div class="feature_option" id="storagepress_feature_option_{{key}}">
+                <label for="storagepress_feature_options[]" x-text="value"></label>
+                <button type="button" @click="feature_options.splice(key, 1)">&times;</button>
+                <input type="hidden" name="storagepress_feature_options[]" :value="value">
+            </div>
+        </template>
+    </div>
 </div>
