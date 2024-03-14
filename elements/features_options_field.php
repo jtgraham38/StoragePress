@@ -27,9 +27,6 @@ if (!defined('ABSPATH')) {
         
     }
     .feature_option button:hover {
-        border: none;
-        margin-left: 1rem;
-        font-size: larger;
         font-weight: bold;
         color: red;
     }
@@ -39,6 +36,7 @@ if (!defined('ABSPATH')) {
         align-items: center;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
+        
     }
     #storagepress_add_feature_option_button {
         border: none;
@@ -49,7 +47,7 @@ if (!defined('ABSPATH')) {
         place-items: center;
     }
     #storagepress_add_feature_option_button:hover {
-        background-color: #2271b1;
+        color: green;
     }
     #storagepress_add_feature_option {
         border: none;
