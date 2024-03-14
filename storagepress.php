@@ -293,7 +293,7 @@ class StoragePress{
         // create the settings fields
         add_settings_field(
             'storagepress_name_field',  //id
-            'Business NAme',       //title
+            'Business Name',       //title
             function(){
                 require_once plugin_dir_path(__FILE__) . 'elements/name_field.php';
             },  //callback
@@ -332,6 +332,15 @@ class StoragePress{
             'Rental Terms',       //title
             function(){
                 require_once plugin_dir_path(__FILE__) . 'elements/rental_terms_field.php';
+            },  //callback
+            'storagepress_settings_page',     //page
+            'storagepress_settings_section'  //section id to appear on (optional)
+        );
+        add_settings_field(
+            'storagepress_checks_payable_to_field',  //id
+            'Checks Payable To:',       //title
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/storagepress_checks_payable_to_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -384,6 +393,14 @@ class StoragePress{
         register_setting(
             'storagepress_settings_group',    //option group
             'storagepress_rental_terms',    //option name
+            array(                    //args
+                'default' => "", //default value
+                'sanitize_callback' => 'sanitize_text_field' //sanitize callback
+            )
+        );
+        register_setting(
+            'storagepress_settings_group',    //option group
+            'storagepress_checks_payable_to',    //option name
             array(                    //args
                 'default' => "", //default value
                 'sanitize_callback' => 'sanitize_text_field' //sanitize callback
