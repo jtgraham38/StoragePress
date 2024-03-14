@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="wrap">
+<section class="wrap">
     <h1>StoragePress Settings</h1>
     <form method="post" action="options.php">
         <?php
@@ -15,4 +15,4 @@ if (!defined('ABSPATH')) {
         submit_button();
         ?>
     </form>
-</div>
+</section>
