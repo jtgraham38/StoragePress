@@ -42,18 +42,21 @@ global $post; //get the post being edited
         <?php 
         if (isset($post->ID)){
             $types = ["air-conditioned", "drive-up", "get", "these", "from", "plugin", "setting"];
+            $feature_options = get_option('storagepress_feature_options');
             
             $features = get_post_meta($post->ID, 'sp_features', false);
+            $features = isset($features[0]) ? $features[0] : [];
+            var_dump($features);    //problem is the attempt to access index 0 below
 
-            foreach ($types as $type) {
+            foreach ($feature_options as $feature_option) {
                 
                 ?>
                 <div style="display: inline-flex; flex-direction: row; align-items: center; margin-right: 0.5rem;">
-                    <label class="storagepress_input_label" style="margin-right: 0.25rem;" for="sp_is_<?php echo $type ?>">Is <?php echo $type ?>?</label>
+                    <label class="storagepress_input_label" style="margin-right: 0.25rem;" for="sp_is_<?php echo $feature_option ?>">Is <?php echo $feature_option ?>?</label>
                     <input 
-                        type="checkbox" id="sp_is_<?php echo $type ?>" 
-                        value="<?php echo $type ?>" name="sp_features[]"
-                        <?php echo in_array($type, $features[0]) ? "checked" : ""?>
+                        type="checkbox" id="sp_is_<?php echo $feature_option ?>" 
+                        value="<?php echo $feature_option ?>" name="sp_features[]"
+                        <?php echo in_array($feature_option, $features) ? "checked" : ""?>
                     >
                 </div>
                 <?php
