@@ -35,18 +35,13 @@ global $post; //get the post being edited
 
 <div class="sp_input_group">
     <label class="storagepress_input_label" for="sp_last_payment_amount">Features:</label>
-    <small style="display: block;">
-        TODO: need to change type into multivalued attribute, then make the 
-    </small>
     <div id="sp_features">
         <?php 
         if (isset($post->ID)){
-            $types = ["air-conditioned", "drive-up", "get", "these", "from", "plugin", "setting"];
-            $feature_options = get_option('storagepress_feature_options');
+            $feature_options = get_option('storagepress_feature_options', []);
             
             $features = get_post_meta($post->ID, 'sp_features', false);
             $features = isset($features[0]) ? $features[0] : [];
-            var_dump($features);    //problem is the attempt to access index 0 below
 
             foreach ($feature_options as $feature_option) {
                 
@@ -84,14 +79,14 @@ global $post; //get the post being edited
             }
             ?>
         </select>
+        <div>TODO: select user</div>
     </div>
     <div style="margin-right: 1rem;">
+        <label class="storagepress_input_label" for="sp_last_vacant_date">Last Vacant Date:</label>
+        <input class="storagepress_settings_input" type="date" id="sp_last_vacant_date" name="sp_last_vacant_date" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_last_vacant_date', true) ? date('Y-m-d', strtotime(esc_attr(get_post_meta($post->ID, 'sp_last_vacant_date', true)))) : date("Y-m-d"); ?>" size="25" />
+    </div>
+    <div>
         <label class="storagepress_input_label" for="sp_last_rental_date">Last Rental Date:</label>
         <input class="storagepress_settings_input" type="date" id="sp_last_rental_date" name="sp_last_rental_date" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_last_rental_date', true) ? date('Y-m-d', strtotime(esc_attr(get_post_meta($post->ID, 'sp_last_rental_date', true)))) : ''; ?>" size="25" />
     </div>
-    <div>
-        <label class="storagepress_input_label" for="sp_last_vacant_date">Last Vacant Date:</label>
-        <input class="storagepress_settings_input" type="date" id="sp_last_vacant_date" name="sp_last_vacant_date" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_last_vacant_date', true) ? date('Y-m-d', strtotime(esc_attr(get_post_meta($post->ID, 'sp_last_vacant_date', true)))) : ''; ?>" size="25" />
-    </div>
-  
 </div>
