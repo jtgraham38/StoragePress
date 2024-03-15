@@ -77,8 +77,6 @@ $options = get_option('storagepress_feature_options', []);
         <button type="button" id="storagepress_add_feature_option_button" @click="if (new_value) {feature_options.push(new_value); new_value = ''}">Add</button>
     </div>
 
-    <span x-text="new_value"></span>
-
     <div id="storagepress_feature_options_container">
         <template x-for="(value, key) in feature_options" :key="key">
             <div class="feature_option" id="storagepress_feature_option_{{key}}">

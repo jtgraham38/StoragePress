@@ -9,17 +9,19 @@ Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
 */
 
-class StoragePress{
+require_once plugin_dir_path(__FILE__) . 'jg_wp_plugin.php';
+
+class StoragePress extends JGWPPlugin{
 
     // constructor
     public function __construct(){
-        //enqueue admin scripts and styles
-        add_action('admin_enqueue_scripts', array($this, 'storagepress_admin_enqueue_assets'));
+        parent::__construct();
+        //defer alpine js to mitigate warning
         add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
 
         //create pages for managing storage units
         add_action('admin_menu', array($this, 'storagepress_setup_menu'));
-        add_action('admin_init', array($this, 'settings_init'));    //set up plugin settings
+
 
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
@@ -38,7 +40,7 @@ class StoragePress{
     }
 
     //enqueue admin scripts and styles
-    public function storagepress_admin_enqueue_assets($hook){
+    public function admin_resources($hook){
         global $post;   //get the post, if set
 
         //add settings styling if on storage unit settings page
@@ -50,6 +52,12 @@ class StoragePress{
             //enqueue scripts
             wp_enqueue_script('storagepress_alpinejs', plugin_dir_url(__FILE__) . 'assets/js/alpine.min.js', array(), true);
         }
+    }
+
+    //enqueue front-end scripts and styles
+    public function front_end_resources($hook){
+        //enqueue styles
+        //TODO
     }
 
     //add defer to the alpine js script
@@ -279,7 +287,7 @@ class StoragePress{
     }
 
     //initialize plugin settings
-    public function settings_init(){
+    public function init_settings(){
         // create section for settings
         add_settings_section(
             'storagepress_settings_section',        //id
