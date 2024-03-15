@@ -1,6 +1,12 @@
 <?php
 abstract class JGWPPlugin {
-    public function __construct() {
+
+    protected $plugin_prefix = "";
+
+    public function __construct($plugin_prefix) {
+
+        //set plugin prefix, to use on settings, postmeta, etc. to avoid conflicts
+        $this->plugin_prefix = $plugin_prefix;
 
         //register settings
         add_action('admin_init', array($this, 'init_settings'));
