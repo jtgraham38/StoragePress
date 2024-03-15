@@ -306,7 +306,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_name_field',  //id
             'Business Name',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/name_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/name_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -315,7 +315,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_address_field',  //id
             'Business Address',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/address_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/address_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -324,7 +324,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_email_field',  //id
             'Business Email',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/email_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/email_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -333,7 +333,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_phone_field',  //id
             'Business Phone',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/phone_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/phone_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -342,7 +342,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_rental_terms_field',  //id
             'Rental Terms',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/rental_terms_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/rental_terms_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -351,7 +351,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_checks_payable_to_field',  //id
             'Checks Payable To:',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/storagepress_checks_payable_to_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/storagepress_checks_payable_to_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -360,7 +360,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_features_field',  //id
             'Storage Unit Features:',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings_fields/features_options_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/features_options_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
