@@ -35,7 +35,7 @@ if (!defined('ABSPATH')) {
     #storagepress_add_feature_option_container{
         display: inline-flex;
         align-items: center;
-        border: 1px solid #ccc;
+        border: 1px solid #8c8f94;
         border-radius: 0.5rem;
         
     }
@@ -71,9 +71,9 @@ $options = get_option('storagepress_feature_options', []);
     </div>
 </template>
 
-<div x-data="{ feature_options: JSON.parse('<?php echo htmlspecialchars(json_encode($options)) ?>'), new_value: '' }">
+<div x-data="{ feature_options: JSON.parse('<?php echo esc_attr(json_encode($options)) ?>'), new_value: '' }">
     <div id="storagepress_add_feature_option_container">
-        <input type="text" id="storagepress_add_feature_option" x-model="new_value" placeholder="Add a feature option">
+        <input type="text" id="storagepress_add_feature_option" x-model="new_value" placeholder="Add a feature option" title="Please enter the name of a unit feature you would like to be able to attach to your storage units (e.g. climate-controlled, drive-up access, etc.).">
         <button type="button" id="storagepress_add_feature_option_button" @click="if (new_value) {feature_options.push(new_value); new_value = ''}">Add</button>
     </div>
 
