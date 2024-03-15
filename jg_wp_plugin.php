@@ -1,12 +1,15 @@
 <?php
 abstract class JGWPPlugin {
 
-    protected $plugin_prefix = "";
+    protected $plugin_prefix;   //used to prefix settings, options, etc
+    
 
-    public function __construct($plugin_prefix) {
+    public function __construct() {
 
-        //set plugin prefix, to use on settings, postmeta, etc. to avoid conflicts
-        $this->plugin_prefix = $plugin_prefix;
+        //ensure the user set a plugin prefix
+        if (empty($this->plugin_prefix)) {
+            throw new Exception('You must set a plugin prefix.');
+        }
 
         //register settings
         add_action('admin_init', array($this, 'init_settings'));

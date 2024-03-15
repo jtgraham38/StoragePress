@@ -15,7 +15,10 @@ class StoragePress extends JGWPPlugin{
 
     // constructor
     public function __construct(){
-        parent::__construct("storagepress_");   //call parent constructor
+        //set the plugin prefix before calling super constructor
+        $this->plugin_prefix = "storagepress_";
+
+        parent::__construct();   //call parent constructor
         //defer alpine js to mitigate warning
         add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
 
