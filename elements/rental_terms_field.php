@@ -1,1 +1,0 @@
-rental terms field here
