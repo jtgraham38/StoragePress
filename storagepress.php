@@ -18,6 +18,28 @@ class StoragePress extends JGWPPlugin{
         //set the plugin prefix before calling super constructor
         $this->plugin_prefix = "storagepress_";
 
+        $this->settings_groups = [
+            new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
+                echo 'Configure settings for your self-storage business.';
+            })
+        ];
+        
+        $this->settings = [
+            new JGWPSetting($this, 'name', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Name', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'address', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Address', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'email', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Email', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'phone', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Phone', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'rental_terms', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Rental Terms', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'checks_payable_to', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Checks Payable To:', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'feature_options', array('default' => array(), 'sanitize_callback' => function($input){ 
+                foreach($input as $key => $value){
+                    $input[$key] = sanitize_text_field($value);
+                }
+                return $input;
+             }), 'storagepress_settings_page', 'Storage Unit Features:', 'storagepress_settings_section')
+             
+            ];
+
         parent::__construct();   //call parent constructor
         //defer alpine js to mitigate warning
         add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
@@ -290,7 +312,7 @@ class StoragePress extends JGWPPlugin{
     }
 
     //initialize plugin settings
-    public function init_settings(){
+    public function __init_settings(){
         // create section for settings
         add_settings_section(
             'storagepress_settings_section',        //id
@@ -360,7 +382,7 @@ class StoragePress extends JGWPPlugin{
             'storagepress_features_field',  //id
             'Storage Unit Features:',       //title
             function(){
-                require_once plugin_dir_path(__FILE__) . 'elements/settings/features_options_field.php';
+                require_once plugin_dir_path(__FILE__) . 'elements/settings/feature_option_field.php';
             },  //callback
             'storagepress_settings_page',     //page
             'storagepress_settings_section'  //section id to appear on (optional)
@@ -432,5 +454,7 @@ class StoragePress extends JGWPPlugin{
         );
     }
 }
+
+
 
 $plugin = new StoragePress();

@@ -8,8 +8,18 @@ abstract class JGWPPlugin {
     public function __construct() {
 
         //ensure the user set a plugin prefix
-        if (empty($this->plugin_prefix)) {
+        if (is_string($this->plugin_prefix)) {
             throw new Exception('You must set a plugin prefix.');
+        }
+
+        //ensure that settings_group is an array of JGWPSettingsGroup objects
+        if (!is_array($this->settings_groups)) {
+            throw new Exception('You must set the settings_groups property to an array of JGWPSettingsGroup objects.');
+        }
+
+        //ensure that settings is an array of JGWPSetting objects
+        if (!is_array($this->settings)) {
+            throw new Exception('You must set the settings property to an array of JGWPSetting objects.');
         }
 
         //check if the last character of plugin prefix is an underscore
@@ -29,17 +39,19 @@ abstract class JGWPPlugin {
 
     }
 
+    public function get_prefix(){
+        return $this->plugin_prefix;
+    }
+
 
     public function init_settings(){
-        //create settings sections
+        //create settings sections and nested settings with them
         foreach ($this->settings_groups as $group) {
-            $group->set_prefix($this->plugin_prefix);
             $group->add();
         }
 
         //create settings that are not in a section
         foreach ($this->settings as $setting) {
-            $setting->set_prefix($this->plugin_prefix);
             $setting->add();
         }
     }
@@ -49,22 +61,23 @@ abstract class JGWPPlugin {
     abstract public function front_end_resources($hook);
 }
 
-class JGWPBase{
-    private $plugin_prefix;
+class JGPluginParentReference{
+    protected $plugin;
 
-    protected function set_prefix($prefix){
-        $this->plugin_prefix = $prefix;
+    public function __construct($plugin){
+        $this->plugin = $plugin;
     }
 }
 
-class JGWPSettingsGroup extends JGWPBase{
+class JGWPSettingsGroup extends JGPluginParentReference{
     
     private $section_id;
     private $section_title;
     private $page;
     private $callback;
 
-    public function __construct($section_id, $section_title, $page, $callback){
+    public function __construct($plugin, $section_id, $section_title, $page, $callback){
+        parent::__construct($plugin);   //call parent constructor
         $this->section_id = $section_id;
         $this->section_title = $section_title;
         $this->page = $page;
@@ -82,7 +95,7 @@ class JGWPSettingsGroup extends JGWPBase{
 }
 
 
-class JGWPSetting extends JGWPBase{
+class JGWPSetting extends JGPluginParentReference{
     private $name;
     private $args;
 
@@ -91,7 +104,8 @@ class JGWPSetting extends JGWPBase{
     private $section_id;
 
 
-    public function __construct($name, $args, $page, $lbl, $section_id = null){
+    public function __construct($plugin, $name, $args, $page, $lbl, $section_id = null){
+        parent::__construct($plugin);   //call parent constructor
         //setting args
         $this->name = $name;
         $this->args = $args;
@@ -104,8 +118,8 @@ class JGWPSetting extends JGWPBase{
     public function add(){
         //register setting
         register_setting(
-            $this->plugin_prefix . "_settings",    //TODO: switch this to the plugin prefix + "_settings"
-            $this->name,    //option name
+            $this->plugin->get_prefix() . "settings",    //TODO: switch this to the plugin prefix + "settings"
+            $this->plugin->get_prefix() . $this->name,    //setting name
             $this->args    //args
         );
 
