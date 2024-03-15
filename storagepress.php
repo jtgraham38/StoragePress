@@ -9,7 +9,7 @@ Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
 */
 
-require_once plugin_dir_path(__FILE__) . 'jg_wp_plugin.php';
+require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
 class StoragePress extends JGWPPlugin{
 
@@ -17,6 +17,7 @@ class StoragePress extends JGWPPlugin{
     public function __construct(){
         //set the plugin prefix before calling super constructor
         $this->plugin_prefix = "storagepress_";
+        $this->base_dir = plugin_dir_path(__FILE__);
 
         $this->settings_groups = [
             new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
