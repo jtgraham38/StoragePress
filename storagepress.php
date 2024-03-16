@@ -70,9 +70,13 @@ class StoragePress extends JGWPPlugin{
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
 
+        //add inputs to the quick edit menu, and save results from them
+        // add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
+        // add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
+
         //set cols that appear in storage unit listing
-        add_filter('manage_storage_units_posts_columns', array($this, 'storage_units_columns'));
-        add_action('manage_storage_units_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
+        add_filter('manage_posts_columns', array($this, 'storage_units_columns'));
+        add_action('manage_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
 
         //add inputs to storage unit create form
         add_action('edit_form_after_editor', array($this, 'add_inputs_to_storage_unit_create_form'));
@@ -278,33 +282,76 @@ class StoragePress extends JGWPPlugin{
         }
     }
 
+    // add inputs to the quick edit menu
+    // function display_quick_edit_custom($column_name, $post_type){
+        
+    //     //require_once plugin_dir_path(__FILE__) . 'elements/quick_edit_custom.php';
+    //     
+    // }
+
+    // //save data from those inputs
+    // function save_quick_edit_data($post_id){
+    //     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    //     if (!current_user_can('edit_post', $post_id)) return;
+    //     if (isset($_POST['my_custom_field'])) {
+    //         update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
+    //     }
+    // }
+
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {
-        unset($columns['date']); // remove date column
-        $columns['size'] = 'Size'; // add custom field column
-        $columns['price'] = 'Price'; // add custom field column
-        $columns['status'] = 'Status'; // add custom field column
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+            unset($columns['date']); // remove date column
+            $columns['size'] = 'Size'; // add custom field column
+            $columns['price'] = 'Price'; // add custom field column
+            $columns['tenant'] = 'Tenant'; // add custom field column
+        }
         return $columns;
     }
 
     // populate custom fields columns in storage units table
     public function storage_units_custom_column($column, $post_id) {
-        switch ($column) {
-            case 'price':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'price', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
-            case 'size':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'size', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
-            case 'status':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'status', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+            switch ($column) {
+                case 'price':
+                    // get the custom field value and echo it
+                    $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'sp_price', true)) / 100);
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+                case 'size':
+                    // get the custom field value and echo it
+                    $unit = esc_attr(get_post_meta($post_id, 'sp_unit', true));
+                    $length = esc_attr(get_post_meta($post_id, 'sp_length', true));
+                    $width = esc_attr(get_post_meta($post_id, 'sp_width', true));
+                    if ($length != "" && $width != "" && $unit != "") {
+                        $custom_field_value = $length . " " . $unit . " &times; " . $width . " " . $unit;
+                    } else {
+                        $custom_field_value = "N/A";
+                    }
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+                case 'tenant':
+                    // get the custom field value and echo it
+                    $uid = esc_attr(get_post_meta($post_id, 'sp_tenant', true));
+                    $user = get_user_by('id', $uid);
+                    if (isset($user)){
+                        if (isset($user->display_name)){
+                            if (isset($user->user_email)){
+                                $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
+                            }else{
+                                $custom_field_value = $user->display_name;
+                            }
+                        }
+                        else{
+                            $custom_field_value = "N/A";
+                        }
+                    }else{
+                        $custom_field_value = "N/A";
+                    }
+                    $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+            }
         }
     }
 }
