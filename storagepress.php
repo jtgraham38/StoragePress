@@ -71,8 +71,8 @@ class StoragePress extends JGWPPlugin{
         add_action('init', array($this, 'register_storage_units_post_type'));
 
         //add inputs to the quick edit menu, and save results from them
-        // add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
-        // add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
+        add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
+        add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
 
         //set cols that appear in storage unit listing
         add_filter('manage_posts_columns', array($this, 'storage_units_columns'));
@@ -283,20 +283,47 @@ class StoragePress extends JGWPPlugin{
     }
 
     // add inputs to the quick edit menu
-    // function display_quick_edit_custom($column_name, $post_type){
+    function display_quick_edit_custom($column_name, $post_type){
         
-    //     //require_once plugin_dir_path(__FILE__) . 'elements/quick_edit_custom.php';
-    //     
-    // }
+        //require_once plugin_dir_path(__FILE__) . 'elements/quick_edit_custom.php';
+        if ($post_type != 'sp_storage_units') return;
 
-    // //save data from those inputs
-    // function save_quick_edit_data($post_id){
-    //     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-    //     if (!current_user_can('edit_post', $post_id)) return;
-    //     if (isset($_POST['my_custom_field'])) {
-    //         update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
-    //     }
-    // }
+        switch ($column_name) {
+            case 'price': ?> 
+                <fieldset class="inline-edit-col-right" style="display: flex; flex-direction: column;">
+                    <div class="inline-edit-col">
+                        <label for="sp_size">
+                            <span class="title">Size</span>
+                            <span class="input-text-wrap">
+                                <?php include_once $this->base_dir . 'elements/size_storage_unit_meta_field.php'; ?>
+                            </span>
+                        </label>
+                        <label for="sp_price">
+                            <span class="title">Price</span>
+                            <span class="input-text-wrap">
+                                <?php include_once $this->base_dir . 'elements/price_storage_unit_meta_field.php'; ?>
+                            </span>
+                        </label>
+                        <label for="sp_tenant_select">
+                            <span class="title">Tenant</span>
+                            <span class="input-text">
+                                <?php include_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
+                            </span>
+                    </div>
+                </fieldset> 
+                <?php
+                break;
+        }
+    }
+
+    //save data from those inputs
+    function save_quick_edit_data($post_id){
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+        if (!current_user_can('edit_post', $post_id)) return;
+        if (isset($_POST['my_custom_field'])) {
+            update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
+        }
+    }
 
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {

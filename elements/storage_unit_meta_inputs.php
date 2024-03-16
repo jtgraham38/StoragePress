@@ -15,22 +15,12 @@ global $post; //get the post being edited
 
 <div class="sp_input_group">
     <label class="storagepress_input_label" for="sp_size">Size:</label>
-    <div id="sp_size"  style="display: flex; flex-direction: row; align-items: center;">
-        <input class="storagepress_settings_input" type="number" min="0" step="0.25" id="sp_length" name="sp_length" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_length', true) ? esc_attr(get_post_meta($post->ID, 'sp_length', true)) : ''; ?>"size="25" />
-        <span>&times;</span>
-        <input class="storagepress_settings_input" type="number" min="0" step="0.25" id="sp_width" name="sp_width" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_width', true) ? esc_attr(get_post_meta($post->ID, 'sp_width', true)) : ''; ?>"size="25" />
-        <select name="sp_unit" id="sp_unit" style="margin-left: 0.25rem;">
-            <option value="ft" <?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_unit', true) == 'ft' ? 'selected' : ''; ?>>ft</option>
-            <option value="m" <?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_unit', true) == 'm' ? 'selected' : ''; ?>>m</option>
-        </select>
-    </div>
+    <?php include_once $this->base_dir . 'elements/size_storage_unit_meta_field.php'; ?>
 </div>
 
 <div class="sp_input_group">
     <label class="storagepress_input_label" for="sp_price">Price:</label>
-    <span>$</span>
-    <input class="storagepress_settings_input" type="number" min="0" step="0.01" id="sp_price" name="sp_price" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_price', true) ? esc_attr(floatval(get_post_meta($post->ID, 'sp_price', true)) / 100) : ''; ?>" size="25" />
-    <span>/ month</span>
+    <?php include_once $this->base_dir . 'elements/price_storage_unit_meta_field.php'; ?>
 </div>
 
 <div class="sp_input_group">
@@ -69,17 +59,8 @@ global $post; //get the post being edited
 <div class="sp_input_group" style="display: flex; flex-direction: row;">
 
     <div style="margin-right: 1rem;">
-        <label class="storagepress_input_label" for="sp_tenant">Tenant:</label>
-        <select class="storagepress_settings_input" id="sp_tenant_select" name="sp_tenant">
-            <?php 
-            $users = get_users();
-            foreach ($users as $user) {
-                //$selected = isset($post->ID) && get_post_meta($post->ID, 'sp_tenant', true) == $user->ID ? 'selected' : '';
-                ?><option value="<?php echo esc_attr($user->ID)?>"> <?php echo esc_html($user->display_name) ?> </option> <?php
-            }
-            ?>
-        </select>
-        <div>TODO: select user</div>
+        s<label class="storagepress_input_label" for="sp_tenant">Tenant:</label>
+        <?php require_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
     </div>
     <div style="margin-right: 1rem;">
         <label class="storagepress_input_label" for="sp_last_vacant_date">Last Vacant Date:</label>
