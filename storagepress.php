@@ -13,19 +13,17 @@ require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
 class StoragePress extends JGWPPlugin{
 
-    // constructor
+    // constructor, set values to pass to parent constructor
     public function __construct(){
         //set the plugin prefix before calling super constructor
-        $this->plugin_prefix = "storagepress_";
-        $this->base_dir = plugin_dir_path(__FILE__);
-
-        $this->settings_groups = [
+        $plugin_prefix = "storagepress_";
+        $base_dir = plugin_dir_path(__FILE__);
+        $settings_groups = [
             new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
             })
         ];
-        
-        $this->settings = [
+        $settings = [
             new JGWPSetting($this, 'name', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Name', 'storagepress_settings_section'),
             new JGWPSetting($this, 'address', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Address', 'storagepress_settings_section'),
             new JGWPSetting($this, 'email', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Email', 'storagepress_settings_section'),
@@ -41,7 +39,13 @@ class StoragePress extends JGWPPlugin{
              
             ];
 
-        parent::__construct();   //call parent constructor
+        //initialize the plugin
+        parent::__construct($plugin_prefix, $base_dir, $settings_groups, $settings);   //call parent 
+        
+    }
+
+    // implement custom behavior here
+    protected function plugin(){
         //defer alpine js to mitigate warning
         add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
 
@@ -62,8 +66,9 @@ class StoragePress extends JGWPPlugin{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
-        
     }
+
+
 
     //enqueue admin scripts and styles
     public function admin_resources($hook){
