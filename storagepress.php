@@ -18,6 +18,7 @@ class StoragePress extends JGWPPlugin{
         //set the plugin prefix before calling super constructor
         $plugin_prefix = "storagepress_";
         $base_dir = plugin_dir_path(__FILE__);
+        $base_url = plugin_dir_url(__FILE__);
         $settings_groups = [
             new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
@@ -40,13 +41,15 @@ class StoragePress extends JGWPPlugin{
             ];
 
         $admin_resources = [
-            new JGWPResource($this, 'alpine.min.js')
+            new JGWPResource($this, 'alpine.min.js'),
+            new JGWPResource($this, 'settings.css'),
         ];
 
         //initialize the plugin
         parent::__construct([
             'plugin_prefix'=>$plugin_prefix, 
             'base_dir'=> $base_dir,
+            'base_url'=> $base_url,
             'settings_groups'=>$settings_groups,
             'settings' => $settings,
             'admin_resources' => $admin_resources,
@@ -77,29 +80,6 @@ class StoragePress extends JGWPPlugin{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
-    }
-
-
-
-    //enqueue admin scripts and styles
-    public function admin_resources($hook){
-        global $post;   //get the post, if set
-
-        //add settings styling if on storage unit settings page
-        if(($post && 'sp_storage_units' === $post->post_type || (('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && (isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']))) 
-        || (isset($_GET['page']) && 'storagepress_settings_page' === $_GET['page'])){
-            //enqueue styles
-            wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'resources/css/settings.css', array(), true);
-
-            //enqueue scripts
-            wp_enqueue_script('storagepress_alpinejs', plugin_dir_url(__FILE__) . 'resources/js/alpine.min.js', array(), true);
-        }
-    }
-
-    //enqueue front-end scripts and styles
-    public function front_end_resources($hook){
-        //enqueue styles
-        //TODO
     }
 
     //add defer to the alpine js script
