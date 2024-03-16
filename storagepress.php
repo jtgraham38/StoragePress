@@ -39,8 +39,19 @@ class StoragePress extends JGWPPlugin{
              
             ];
 
+        $admin_resources = [
+            new JGWPResource($this, 'alpine.min.js')
+        ];
+
         //initialize the plugin
-        parent::__construct($plugin_prefix, $base_dir, $settings_groups, $settings);   //call parent 
+        parent::__construct([
+            'plugin_prefix'=>$plugin_prefix, 
+            'base_dir'=> $base_dir,
+            'settings_groups'=>$settings_groups,
+            'settings' => $settings,
+            'admin_resources' => $admin_resources,
+            'front_end_resources' => []
+        ]);   //call parent 
         
     }
 
