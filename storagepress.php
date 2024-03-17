@@ -9,6 +9,11 @@ Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
 */
 
+//
+///NOTE: there may be an issue with getting 404 errors when registering the storage units post type, a quick fix is to visit the settings->permalinks page, and click save changes
+///NOTE: but I may need a better solution in the future.
+//
+
 require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
 class StoragePress extends JGWPPlugin{
@@ -86,6 +91,10 @@ class StoragePress extends JGWPPlugin{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
+
+        //register templates for storage units frontend display
+        add_filter('single_template', array($this, 'register_single_template'));
+        add_filter('archive_template', array($this, 'register_archive_template'));
     }
 
     //add defer to the alpine js script
@@ -142,6 +151,7 @@ class StoragePress extends JGWPPlugin{
             'label'  => 'Storage Units',
             'show_in_menu' => 'storagepress',
             'supports' => array('title', 'thumbnail'),
+            'has_archive' => true,
             'labels' => array(
                 'name' => 'Storage Units',
                 'singular_name' => 'Storage Unit',
@@ -382,6 +392,21 @@ class StoragePress extends JGWPPlugin{
                     break;
             }
         }
+    }
+
+    //register custom templates to display storage units in
+    public function register_single_template($single_template){
+        global $post;
+        if ($post->post_type == 'sp_storage_units')
+            $single_template = $this->get_base_dir() . 'elements/templates/single_storage_unit.php';
+        return $single_template;
+
+    }
+    public function register_archive_template($archive_template){
+        global $post;
+        if (is_post_type_archive('sp_storage_units'))
+            $archive_template = $this->get_base_dir() . 'elements/templates/archive_storage_unit.php';
+        return $archive_template;
     }
 }
 

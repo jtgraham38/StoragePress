@@ -59,7 +59,7 @@ global $post; //get the post being edited
 <div class="sp_input_group" style="display: flex; flex-direction: row;">
 
     <div style="margin-right: 1rem;">
-        s<label class="storagepress_input_label" for="sp_tenant">Tenant:</label>
+        <label class="storagepress_input_label" for="sp_tenant">Tenant:</label>
         <?php require_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
     </div>
     <div style="margin-right: 1rem;">
