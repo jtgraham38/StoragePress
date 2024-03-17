@@ -71,8 +71,10 @@ class StoragePress extends JGWPPlugin{
         add_action('init', array($this, 'register_storage_units_post_type'));
 
         //add inputs to the quick edit menu, and save results from them
-        add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
-        add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
+        //NOTE: this is actually a more complex feature than I thought, because the quick edit form is created by cloning an element using js on the client side,
+        //NOTE: so this leads to displaying incorrect default values in the quick edit form
+        // add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
+        // add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
 
         //set cols that appear in storage unit listing
         add_filter('manage_posts_columns', array($this, 'storage_units_columns'));
