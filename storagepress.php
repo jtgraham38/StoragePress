@@ -21,9 +21,10 @@ class StoragePress extends JGWPPlugin{
     // constructor, set values to pass to parent constructor
     public function __construct(){
         //set the plugin prefix before calling super constructor
-        $this->plugin_prefix = "storagepress_";
-
-        $this->settings_groups = [
+        $plugin_prefix = "storagepress_";
+        $base_dir = plugin_dir_path(__FILE__);
+        $base_url = plugin_dir_url(__FILE__);
+        $settings_groups = [
             new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
             })
@@ -386,7 +387,6 @@ class StoragePress extends JGWPPlugin{
                     }else{
                         $custom_field_value = "N/A";
                     }
-                    $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
                     echo $custom_field_value != "" ? $custom_field_value : "N/A";
                     break;
             }
