@@ -9,23 +9,26 @@ Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
 */
 
+//
+///NOTE: there may be an issue with getting 404 errors when registering the storage units post type, a quick fix is to visit the settings->permalinks page, and click save changes
+///NOTE: but I may need a better solution in the future.
+//
+
 require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
 class StoragePress extends JGWPPlugin{
 
-    // constructor
+    // constructor, set values to pass to parent constructor
     public function __construct(){
         //set the plugin prefix before calling super constructor
         $this->plugin_prefix = "storagepress_";
-        $this->base_dir = plugin_dir_path(__FILE__);
 
         $this->settings_groups = [
             new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
             })
         ];
-        
-        $this->settings = [
+        $settings = [
             new JGWPSetting($this, 'name', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Name', 'storagepress_settings_section'),
             new JGWPSetting($this, 'address', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Address', 'storagepress_settings_section'),
             new JGWPSetting($this, 'email', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Email', 'storagepress_settings_section'),
@@ -41,7 +44,26 @@ class StoragePress extends JGWPPlugin{
              
             ];
 
-        parent::__construct();   //call parent constructor
+        $admin_resources = [
+            new JGWPResource($this, 'alpine.min.js'),
+            new JGWPResource($this, 'settings.css'),
+        ];
+
+        //initialize the plugin
+        parent::__construct([
+            'plugin_prefix'=>$plugin_prefix, 
+            'base_dir'=> $base_dir,
+            'base_url'=> $base_url,
+            'settings_groups'=>$settings_groups,
+            'settings' => $settings,
+            'admin_resources' => $admin_resources,
+            'front_end_resources' => []
+        ]);   //call parent 
+        
+    }
+
+    // implement custom behavior here
+    protected function plugin(){
         //defer alpine js to mitigate warning
         add_filter('script_loader_tag', array($this, 'defer_alpinejs'), 10, 3);   //add defer to alpinejs script
 
@@ -52,9 +74,15 @@ class StoragePress extends JGWPPlugin{
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
 
+        //add inputs to the quick edit menu, and save results from them
+        //NOTE: this is actually a more complex feature than I thought, because the quick edit form is created by cloning an element using js on the client side,
+        //NOTE: so this leads to displaying incorrect default values in the quick edit form
+        // add_action('quick_edit_custom_box', array($this, 'display_quick_edit_custom'), 10, 2);    //add inputs
+        // add_action('save_post', array($this, 'save_quick_edit_data'));              //save values
+
         //set cols that appear in storage unit listing
-        add_filter('manage_storage_units_posts_columns', array($this, 'storage_units_columns'));
-        add_action('manage_storage_units_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
+        add_filter('manage_posts_columns', array($this, 'storage_units_columns'));
+        add_action('manage_posts_custom_column', array($this, 'storage_units_custom_column'), 10, 2);
 
         //add inputs to storage unit create form
         add_action('edit_form_after_editor', array($this, 'add_inputs_to_storage_unit_create_form'));
@@ -62,28 +90,10 @@ class StoragePress extends JGWPPlugin{
 
         //save the custom fields of the storage units when the unit is saved
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
-        
-    }
 
-    //enqueue admin scripts and styles
-    public function admin_resources($hook){
-        global $post;   //get the post, if set
-
-        //add settings styling if on storage unit settings page
-        if(($post && 'sp_storage_units' === $post->post_type || (('post.php' === $hook || 'post-new.php' === $hook || 'edit.php' === $hook) && (isset($_GET['post_type']) && 'storage_unit' === $_GET['post_type']))) 
-        || (isset($_GET['page']) && 'storagepress_settings_page' === $_GET['page'])){
-            //enqueue styles
-            wp_enqueue_style('storagepress_settings_style', plugin_dir_url(__FILE__) . 'assets/css/settings.css', array(), true);
-
-            //enqueue scripts
-            wp_enqueue_script('storagepress_alpinejs', plugin_dir_url(__FILE__) . 'assets/js/alpine.min.js', array(), true);
-        }
-    }
-
-    //enqueue front-end scripts and styles
-    public function front_end_resources($hook){
-        //enqueue styles
-        //TODO
+        //register templates for storage units frontend display
+        add_filter('single_template', array($this, 'register_single_template'));
+        add_filter('archive_template', array($this, 'register_archive_template'));
     }
 
     //add defer to the alpine js script
@@ -140,6 +150,7 @@ class StoragePress extends JGWPPlugin{
             'label'  => 'Storage Units',
             'show_in_menu' => 'storagepress',
             'supports' => array('title', 'thumbnail'),
+            'has_archive' => true,
             'labels' => array(
                 'name' => 'Storage Units',
                 'singular_name' => 'Storage Unit',
@@ -282,34 +293,119 @@ class StoragePress extends JGWPPlugin{
         }
     }
 
+    // add inputs to the quick edit menu
+    function display_quick_edit_custom($column_name, $post_type){
+        
+        //require_once plugin_dir_path(__FILE__) . 'elements/quick_edit_custom.php';
+        if ($post_type != 'sp_storage_units') return;
+
+        switch ($column_name) {
+            case 'price': ?> 
+                <fieldset class="inline-edit-col-right" style="display: flex; flex-direction: column;">
+                    <div class="inline-edit-col">
+                        <label for="sp_size">
+                            <span class="title">Size</span>
+                            <span class="input-text-wrap">
+                                <?php include_once $this->base_dir . 'elements/size_storage_unit_meta_field.php'; ?>
+                            </span>
+                        </label>
+                        <label for="sp_price">
+                            <span class="title">Price</span>
+                            <span class="input-text-wrap">
+                                <?php include_once $this->base_dir . 'elements/price_storage_unit_meta_field.php'; ?>
+                            </span>
+                        </label>
+                        <label for="sp_tenant_select">
+                            <span class="title">Tenant</span>
+                            <span class="input-text">
+                                <?php include_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
+                            </span>
+                    </div>
+                </fieldset> 
+                <?php
+                break;
+        }
+    }
+
+    //save data from those inputs
+    function save_quick_edit_data($post_id){
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+        if (!current_user_can('edit_post', $post_id)) return;
+        if (isset($_POST['my_custom_field'])) {
+            update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
+        }
+    }
+
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {
-        unset($columns['date']); // remove date column
-        $columns['size'] = 'Size'; // add custom field column
-        $columns['price'] = 'Price'; // add custom field column
-        $columns['status'] = 'Status'; // add custom field column
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+            unset($columns['date']); // remove date column
+            $columns['size'] = 'Size'; // add custom field column
+            $columns['price'] = 'Price'; // add custom field column
+            $columns['tenant'] = 'Tenant'; // add custom field column
+        }
         return $columns;
     }
 
     // populate custom fields columns in storage units table
     public function storage_units_custom_column($column, $post_id) {
-        switch ($column) {
-            case 'price':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'price', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
-            case 'size':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'size', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
-            case 'status':
-                // get the custom field value and echo it
-                $custom_field_value = get_post_meta($post_id, 'status', true);
-                echo $custom_field_value != "" ? $custom_field_value : "N/A";
-                break;
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+            switch ($column) {
+                case 'price':
+                    // get the custom field value and echo it
+                    $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'sp_price', true)) / 100);
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+                case 'size':
+                    // get the custom field value and echo it
+                    $unit = esc_attr(get_post_meta($post_id, 'sp_unit', true));
+                    $length = esc_attr(get_post_meta($post_id, 'sp_length', true));
+                    $width = esc_attr(get_post_meta($post_id, 'sp_width', true));
+                    if ($length != "" && $width != "" && $unit != "") {
+                        $custom_field_value = $length . " " . $unit . " &times; " . $width . " " . $unit;
+                    } else {
+                        $custom_field_value = "N/A";
+                    }
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+                case 'tenant':
+                    // get the custom field value and echo it
+                    $uid = esc_attr(get_post_meta($post_id, 'sp_tenant', true));
+                    $user = get_user_by('id', $uid);
+                    if (isset($user)){
+                        if (isset($user->display_name)){
+                            if (isset($user->user_email)){
+                                $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
+                            }else{
+                                $custom_field_value = $user->display_name;
+                            }
+                        }
+                        else{
+                            $custom_field_value = "N/A";
+                        }
+                    }else{
+                        $custom_field_value = "N/A";
+                    }
+                    $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
+                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    break;
+            }
         }
+    }
+
+    //register custom templates to display storage units in
+    public function register_single_template($single_template){
+        global $post;
+        if ($post->post_type == 'sp_storage_units')
+            $single_template = $this->get_base_dir() . 'elements/templates/single_storage_unit.php';
+        return $single_template;
+
+    }
+    public function register_archive_template($archive_template){
+        global $post;
+        if (is_post_type_archive('sp_storage_units'))
+            $archive_template = $this->get_base_dir() . 'elements/templates/archive_storage_unit.php';
+        return $archive_template;
     }
 }
 
