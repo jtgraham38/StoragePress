@@ -152,6 +152,7 @@ class StoragePress extends JGWPPlugin{
             'show_in_menu' => 'storagepress',
             'supports' => array('title', 'thumbnail'),
             'has_archive' => true,
+            'show_in_rest' => true,
             'labels' => array(
                 'name' => 'Storage Units',
                 'singular_name' => 'Storage Unit',
