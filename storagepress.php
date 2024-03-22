@@ -41,6 +41,7 @@ class StoragePress extends JGWPPlugin{
             new JGWPSetting($this, 'phone', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Phone', 'storagepress_settings_section'),
             new JGWPSetting($this, 'rental_terms', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Rental Terms', 'storagepress_settings_section'),
             new JGWPSetting($this, 'checks_payable_to', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Checks Payable To:', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'listing_page', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Unit Listing Page:', 'storagepress_settings_section'),
             new JGWPSetting($this, 'feature_options', array('default' => array(), 'sanitize_callback' => function($input){ 
                 foreach($input as $key => $value){
                     $input[$key] = sanitize_text_field($value);
