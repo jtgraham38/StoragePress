@@ -101,37 +101,28 @@ wp.blocks.registerBlockType("storagepress/storage-unit-meta-block",
   category: "typography",
   // category of the block
   attributes: {
-    meta_key: {
+    key: {
       type: "string"
     }
   },
   // attributes of the block
   edit: function (props) {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
-      id: "meta_key",
-      value: props.attributes.meta_key,
+      value: props.attributes.key,
       onChange: event => {
         props.setAttributes({
-          meta_key: event.target.value
+          key: event.target.value
         });
       }
     }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_length"
-    }, "Length"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_width"
-    }, "Width"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_unit"
-    }, "Unit"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+      value: "sp_size"
+    }, "Size"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
       value: "sp_price"
     }, "Price"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
       value: "sp_features"
     }, "Features"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_tenant"
-    }, "Tenant"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_last_rental_date"
-    }, "Last Rental Date"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
-      value: "sp_last_vacant_date"
-    }, "Last Vacant Date")));
+      value: "sp_available"
+    }, "Availability")));
   },
   // function to render the block in the editor (admin appearance)
   save: function (props) {

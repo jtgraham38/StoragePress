@@ -6,24 +6,20 @@ wp.blocks.registerBlockType(
         icon: "smiley", // dashicon to show in the admin panel
         category: "typography", // category of the block
         attributes: {
-            meta_key: { type: "string" },
+            key: { type: "string" },
         },  // attributes of the block
         edit: function (props) {
             return (
                 <span>
-                    <select id="meta_key" 
-                    value={props.attributes.meta_key}
+                    <select
+                    value={props.attributes.key}
                     onChange={(event)=>{ 
-                        props.setAttributes({ meta_key: event.target.value })
+                        props.setAttributes({ key: event.target.value })
                      }}>
-                        <option value="sp_length">Length</option>
-                        <option value="sp_width">Width</option>
-                        <option value="sp_unit">Unit</option>
+                        <option value="sp_size">Size</option>
                         <option value="sp_price">Price</option>
                         <option value="sp_features">Features</option>
-                        <option value="sp_tenant">Tenant</option>
-                        <option value="sp_last_rental_date">Last Rental Date</option>
-                        <option value="sp_last_vacant_date">Last Vacant Date</option>
+                        <option value="sp_available">Availability</option>
                     </select>
                 </span>
             )
