@@ -13,6 +13,11 @@ Text Domain: storagepress
 ///NOTE: there may be an issue with getting 404 errors when registering the storage units post type, a quick fix is to visit the settings->permalinks page, and click save changes
 ///NOTE: but I may need a better solution in the future.
 //
+//exit if file is called directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+//init global post variable
 
 require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
@@ -93,8 +98,39 @@ class StoragePress extends JGWPPlugin{
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
 
         //register templates for storage units frontend display
-        add_filter('single_template', array($this, 'register_single_template'));
-        add_filter('archive_template', array($this, 'register_archive_template'));
+        //add_filter('single_template', array($this, 'register_single_template'));
+        //add_filter('archive_template', array($this, 'register_archive_template'));
+
+        //register custom blocks
+        add_action('init', array($this, 'register_custom_blocks'));
+    }
+
+    //register custom blocks
+    function register_custom_blocks(){
+        //enqueue block editor script
+        wp_register_script(
+            'storagepress_storage_unit_meta_block', //handle
+            $this->get_base_url() . 'build/index.js',   //script url
+            array('wp-blocks', 'wp-element')  //dependencies (corresponds to wp.blocks, wp.element)
+        );
+        //register each block from the script, and determine its editor script and render callback
+        register_block_type('storagepress/storage-unit-meta-block', 
+            array(
+                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'render_callback' => array($this, 'render_storage_unit_meta_block')  //callback to render the block
+            )
+        );
+    }
+
+    function render_storage_unit_meta_block($attributes){
+        global $post;
+        if ($post->post_type != 'sp_storage_units') return '<span>Post of type "' . $post->post_type . '" is not a Storage Unit</span> ';
+        ob_start();?>
+        <span>
+            <?php echo get_post_meta($post->ID, $attributes['meta_key'], true); //note: will need to change third attr from true for multivalued attrs ?>
+        </span>
+        <?php
+        return ob_get_clean();
     }
 
     //add defer to the alpine js script
@@ -193,7 +229,7 @@ class StoragePress extends JGWPPlugin{
             'single' => true,
             'type' => 'string',
         ));
-        register_meta('sp_storage_units', 'sp_length', array(  //width
+        register_meta('sp_storage_units', 'sp_width', array(  //width
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
