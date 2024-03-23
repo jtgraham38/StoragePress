@@ -155,8 +155,27 @@ class StoragePress extends JGWPPlugin{
                 'render_callback' => array($this, 'render_storage_unit_meta_block')  //callback to render the block
             )
         );
+        register_block_type('storagepress/storage-unit-listing-block', 
+            array(
+                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'render_callback' => array($this, 'render_storage_unit_listing_block')  //callback to render the block
+            )
+        );
+        register_block_type('storagepress/storage-unit-business-detail-block', 
+            array(
+                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'render_callback' => array($this, 'render_storage_unit_business_detail_block')  //callback to render the block
+            )
+        );
+        register_block_type('storagepress/storage-unit-business-details-card-block', 
+            array(
+                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'render_callback' => array($this, 'render_storage_unit_business_details_card_block')  //callback to render the block
+            )
+        );
     }
 
+    //render the storage unit meta block
     function render_storage_unit_meta_block($attributes){
         global $post;
         if ($post->post_type != 'sp_storage_units') return '<span>Post of type "' . $post->post_type . '" is not a Storage Unit.</span> ';
@@ -208,7 +227,9 @@ class StoragePress extends JGWPPlugin{
                         else{
                             echo '<i>No features!</i>';
                         }
-                        break;     
+                        break;
+                    default:
+                        echo '<span>(Invalid Storage Unit Meta Chosen)</span>'; 
                 }
             }
             //otherwise, display default content
@@ -220,6 +241,99 @@ class StoragePress extends JGWPPlugin{
         <?php
         return ob_get_clean();
     }
+
+    //render the storage unit listing block
+    function render_storage_unit_listing_block($attributes){
+        //get the storage unit
+
+        //create the content
+        ob_start();?>
+        <div>
+            <h2>Storage Unit Listing</h2>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    //render the storage unit business detail block
+    function render_storage_unit_business_detail_block($attributes){
+        //create the content
+        ob_start();?>
+        <span>
+            <?php
+            if (array_key_exists('key', $attributes)){
+                switch($attributes['key']){
+                    case 'storagepress_name':
+                        echo get_option('storagepress_name');
+                        break;
+                    case 'storagepress_address':
+                        ?> 
+                        <address>
+                            <?php echo get_option('storagepress_address'); ?>
+                        </address>
+                        <?php
+                        break;
+                    case 'storagepress_phone':
+                        ?> 
+                        <a href="tel:<?php echo get_option('storagepress_phone'); ?>"><?php echo get_option('storagepress_phone'); ?></a>
+                        <?php
+                        break;
+                    case 'storagepress_email':
+                        ?> 
+                        <a href="mailto:<?php echo get_option('storagepress_email'); ?>"><?php echo get_option('storagepress_email'); ?></a>
+                        <?php
+                        break;
+                    case 'storagepress_rental_terms':
+                        ?>
+                        <details>
+                            <summary>Rental Terms</summary>
+                            <p><?php echo get_option('storagepress_rental_terms'); ?></p>
+                        </details>
+                        <?php
+                        break;
+                    case 'storagepress_checks_payable_to':
+                        ?>
+                        <i><?php echo get_option('storagepress_checks_payable_to'); ?></i>
+                        <?php
+                        break;
+                    case 'storagepress_listing_page':
+                        //get the url of the listing page
+                        $listing_page_id = get_option('storagepress_listing_page');
+                        $listing_page = get_post($listing_page_id);
+                        if ($listing_page){
+                            ?>
+                            <a href="<?php echo get_permalink($listing_page); ?>"><?php echo $listing_page->post_title; ?></a>
+                            <?php
+                        }else{
+                            echo '<span>(No Listing Page Set)</span>';
+                        }
+                        break;
+                    default:
+                        echo '<span>(Invalid Business Detail Chosen)</span>';
+                }
+            }
+            else{
+                echo '<span>(No Business Detail Chosen)</span>';
+            }
+            ?>
+        </span>
+        <?php
+        return ob_get_clean();
+    }
+
+    //render the storage unit business details card block
+    function render_storage_unit_business_details_card_block($attributes){
+        //get the storage unit
+
+        //create the content
+        ob_start();?>
+        <div>
+            <h2>Storage Unit Business Details Card (TODO)</h2>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
 
     //add defer to the alpine js script
     public function defer_alpinejs($tag, $handle, $src){
