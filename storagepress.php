@@ -104,6 +104,33 @@ class StoragePress extends JGWPPlugin{
 
         //register custom blocks
         add_action('init', array($this, 'register_custom_blocks'));
+
+        //create page for the storage unit listing
+        add_action('init', array($this, 'create_storage_unit_listing_page'));
+    }
+
+    function create_storage_unit_listing_page(){
+        //see if there is currently a listing page set
+        $listing_page_id = get_option( 'storagepress_listing_page', null);
+        $listing_page = get_post($listing_page_id);
+
+        //if no listing page is set...
+        if (!$listing_page || $listing_page->post_type != 'page'){
+            //create the page
+            $page = array(
+                'post_title' => 'Storage Units',
+                'post_content' => '[storage_unit_listing]',
+                'post_status' => 'publish',
+                'post_type' => 'page',
+            );
+            $page_id = wp_insert_post($page);
+
+            //update the option to create the page
+            if ($page_id && !is_wp_error($page_id)) {
+                // Update the option with the ID of the new page
+                update_option('storagepress_listing_page', $page_id);
+            }
+        }
     }
 
     //register custom blocks
@@ -125,7 +152,7 @@ class StoragePress extends JGWPPlugin{
 
     function render_storage_unit_meta_block($attributes){
         global $post;
-        if ($post->post_type != 'sp_storage_units') return '<span>Post of type "' . $post->post_type . '" is not a Storage Unit</span> ';
+        if ($post->post_type != 'sp_storage_units') return '<span>Post of type "' . $post->post_type . '" is not a Storage Unit.</span> ';
         ob_start();?>
         <span>
             <?php 

@@ -6,7 +6,7 @@ export default wp.blocks.registerBlockType(
         icon: "smiley", // dashicon to show in the admin panel
         category: "typography", // category of the block
         attributes: {
-            key: { type: "string" },
+            key: { type: "string" },    //once published, don't change the name of an attribute, could lead to errors with previously created blocks
         },  // attributes of the block
         edit: function (props) {
             return (
