@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <select name="storagepress_listing_page" class="storagepress_settings_input" id="listing_page_input" title="Please select the page you display your storage units on.">
-    <option value="">Select a page</option>
+    <option value="">Create New Page (None selected)</option>
     <?php
     $pages = get_pages();
     foreach ($pages as $page) {
