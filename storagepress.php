@@ -268,7 +268,7 @@ class StoragePress extends JGWPPlugin{
                         break;
                     case 'storagepress_address':
                         ?> 
-                        <address>
+                        <address style="display: inline;">
                             <?php echo get_option('storagepress_address'); ?>
                         </address>
                         <?php
@@ -285,7 +285,7 @@ class StoragePress extends JGWPPlugin{
                         break;
                     case 'storagepress_rental_terms':
                         ?>
-                        <details>
+                        <details style="display: inline;">
                             <summary>Rental Terms</summary>
                             <p><?php echo get_option('storagepress_rental_terms'); ?></p>
                         </details>
