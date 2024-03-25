@@ -178,12 +178,6 @@ class StoragePress extends JGWPPlugin{
                 'render_callback' => array($this, 'render_storage_unit_business_detail_block')  //callback to render the block
             )
         );
-        register_block_type('storagepress/storage-unit-business-details-card-block', 
-            array(
-                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
-                'render_callback' => array($this, 'render_storage_unit_business_details_card_block')  //callback to render the block
-            )
-        );
     }
 
     //render the storage unit meta block
@@ -315,20 +309,6 @@ class StoragePress extends JGWPPlugin{
             }
             ?>
         </span>
-        <?php
-        return ob_get_clean();
-    }
-
-    //render the storage unit business details card block
-    function render_storage_unit_business_details_card_block($attributes, $content){
-        //get the storage unit
-
-        //create the content
-        ob_start();?>
-        <div>
-            <h2>Storage Unit Business Details Card (TODO)</h2>
-            <p><?php echo $content ?></p>
-        </div>
         <?php
         return ob_get_clean();
     }
