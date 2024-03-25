@@ -1,4 +1,7 @@
 
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor'; // wp block editor
+import { PanelBody } from '@wordpress/components';
+
 //wp is registered in the browser global scop by WordPress
 export default wp.blocks.registerBlockType(
     "storagepress/storage-unit-business-detail-block", // Unique name of the block
@@ -11,22 +14,30 @@ export default wp.blocks.registerBlockType(
         },  // attributes of the block
         edit: function (props) {
             return (
-                <span>
-                    <select
-                    value={props.attributes.key}
-                    onChange={(event)=>{ 
-                        props.setAttributes({ key: event.target.value })
-                     }}>
-                        <option value="none">Choose a Business Detail...</option>
-                        <option value="storagepress_name">Business Name</option>
-                        <option value="storagepress_address">Business Address</option>
-                        <option value="storagepress_phone">Business Phone Number</option>
-                        <option value="storagepress_email">Business Email</option>
-                        <option value="storagepress_rental_terms">Business Rental Terms</option>
-                        <option value="storagepress_checks_payable_to">Make Checks Payable To</option>
-                        <option value="storagepress_listing_page">Link to Listing Page</option>
-                    </select>
-                </span>
+                <>
+                    <InspectorControls>
+                        <PanelBody>
+                            <select
+                                value={props.attributes.key}
+                                onChange={(event)=>{ 
+                                    props.setAttributes({ key: event.target.value })
+                            }}>
+                                <option value="none">Choose a Business Detail...</option>
+                                <option value="storagepress_name">Business Name</option>
+                                <option value="storagepress_address">Business Address</option>
+                                <option value="storagepress_phone">Business Phone Number</option>
+                                <option value="storagepress_email">Business Email</option>
+                                <option value="storagepress_rental_terms">Business Rental Terms</option>
+                                <option value="storagepress_checks_payable_to">Make Checks Payable To</option>
+                                <option value="storagepress_listing_page">Link to Listing Page</option>
+                            </select>
+                        </PanelBody>
+                    </InspectorControls>
+
+                    <span>
+                        { storagepress_options[props.attributes.key] }
+                    </span>
+                </>
             )
         }, // function to render the block in the editor (admin appearance)
         save: function (props) {

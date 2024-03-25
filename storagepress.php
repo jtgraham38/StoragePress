@@ -144,32 +144,49 @@ class StoragePress extends JGWPPlugin{
     function register_custom_blocks(){
         //enqueue block editor script
         wp_register_script(
-            'storagepress_storage_unit_meta_block', //handle
+            'storagepress_blocks', //handle
             $this->get_base_url() . 'build/index.js',   //script url
-            array('wp-blocks', 'wp-element')  //dependencies (corresponds to wp.blocks, wp.element)
+            array('wp-blocks', 'wp-element', 'wp-block-editor')  //dependencies (corresponds to wp.blocks, wp.element, @wordpress/block-editor)
         );
+
+        //pass data to my blocks
+        global $post;
+        wp_localize_script(
+            'storagepress_blocks', //handle
+            'storagepress_options', //name of the JavaScript object that will hold your variables
+            array(
+                'storagepress_name' => get_option('storagepress_name'),
+                'storagepress_address' => get_option('storagepress_address'),
+                'storagepress_phone' => get_option('storagepress_phone'),
+                'storagepress_email' => get_option('storagepress_email'),
+                'storagepress_rental_terms' => get_option('storagepress_rental_terms'),
+                'storagepress_checks_payable_to' => get_option('storagepress_checks_payable_to'),
+                'storagepress_listing_page' => get_option('storagepress_listing_page')
+            ) //data to pass to your script
+        );
+
         //register each block from the script, and determine its editor script and render callback
         register_block_type('storagepress/storage-unit-meta-block', 
             array(
-                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
                 'render_callback' => array($this, 'render_storage_unit_meta_block')  //callback to render the block
             )
         );
         register_block_type('storagepress/storage-unit-listing-block', 
             array(
-                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
                 'render_callback' => array($this, 'render_storage_unit_listing_block')  //callback to render the block
             )
         );
         register_block_type('storagepress/storage-unit-business-detail-block', 
             array(
-                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
                 'render_callback' => array($this, 'render_storage_unit_business_detail_block')  //callback to render the block
             )
         );
         register_block_type('storagepress/storage-unit-business-details-card-block', 
             array(
-                'editor_script' => 'storagepress_storage_unit_meta_block',   //script to enqueue in editor
+                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
                 'render_callback' => array($this, 'render_storage_unit_business_details_card_block')  //callback to render the block
             )
         );
@@ -322,13 +339,14 @@ class StoragePress extends JGWPPlugin{
     }
 
     //render the storage unit business details card block
-    function render_storage_unit_business_details_card_block($attributes){
+    function render_storage_unit_business_details_card_block($attributes, $content){
         //get the storage unit
 
         //create the content
         ob_start();?>
         <div>
             <h2>Storage Unit Business Details Card (TODO)</h2>
+            <p><?php echo $content ?></p>
         </div>
         <?php
         return ob_get_clean();

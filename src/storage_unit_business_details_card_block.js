@@ -12,9 +12,10 @@ export default wp.blocks.registerBlockType(
         },  // attributes of the block
         edit: function (props) {
             return (
-                <span>
-                   Unit Business Details Card
-                </span>
+                <div>
+                    <h1>Unit Business Details Card (TODO)</h1>
+                    <InnerBlocks />
+                </div>
             )
         }, // function to render the block in the editor (admin appearance)
         save: function (props) {
