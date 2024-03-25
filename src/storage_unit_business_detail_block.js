@@ -35,7 +35,7 @@ export default wp.blocks.registerBlockType(
                     </InspectorControls>
 
                     <span>
-                        { storagepress_options[props.attributes.key] }
+                        { storagepress_options[props.attributes.key] ? storagepress_options[props.attributes.key] : 'No detail selected!'}
                     </span>
                 </>
             )
