@@ -172,12 +172,6 @@ class StoragePress extends JGWPPlugin{
                 'render_callback' => array($this, 'render_storage_unit_meta_block')  //callback to render the block
             )
         );
-        register_block_type('storagepress/storage-unit-listing-block', 
-            array(
-                'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
-                'render_callback' => array($this, 'render_storage_unit_listing_block')  //callback to render the block
-            )
-        );
         register_block_type('storagepress/storage-unit-business-detail-block', 
             array(
                 'editor_script' => 'storagepress_blocks',   //script to enqueue in editor
@@ -255,19 +249,6 @@ class StoragePress extends JGWPPlugin{
             }
             ?>
         </span>
-        <?php
-        return ob_get_clean();
-    }
-
-    //render the storage unit listing block
-    function render_storage_unit_listing_block($attributes){
-        //get the storage unit
-
-        //create the content
-        ob_start();?>
-        <div>
-            <h2>Storage Unit Listing</h2>
-        </div>
         <?php
         return ob_get_clean();
     }
