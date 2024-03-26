@@ -31,6 +31,8 @@ if ($post->post_type != 'sp_storage_units'){
 				$features = get_post_meta($post->ID, 'sp_features', false);
 				if (count($features) > 0){
 					//feature tag style
+
+					//TODO: the style below will be echoed for each block of this type, migrate it to use more official block styles instead
 					?>
 					<style>
 						.feature_tag{
