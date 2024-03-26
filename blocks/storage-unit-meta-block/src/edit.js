@@ -40,6 +40,7 @@ export default function Edit(props) {
 		'sp_features': 'Features',
 		'sp_available': 'Availability',
 	}
+	console.log(useBlockProps())
 	return (
 		<>
 			<InspectorControls>

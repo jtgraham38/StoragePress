@@ -44,9 +44,7 @@ if ($post->post_type != 'sp_storage_units'){
 					<?php
 					//display features
 					foreach($features[0] as $feature){
-					?> 
-					$output .= '<span class="feature_tag">' . $feature . '</span> '; 
-					<?php
+						$output .= '<span class="feature_tag">' . $feature . '</span> '; 
 					}
 				}
 				else{
@@ -58,7 +56,7 @@ if ($post->post_type != 'sp_storage_units'){
 		}
 
 		//display the output
-		echo '<span>' . $output . '</span>';
+		echo '<span ' . get_block_wrapper_attributes() . '>' . $output . '</span>';
 	}
 	//otherwise, display default content
 	else{
