@@ -20,6 +20,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
+import { BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,6 +33,13 @@ import './editor.scss';
 const { InspectorControls } = wp.blockEditor;
 const { PanelBody } = wp.components;
 export default function Edit(props) {
+	const options = {
+		'none': 'Choose a Business Detail...',
+		'sp_size': 'Size',
+		'sp_price': 'Price',
+		'sp_features': 'Features',
+		'sp_available': 'Availability',
+	}
 	return (
 		<>
 			<InspectorControls>
@@ -41,20 +49,19 @@ export default function Edit(props) {
 						onChange={(event)=>{ 
 							props.setAttributes({ key: event.target.value })
 					}}>
-						<option value="none">Choose a Business Detail...</option>
-						<option value="storagepress_name">Business Name</option>
-						<option value="storagepress_address">Business Address</option>
-						<option value="storagepress_phone">Business Phone Number</option>
-						<option value="storagepress_email">Business Email</option>
-						<option value="storagepress_rental_terms">Business Rental Terms</option>
-						<option value="storagepress_checks_payable_to">Make Checks Payable To</option>
-						<option value="storagepress_listing_page">Link to Listing Page</option>
+						{
+							Object.entries(options).map(([value, label]) => (
+								<option key={value} value={value}>
+									{label}
+								</option>
+							))
+						}
 					</select>
 				</PanelBody>
 			</InspectorControls>
 
 			<span { ...useBlockProps() }>
-				{ props.attributes.key }
+				{ options[props.attributes.key] }
 			</span>
 		</>
 	);
