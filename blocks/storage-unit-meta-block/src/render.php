@@ -11,19 +11,20 @@ if ($post->post_type != 'sp_storage_units'){
 } else{
 	//for some reason, the key attr will not be set if the input is not changed
 	if (array_key_exists('key', $attributes)){
+		$output = '';
 		switch($attributes['key']){
 			case 'sp_size':
-				echo get_post_meta($post->ID, 'sp_length', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true) . ' &times; ' . get_post_meta($post->ID, 'sp_width', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true);
+				$output = get_post_meta($post->ID, 'sp_length', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true) . ' &times; ' . get_post_meta($post->ID, 'sp_width', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true);
 				break;
 			case 'sp_price':
-				echo '$' . (get_post_meta($post->ID, 'sp_price', true) / 100) . "/mo.";
+				$output = '$' . (get_post_meta($post->ID, 'sp_price', true) / 100) . "/mo.";
 				break;
 			case 'sp_available':
 				$tenant = get_post_meta($post->ID, 'sp_tenant', true);
 				if ($tenant == 0){
-					echo '<span style="color: green;">Available</span>';
+					$output = 'Available';
 				}else{
-					echo '<span style="color: red;">Rented</span>';
+					$output = 'Rented';
 				}
 				break;
 			case 'sp_features':
@@ -44,19 +45,20 @@ if ($post->post_type != 'sp_storage_units'){
 					//display features
 					foreach($features[0] as $feature){
 					?> 
-						<span class="feature_tag">
-							<?php echo $feature; ?>
-					</span> 
+					$output .= '<span class="feature_tag">' . $feature . '</span> '; 
 					<?php
 					}
 				}
 				else{
-					echo '<i>No features!</i>';
+					$output = 'No features!';
 				}
 				break;
 			default:
-				echo '<span>(Invalid Storage Unit Meta Chosen)</span>'; 
+				$output = '(Invalid Storage Unit Meta Chosen)'; 
 		}
+
+		//display the output
+		echo '<span>' . $output . '</span>';
 	}
 	//otherwise, display default content
 	else{
