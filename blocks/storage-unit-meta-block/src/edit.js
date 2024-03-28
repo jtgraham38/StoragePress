@@ -61,9 +61,9 @@ export default function Edit(props) {
 				</PanelBody>
 			</InspectorControls>
 
-			<span { ...useBlockProps() }>
+			<div { ...useBlockProps() }>
 				{ options[props.attributes.key] }
-			</span>
+			</div>
 		</>
 	);
 }

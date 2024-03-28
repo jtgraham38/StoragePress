@@ -39,13 +39,13 @@ if (array_key_exists('key', $attributes)){
             }
             break;
         default:
-            $output = '<span>(Invalid Business Detail Chosen)</span>';
+            $output = '<div>(Invalid Business Detail Chosen)</div>';
     }
 
     //echo out content
-    echo '<span ' . get_block_wrapper_attributes() . '>' . $output . '</span>';
+    echo '<div ' . get_block_wrapper_attributes() . '>' . $output . '</div>';
 }
 else{
-    echo '<span>(No Business Detail Chosen)</span>';
+    echo '<div>(No Business Detail Chosen)</div>';
 }
 

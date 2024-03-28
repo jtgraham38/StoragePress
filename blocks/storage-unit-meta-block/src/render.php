@@ -7,7 +7,7 @@
 //if an option was chosen in the input...
 global $post;
 if ($post->post_type != 'sp_storage_units'){
-	echo '<span>Post of type "' . $post->post_type . '" is not a Storage Unit.</span> ';
+	echo '<div>Post of type "' . $post->post_type . '" is not a Storage Unit.</div> ';
 } else{
 	//for some reason, the key attr will not be set if the input is not changed
 	if (array_key_exists('key', $attributes)){
@@ -58,10 +58,10 @@ if ($post->post_type != 'sp_storage_units'){
 		}
 
 		//display the output
-		echo '<span ' . get_block_wrapper_attributes() . '>' . $output . '</span>';
+		echo '<div ' . get_block_wrapper_attributes() . '>' . $output . '</div>';
 	}
 	//otherwise, display default content
 	else{
-		echo '<span>(No Storage Unit Meta Chosen)</span>';
+		echo '<div>(No Storage Unit Meta Chosen)</div>';
 	}
 }
