@@ -200,9 +200,10 @@ class StoragePress extends JGWPPlugin{
             'public' => true,
             'label'  => 'Storage Units',
             'show_in_menu' => 'storagepress',
-            'supports' => array('title', 'thumbnail'),
+            'supports' => array('title', 'thumbnail', 'custom-fields'),
             'has_archive' => true,
             'show_in_rest' => true,
+            'public' => true,
             'labels' => array(
                 'name' => 'Storage Units',
                 'singular_name' => 'Storage Unit',
@@ -238,45 +239,53 @@ class StoragePress extends JGWPPlugin{
         register_post_type('sp_storage_units', $args);
 
         //add attributes to storage unit post type
-        register_meta('sp_storage_units', 'sp_length', array(  //length
+        register_post_meta('sp_storage_units', 'sp_length', array(  //length
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_width', array(  //width
+        register_post_meta('sp_storage_units', 'sp_width', array(  //width
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_unit', array(  //unit
+        register_post_meta('sp_storage_units', 'sp_unit', array(  //unit
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_features', array(  //type
+        register_post_meta('sp_storage_units', 'sp_features', array(  //type
             'show_in_rest' => true,
             'single' => false,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_price', array(  //price
+        register_post_meta('sp_storage_units', 'sp_price', array(  //price
             'show_in_rest' => true,
             'single' => true,
             'type' => 'number',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_tenant', array(  //status
+        register_post_meta('sp_storage_units', 'sp_tenant', array(  //status
             'show_in_rest' => true,
             'single' => true,
             'type' => 'int',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_last_rental_date', array(  //date of last rental
+        register_post_meta('sp_storage_units', 'sp_last_rental_date', array(  //date of last rental
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
-        register_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date of last payment
+        register_post_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date of last payment
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
+            'object_subtype' => 'sp_storage_units'
         ));
     }
 

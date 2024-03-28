@@ -33,30 +33,27 @@ import { BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
 const { InspectorControls } = wp.blockEditor;
 const { PanelBody } = wp.components;
 import { useSelect } from '@wordpress/data';
+import { store as coreDataStore } from '@wordpress/core-data';
+import { useEntityRecord, useEntityProp } from '@wordpress/core-data';	//gets a record of a post from the api
 export default function Edit(props) {
 	//set select input options
 	const options = {
-		'none': 'Choose a Business Detail...',
+		'none': 'Choose a Unit Meta Detail...',
 		'sp_size': 'Size',
 		'sp_price': 'Price',
 		'sp_features': 'Features',
 		'sp_available': 'Availability',
 	}
 
-	//get meta
-	console.log(props.context)
+	//get meta if the context we are in is that of a storage unit
 	if (props.context.postType == 'sp_storage_units'){
-		/*
-		TODO: props.context gives the post type and post id of the current post, including context-based in the
-		query loop.  However, I cannot get the metadata yet.  I need to figure out how to get the metadata.
-		*/
-		const result = useSelect(
-			(select) =>{
-				const { getEditedEntityRecord, getUser } = select( coreStore );
-				const record = getEditedEntityRecord( 'postType', 'sp_storage_units', props.context.postId );
-				console.log("record", record)
-			}
-		);
+		//get the unit record from the db, then return it's meta object
+		const meta = useSelect((select) => {
+			const { getEditedEntityRecord } = select('core');
+			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
+			return record.meta;
+		})
+		console.log(meta)
 	}
 
 	//get content
