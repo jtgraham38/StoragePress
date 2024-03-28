@@ -32,7 +32,9 @@ import { BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
  */
 const { InspectorControls } = wp.blockEditor;
 const { PanelBody } = wp.components;
+import { useSelect } from '@wordpress/data';
 export default function Edit(props) {
+	//set select input options
 	const options = {
 		'none': 'Choose a Business Detail...',
 		'sp_size': 'Size',
@@ -40,7 +42,24 @@ export default function Edit(props) {
 		'sp_features': 'Features',
 		'sp_available': 'Availability',
 	}
-	console.log(useBlockProps())
+
+	//get meta
+	console.log(props.context)
+	if (props.context.postType == 'sp_storage_units'){
+		/*
+		TODO: props.context gives the post type and post id of the current post, including context-based in the
+		query loop.  However, I cannot get the metadata yet.  I need to figure out how to get the metadata.
+		*/
+		const result = useSelect(
+			(select) =>{
+				const { getEditedEntityRecord, getUser } = select( coreStore );
+				const record = getEditedEntityRecord( 'postType', 'sp_storage_units', props.context.postId );
+				console.log("record", record)
+			}
+		);
+	}
+
+	//get content
 	return (
 		<>
 			<InspectorControls>

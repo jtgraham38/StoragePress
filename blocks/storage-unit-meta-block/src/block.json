@@ -15,6 +15,7 @@
             "default": "none"
         }
     },
+    "usesContext": [ "postType", "postId" ],
     "selectors": {
         "text": ".storage-unit-meta-block"
     },
