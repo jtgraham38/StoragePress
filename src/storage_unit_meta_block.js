@@ -59,7 +59,7 @@ export default wp.blocks.registerBlockType(
                     </InspectorControls>
 
                     <span>
-                        { labels[props.attributes.key] } here
+                        Unit { labels[props.attributes.key] } here.
                     </span>
                 </>
             )
