@@ -22,6 +22,14 @@ import { useBlockProps } from '@wordpress/block-editor';
 import './editor.scss';
 import { BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
 
+
+/* 
+other imports, by me
+*/
+const { InspectorControls } = wp.blockEditor;
+const { PanelBody } = wp.components;
+import { useSelect } from '@wordpress/data';
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -30,11 +38,6 @@ import { BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-const { InspectorControls } = wp.blockEditor;
-const { PanelBody } = wp.components;
-import { useSelect } from '@wordpress/data';
-import { store as coreDataStore } from '@wordpress/core-data';
-import { useEntityRecord, useEntityProp } from '@wordpress/core-data';	//gets a record of a post from the api
 export default function Edit(props) {
 	//set select input options
 	const options = {
@@ -46,17 +49,27 @@ export default function Edit(props) {
 	}
 
 	//get meta if the context we are in is that of a storage unit
+	let meta = {}
 	if (props.context.postType == 'sp_storage_units'){
 		//get the unit record from the db, then return it's meta object
-		const meta = useSelect((select) => {
+		const db_meta = useSelect((select) => {
 			const { getEditedEntityRecord } = select('core');
 			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
 			return record.meta;
 		})
-		console.log(meta)
+		console.log("db_meta", db_meta['sp_features'])
+
+
+		//format metadata for outputting
+		meta = {
+			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " x " + db_meta['sp_width'] + db_meta['sp_unit'],
+			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
+			'sp_features': "TODO: fix return type of db_meta['sp_features']",
+			'sp_available': db_meta['sp_tenant'] ? "Rented" : "Available",
+		}
 	}
 
-	//get content
+	//generate content for the component
 	return (
 		<>
 			<InspectorControls>
@@ -78,7 +91,7 @@ export default function Edit(props) {
 			</InspectorControls>
 
 			<div { ...useBlockProps() }>
-				{ options[props.attributes.key] }
+				{ meta ? meta[props.attributes.key] : 'No Meta'}
 			</div>
 		</>
 	);
