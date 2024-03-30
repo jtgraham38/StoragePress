@@ -34,19 +34,10 @@ if ($post->post_type != 'sp_storage_units'){
 
 					//TODO: the style below will be echoed for each block of this type, migrate it to use more official block styles instead
 					?>
-					<style>
-						.feature_tag{
-							padding: 0.25rem;
-							margin: 0.25rem;
-							border: 1px solid #8c8f94;
-							border-radius: 0.5rem;
-							font-size: smaller;
-						}
-					</style>
 					<?php
 					//display features
 					foreach($features[0] as $feature){
-						$output .= '<span class="feature_tag">' . $feature . '</span> '; 
+						$output .= '<span class="sp_feature_tag">' . $feature . '</span> '; 
 					}
 				}
 				else{

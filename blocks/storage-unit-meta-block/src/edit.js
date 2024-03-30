@@ -62,6 +62,7 @@ export default function Edit(props) {
 
 		//format metadata for outputting
 		meta = {
+			'none': 'Choose a Storage Unit Meta Detail...',
 			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " x " + db_meta['sp_width'] + db_meta['sp_unit'],
 			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
 			'sp_features': "TODO: fix return type of db_meta['sp_features']",
