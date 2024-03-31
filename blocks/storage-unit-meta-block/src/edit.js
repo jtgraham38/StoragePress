@@ -57,7 +57,7 @@ export default function Edit(props) {
 			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
 			return record.meta;
 		})
-		console.log("db_meta", db_meta['sp_features'])
+		//console.log("db_meta", db_meta['sp_features'])
 
 
 		//format metadata for outputting

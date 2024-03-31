@@ -107,6 +107,30 @@ class StoragePress extends JGWPPlugin{
 
         //create page for the storage unit listing
         add_action('init', array($this, 'create_storage_unit_listing_page'));
+
+        //rest api routes for getting business details
+        add_action('rest_api_init', array($this, 'register_rest_routes'));
+    }
+
+    //register rest api routes
+    function register_rest_routes(){
+        register_rest_route('storagepress/v1', '/business-details', array(
+            'methods' => 'GET',
+            'permission_callback' => '__return_true', // this line was added to allow anyone to access the endpoint
+            'callback' => function(){
+                $business = array(
+                    'storagepress_name' => get_option('storagepress_name', ''),
+                    'storagepress_address' => get_option('storagepress_address', ''),
+                    'storagepress_email' => get_option('storagepress_email', ''),
+                    'storagepress_phone' => get_option('storagepress_phone', ''),
+                    'storagepress_rental_terms' => get_option('storagepress_rental_terms', ''),
+                    'storagepress_checks_payable_to' => get_option('storagepress_checks_payable_to', ''),
+                    'storagepress_features' => get_option('storagepress_feature_options', array()),
+                    'storagepress_listing_page' => get_option('storagepress_listing_page', null)
+                );
+                return $business;
+            }
+        ));
     }
 
     function create_storage_unit_listing_page(){
