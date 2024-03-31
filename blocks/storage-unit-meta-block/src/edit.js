@@ -65,7 +65,7 @@ export default function Edit(props) {
 			'none': 'Choose a Storage Unit Meta Detail...',
 			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " x " + db_meta['sp_width'] + db_meta['sp_unit'],
 			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
-			'sp_features': "TODO: fix return type of db_meta['sp_features']",
+			'sp_features': "<span class='sp_feature_tag'>TODO: fix return type of db_meta['sp_features']</span>",
 			'sp_available': db_meta['sp_tenant'] ? "Rented" : "Available",
 		}
 	}
