@@ -57,15 +57,13 @@ export default function Edit(props) {
 			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
 			return record.meta;
 		})
-		//console.log("db_meta", db_meta['sp_features'])
-
 
 		//format metadata for outputting
 		meta = {
 			'none': 'Choose a Storage Unit Meta Detail...',
 			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " x " + db_meta['sp_width'] + db_meta['sp_unit'],
 			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
-			'sp_features': "<span class='sp_feature_tag'>TODO: fix return type of db_meta['sp_features']</span>",
+			'sp_features': db_meta['sp_features'],
 			'sp_available': db_meta['sp_tenant'] ? "Rented" : "Available",
 		}
 	}
@@ -91,9 +89,23 @@ export default function Edit(props) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div { ...useBlockProps() }>
-				{ meta ? meta[props.attributes.key] : 'No Meta'}
-			</div>
+			{ props.context.postType != 'sp_storage_units' ? 
+				<div { ...useBlockProps() }>No Storage Unit Found!</div>
+			:
+				<div { ...useBlockProps() }>
+					{ meta['sp_features'] && props.attributes.key == 'sp_features' ?
+						(meta ? meta[props.attributes.key].map((feature, index) => (
+							<span key={index} className="sp_feature_tag">{feature}</span>
+						)) : 'No Meta Found!')
+					:
+						(meta ? (meta[props.attributes.key] ? meta[props.attributes.key] : "No Meta for that Key!") : 'No Meta Found!')
+					}
+				</div>
+			}
+
+			
+
+			
 		</>
 	);
 }

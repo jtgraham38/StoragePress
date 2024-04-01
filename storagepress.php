@@ -282,9 +282,16 @@ class StoragePress extends JGWPPlugin{
             'object_subtype' => 'sp_storage_units'
         ));
         register_post_meta('sp_storage_units', 'sp_features', array(  //type
-            'show_in_rest' => true,
-            'single' => false,
-            'type' => 'string',
+            'show_in_rest' => array(
+                'schema' => array(  //schema for the rest api
+                    'type' => 'array',
+                    'items' => array(
+                        'type' => 'string', // whatever type each array entry should be
+                    ),
+                )
+            ),
+            'single' => true,
+            'type' => 'array',
             'object_subtype' => 'sp_storage_units'
         ));
         register_post_meta('sp_storage_units', 'sp_price', array(  //price
