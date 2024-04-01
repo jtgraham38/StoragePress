@@ -46,6 +46,6 @@ if (array_key_exists('key', $attributes)){
     echo '<div ' . get_block_wrapper_attributes() . '>' . $output . '</div>';
 }
 else{
-    echo '<div>(No Business Detail Chosen)</div>';
+    echo '<div ' . get_block_wrapper_attributes() . '>(No Business Detail Chosen)</div>';
 }
 
