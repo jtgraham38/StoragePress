@@ -67,6 +67,7 @@ export default function Edit(props) {
 		<>
 			<InspectorControls>
                 <PanelBody>
+                    <label>Choose a Business Detail</label>
                     <select
                         value={props.attributes.key}
                         onChange={(event)=>{ 

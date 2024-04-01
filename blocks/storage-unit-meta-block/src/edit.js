@@ -61,7 +61,7 @@ export default function Edit(props) {
 		//format metadata for outputting
 		meta = {
 			'none': 'Choose a Storage Unit Meta Detail...',
-			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " x " + db_meta['sp_width'] + db_meta['sp_unit'],
+			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " × " + db_meta['sp_width'] + db_meta['sp_unit'],
 			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
 			'sp_features': db_meta['sp_features'],
 			'sp_available': db_meta['sp_tenant'] ? "Rented" : "Available",
@@ -73,6 +73,7 @@ export default function Edit(props) {
 		<>
 			<InspectorControls>
 				<PanelBody>
+					<label>Choose a Storage Unit Meta Detail</label>
 					<select
 						value={props.attributes.key}
 						onChange={(event)=>{ 
