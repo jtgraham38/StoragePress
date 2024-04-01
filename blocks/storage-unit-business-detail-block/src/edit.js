@@ -56,6 +56,7 @@ export default function Edit(props) {
     apiFetch( { path: '/storagepress/v1/business-details' } )
     .then( (response) => {
         delete response['storagepress_listing_page']
+        response['none'] = 'Choose a Business Detail...'
         set_settings(response);
     } )
 
