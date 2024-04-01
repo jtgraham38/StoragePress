@@ -80,6 +80,7 @@ class StoragePress extends JGWPPlugin{
 
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
+        add_action('admin_menu', array($this, 'remove_unit_meta_metabox')); //remove the metabox for settings post meta fields
 
         //add inputs to the quick edit menu, and save results from them
         //NOTE: this is actually a more complex feature than I thought, because the quick edit form is created by cloning an element using js on the client side,
@@ -246,10 +247,10 @@ class StoragePress extends JGWPPlugin{
                 'attributes' => 'Storage Unit Attributes',
                 'insert_into_item' => 'Insert into storage unit',
                 'uploaded_to_this_item' => 'Uploaded to this storage unit',
-                'featured_image' => 'Featured Image',
-                'set_featured_image' => 'Set featured image',
-                'remove_featured_image' => 'Remove featured image',
-                'use_featured_image' => 'Use as featured image',
+                'featured_image' => 'Unit Image',
+                'set_featured_image' => 'Set unit image',
+                'remove_featured_image' => 'Remove unit image',
+                'use_featured_image' => 'Use as unit image',
                 'filter_items_list' => 'Filter storage units list',
                 'items_list_navigation' => 'Storage units list navigation',
                 'items_list' => 'Storage units list',
@@ -318,6 +319,11 @@ class StoragePress extends JGWPPlugin{
             'type' => 'string',
             'object_subtype' => 'sp_storage_units'
         ));
+    }
+
+    //remove the metabox for settings post meta fields
+    public function remove_unit_meta_metabox(){
+        remove_meta_box('postcustom', 'sp_storage_units', 'normal');    //id (in html), post type, context
     }
 
     //change the label of the title field for storage units
