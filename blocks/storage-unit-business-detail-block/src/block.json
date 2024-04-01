@@ -24,7 +24,9 @@
             "text": true
         },
         "typography": {
-            "fontSize": true
+            "fontSize": true,
+            "fontSizeUnit": [ "px", "em", "rem" ],
+            "fontStyle": true
         },
         "html": false,
         "align": true
