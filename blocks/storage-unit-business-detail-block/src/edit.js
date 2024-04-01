@@ -47,19 +47,19 @@ export default function Edit(props) {
         'storagepress_phone': 'Business Phone Number',
         'storagepress_email': 'Business Email',
         'storagepress_rental_terms': 'Business Rental Terms',
-        'storagepress_checks_payable_to': 'Make Checks Payable To',
-        'storagepress_listing_page': 'Link to Listing Page',
-    
+        'storagepress_checks_payable_to': 'Make Checks Payable To'
     }
 
     const [settings, set_settings] = useState(options)
 
     //get settings to display in the editor
     apiFetch( { path: '/storagepress/v1/business-details' } )
-    .then( response => {
+    .then( (response) => {
+        delete response['storagepress_listing_page']
         set_settings(response);
-    } );
+    } )
 
+    
 	
 
 	return (
