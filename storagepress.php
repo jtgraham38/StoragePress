@@ -144,7 +144,7 @@ class StoragePress extends JGWPPlugin{
             //create the page
             $page = array(
                 'post_title' => 'Storage Units',
-                'post_content' => $this->storage_unit_listing_block_content(),
+                'post_content' => file_get_contents($this->get_base_dir() . 'elements/storagepress_default_listing_page.php'),
                 'post_status' => 'publish',
                 'post_type' => 'page',
             );
@@ -156,13 +156,6 @@ class StoragePress extends JGWPPlugin{
                 update_option('storagepress_listing_page', $page_id);
             }
         }
-    }
-
-    //storage unit page default block contents
-    function storage_unit_listing_block_content(){
-        return '<!-- wp:paragraph -->
-        <p>[storage_unit_listing] (todo)</p>
-        <!-- /wp:paragraph -->';
     }
 
     //register custom blocks
