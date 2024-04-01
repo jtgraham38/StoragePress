@@ -25,6 +25,8 @@ import './editor.scss';
 other imports, by me
 */
 import apiFetch from '@wordpress/api-fetch';
+import { useState } from '@wordpress/element';
+
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -50,15 +52,12 @@ export default function Edit(props) {
     
     }
 
+    const [settings, set_settings] = useState(options)
+
     //get settings to display in the editor
-	let settings = {}
-    console.log("APIFETCH")
     apiFetch( { path: '/storagepress/v1/business-details' } )
     .then( response => {
-        // `data` is the option value.
-        settings = response;
-        console.log("settings", settings)
-        //TODO: we get the settings, but they are not being displayed in the editor.  FIX THIS!
+        set_settings(response);
     } );
 
 	
@@ -84,7 +83,7 @@ export default function Edit(props) {
             </InspectorControls>
 
             <div { ...useBlockProps() }>
-                { settings[props.attributes.key] ? settings[props.attributes.key] : options[props.attributes.key]}
+                { settings[props.attributes.key] }
             </div>
 		</>
 	);
