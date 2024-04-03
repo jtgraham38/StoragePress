@@ -16,11 +16,11 @@ if (array_key_exists('key', $attributes)){
             break;
         case 'storagepress_phone':
             $phone_number = get_option('storagepress_phone');
-            $output = $phone_number;
+            $output = '<a href="tel:' . $phone_number . '">' . $phone_number . '</a>';
             break;
         case 'storagepress_email':
             $email = get_option('storagepress_email');
-            $output = '<a href="' . $email . '">' . $email . '</a>';
+            $output = '<a href="mailto:' . $email . '">' . $email . '</a>';
             break;
         case 'storagepress_rental_terms':
             $output = get_option('storagepress_rental_terms');
