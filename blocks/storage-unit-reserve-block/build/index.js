@@ -61,13 +61,14 @@ function Edit(props) {
   const [is_open, set_is_open] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false);
   const open_modal = () => set_is_open(true);
   const close_modal = () => set_is_open(false);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)(),
-    onClick: open_modal
+    onClick: open_modal,
+    className: "storagepress-reserve-button"
   }, "Reserve"), is_open && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Modal, {
     title: "Reserve",
     onRequestClose: close_modal
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "// Your modal content goes here")));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "// Your modal content goes here"))));
 }
 
 /***/ }),
@@ -256,7 +257,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"storagepress/storage-unit-reserve-block","title":"Reserve Storage Unit","icon":"vault","category":"storagepress","description":"A block that will allow customers to reserve and purchase a storage unit.","keywords":["storagepress","storage unit","storage","unit","reserve","pay","buy","available","features"],"version":"1.0.0","textdomain":"storagepress","attributes":{"key":{"type":"string","default":"none"}},"usesContext":["postType","postId"],"selectors":{"text":".storage-unit-reserve-block"},"supports":{"color":{"background":true,"text":true,"border":true},"typography":{"fontSize":true,"fontSizeUnit":["px","em","rem"],"fontStyle":true},"border":{"radius":true,"width":true,"style":true,"color":true},"html":false,"align":true},"example":{"attributes":{"key":"TODO: CHANGE"}},"editorScript":"file:./index.js","render":"file:./render.php","style":"file:./style-index.css","editorStyle":"file:./index.css"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"storagepress/storage-unit-reserve-block","title":"Reserve Storage Unit","icon":"vault","category":"storagepress","description":"A block that will allow customers to reserve and purchase a storage unit.","keywords":["storagepress","storage unit","storage","unit","reserve","pay","buy","available","features"],"version":"1.0.0","textdomain":"storagepress","attributes":{"key":{"type":"string","default":"none"}},"usesContext":["postType","postId"],"selectors":{"text":".storage-unit-reserve-block"},"supports":{"color":{"background":true,"text":true},"typography":{"fontSize":true,"fontSizeUnit":["px","em","rem"],"fontStyle":true},"html":false,"align":true},"example":{"attributes":{"key":"TODO: CHANGE"}},"editorScript":"file:./index.js","render":"file:./render.php","style":"file:./style-index.css","editorStyle":"file:./index.css"}');
 
 /***/ })
 
