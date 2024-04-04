@@ -1,3 +1,4 @@
 _jg_wp_plugin_kit/*
 node_modules/*
 build/*
+node_modules
