@@ -1,1 +1,1 @@
-<div <?php get_block_wrapper_attributes() ?> onclick="console.log('REserve!')">Reserve</div>
+<button <?php get_block_wrapper_attributes() ?> onclick="console.log('REserve!')">Reserve</button>
