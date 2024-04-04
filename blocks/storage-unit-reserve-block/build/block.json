@@ -35,8 +35,7 @@
   "supports": {
     "color": {
       "background": true,
-      "text": true,
-      "border": true
+      "text": true
     },
     "typography": {
       "fontSize": true,
@@ -46,12 +45,6 @@
         "rem"
       ],
       "fontStyle": true
-    },
-    "border": {
-      "radius": true,
-      "width": true,
-      "style": true,
-      "color": true
     },
     "html": false,
     "align": true

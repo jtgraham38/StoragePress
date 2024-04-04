@@ -38,20 +38,22 @@ export default function Edit(props) {
 
 	return (
 		<>
-			<div { ...useBlockProps() } onClick={open_modal}>
-				Reserve
-			</div>
+			<div>
+				<span { ...useBlockProps() } onClick={open_modal} className='storagepress-reserve-button'>
+					Reserve
+				</span>
 
-			{ is_open && (
-				<Modal
-					title="Reserve"
-					onRequestClose={close_modal}
-				>
-					<div>
-						// Your modal content goes here
-					</div>
-				</Modal>
-			)}
+				{ is_open && (
+					<Modal
+						title="Reserve"
+						onRequestClose={close_modal}
+					>
+						<div>
+							// Your modal content goes here
+						</div>
+					</Modal>
+				)}
+			</div>
 		</>
 	);
 }
