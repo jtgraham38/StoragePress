@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "storagepress/storage-unit-reserve-block",
+    "title": "Reserve Storage Unit",
+    "icon": "vault",
+    "category": "storagepress",
+    "description": "A block that will allow customers to reserve and purchase a storage unit.",
+    "keywords": ["storagepress", "storage unit", "storage", "unit", "reserve", "pay", "buy", "available", "features"],
+    "version": "1.0.0",
+    "textdomain": "storagepress",
+    "attributes": {
+        "key": {
+            "type": "string",
+            "default": "none"
+        }
+    },
+    "usesContext": [ "postType", "postId" ],
+    "selectors": {
+        "text": ".storage-unit-reserve-block"
+    },
+    "supports": {
+        "color": {
+            "background": true,
+            "text": true,
+            "border": true
+        },
+        "typography": {
+            "fontSize": true,
+            "fontSizeUnit": [ "px", "em", "rem" ],
+            "fontStyle": true
+        },
+        "border": {
+            "radius": true,
+            "width": true,
+            "style": true,
+            "color": true
+        },
+        "html": false,
+        "align": true
+    },
+    "example": {
+        "attributes": {
+            "key": "TODO: CHANGE"
+        }
+    },
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php",
+    "style": "file:./style-index.css",
+    "editorStyle": "file:./index.css"
+}

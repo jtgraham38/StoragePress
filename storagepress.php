@@ -162,6 +162,7 @@ class StoragePress extends JGWPPlugin{
     function register_custom_blocks(){
         register_block_type($this->get_base_dir() . '/blocks/storage-unit-business-detail-block/build');
         register_block_type($this->get_base_dir() . '/blocks/storage-unit-meta-block/build');
+        register_block_type($this->get_base_dir() . '/blocks/storage-unit-reserve-block/build');
     }
 
 
