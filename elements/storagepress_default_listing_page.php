@@ -60,7 +60,7 @@
 <!-- wp:group {"style":{"spacing":{"padding":{"right":"0","left":"0","top":"0","bottom":"0"},"blockGap":"var:preset|spacing|40"},"border":{"width":"0px","style":"none"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 <div class="wp-block-group" style="border-style:none;border-width:0px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:post-featured-image {"width":"60%","style":{"border":{"radius":"0px"}}} /-->
 
-<!-- wp:group {"layout":{"type":"flex","orientation":"vertical"}} -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
 <div class="wp-block-group"><!-- wp:storagepress/storage-unit-meta-block {"key":"sp_size"} /-->
 
 <!-- wp:storagepress/storage-unit-meta-block {"key":"sp_price"} /-->
@@ -69,11 +69,13 @@
 
 <!-- wp:storagepress/storage-unit-meta-block {"key":"sp_features"} /-->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button">Reserve</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
+<!-- wp:spacer {"height":"47px","style":{"layout":{"flexSize":"1rem","selfStretch":"fixed"}}} -->
+<div style="height:47px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:storagepress/storage-unit-reserve-block -->
+<p class="wp-block-storagepress-storage-unit-reserve-block">Blocks Storage Unit Reserve Block – hello from the saved content!</p>
+<!-- /wp:storagepress/storage-unit-reserve-block --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->
