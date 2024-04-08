@@ -50,9 +50,12 @@ class StoragePress extends JGWPPlugin{
                     return $input;
                 }
                 return [];
-             }), 'storagepress_settings_page', 'Storage Unit Features:', 'storagepress_settings_section')
-             
-            ];
+             }), 'storagepress_settings_page', 'Storage Unit Features:', 'storagepress_settings_section'),
+            new JGWPSetting($this, 'default_thumbnail_id', array('default' => null, 'sanitize_callback' => function($input){
+                $value = absint($input);
+                return $value > 0 ? $value : null;
+            }), null, 'Default Thumbnail ID', null)
+        ];
 
         $admin_resources = [
             new JGWPResource($this, 'alpine.min.js'),
@@ -85,6 +88,7 @@ class StoragePress extends JGWPPlugin{
         add_action('init', array($this, 'register_storage_units_post_type'));
         add_action('admin_menu', array($this, 'remove_unit_meta_metabox')); //remove the metabox for settings post meta fields
         add_filter('default_post_metadata', array($this, 'set_unit_default_thumbnail'), 10, 4);
+        add_action('init', array($this, 'create_unit_default_thumbnail'));  //create the upload for the default unit thumbnail
         //add inputs to the quick edit menu, and save results from them
         //NOTE: this is actually a more complex feature than I thought, because the quick edit form is created by cloning an element using js on the client side,
         //NOTE: so this leads to displaying incorrect default values in the quick edit form
@@ -323,11 +327,57 @@ class StoragePress extends JGWPPlugin{
         remove_meta_box('postcustom', 'sp_storage_units', 'normal');    //id (in html), post type, context
     }
 
+    public function create_unit_default_thumbnail(){
+        //exit if default thumbnail already exists
+        $atttachment_id = get_option('storagepress_default_thumbnail_id', null);
+        if ($atttachment_id && wp_get_attachment_url($atttachment_id)){
+            return;
+        }
+
+        // The path to the file you want to upload
+        $file_path = $this->get_base_dir() . 'resources/images/default_thumbnail.png';
+
+         // The contents of the file
+        $file_contents = file_get_contents($file_path);
+
+        // The name of the file
+        $file_name = basename($file_path);
+
+        // Upload the file to the WordPress uploads directory
+        $upload = wp_upload_bits($file_name, null, $file_contents);
+
+        if (isset($upload) && !$upload['error']) {
+            //get data from the upload
+            $file = $upload['file'];
+            $url = $upload['url'];
+            $type = $upload['type'];
+            
+            //insert the file into the media library
+            $attachment = array(
+                'post_mime_type' => $type,
+                'post_title' => sanitize_file_name(preg_replace('/\.[^.]+$/', '', basename($file_name))),
+                'post_content' => '',
+                'post_status' => 'inherit',
+                'guid' => $url
+            );
+            $attach_id = wp_insert_attachment($attachment, $file);
+
+            //set the default thumbnail id
+            if ($attach_id){
+                update_option('storagepress_default_thumbnail_id', $attach_id);
+            }
+        } else{
+            //log the error
+            error_log('Error uploading default thumbnail: ' . $upload['error']);
+        }
+    }
+
     //set default thumbnail for storage units
     public function set_unit_default_thumbnail($value, $post_id, $meta_key, $single){
+        //$this->create_unit_default_thumbnail();
         if ($meta_key == '_thumbnail_id') {
             // Replace 123 with the ID of your default thumbnail
-            return 11;
+            return get_option('storagepress_default_thumbnail_id', null);
         }
     
         return $value;
