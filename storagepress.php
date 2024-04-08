@@ -49,6 +49,7 @@ class StoragePress extends JGWPPlugin{
                     }
                     return $input;
                 }
+                return [];
              }), 'storagepress_settings_page', 'Storage Unit Features:', 'storagepress_settings_section')
              
             ];
@@ -83,7 +84,7 @@ class StoragePress extends JGWPPlugin{
         //register storage units post type
         add_action('init', array($this, 'register_storage_units_post_type'));
         add_action('admin_menu', array($this, 'remove_unit_meta_metabox')); //remove the metabox for settings post meta fields
-
+        add_filter('default_post_metadata', array($this, 'set_unit_default_thumbnail'), 10, 4);
         //add inputs to the quick edit menu, and save results from them
         //NOTE: this is actually a more complex feature than I thought, because the quick edit form is created by cloning an element using js on the client side,
         //NOTE: so this leads to displaying incorrect default values in the quick edit form
@@ -322,6 +323,17 @@ class StoragePress extends JGWPPlugin{
         remove_meta_box('postcustom', 'sp_storage_units', 'normal');    //id (in html), post type, context
     }
 
+    //set default thumbnail for storage units
+    public function set_unit_default_thumbnail($value, $post_id, $meta_key, $single){
+        if ($meta_key == '_thumbnail_id') {
+            // Replace 123 with the ID of your default thumbnail
+            return 11;
+        }
+    
+        return $value;
+    }
+
+
     //change the label of the title field for storage units
     public function change_title_label($title){
         $screen = get_current_screen();
@@ -420,6 +432,8 @@ class StoragePress extends JGWPPlugin{
                 break;
         }
     }
+
+
 
     //save data from those inputs
     function save_quick_edit_data($post_id){
