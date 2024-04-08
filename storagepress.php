@@ -374,12 +374,9 @@ class StoragePress extends JGWPPlugin{
 
     //set default thumbnail for storage units
     public function set_unit_default_thumbnail($value, $post_id, $meta_key, $single){
-        //$this->create_unit_default_thumbnail();
-        if ($meta_key == '_thumbnail_id') {
-            // Replace 123 with the ID of your default thumbnail
+        if (get_post_type($post_id) == 'sp_storage_units' && $meta_key == '_thumbnail_id' && !$value){
             return get_option('storagepress_default_thumbnail_id', null);
         }
-    
         return $value;
     }
 
