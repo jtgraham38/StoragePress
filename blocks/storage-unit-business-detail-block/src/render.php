@@ -2,6 +2,10 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
 ?>
 <?php
 if (array_key_exists('key', $attributes)){

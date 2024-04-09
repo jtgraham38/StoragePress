@@ -1,3 +1,9 @@
+<?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <!-- wp:storagepress/storage-unit-business-detail-block {"key":"storagepress_name","fontSize":"large"} /-->
 
 <!-- wp:columns -->

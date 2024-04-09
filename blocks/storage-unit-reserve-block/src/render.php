@@ -1,4 +1,9 @@
-
+<?php
+// exit if accessed directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+?>
 <div>
     <span <?php echo get_block_wrapper_attributes(array('class'=>'storagepress-reserve-button')) ?> onclick="storagepress_reserve_unit_<?php the_ID(); ?>_modal.showModal()">
         Reserve
