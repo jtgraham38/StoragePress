@@ -28,10 +28,14 @@ global $post; //get the post being edited
     <div id="sp_features">
         <?php 
         if (isset($post->ID)){
+            //get all fields to create checkboxes
             $feature_options = get_option('storagepress_feature_options', []);
-            
-            $features = get_post_meta($post->ID, 'sp_features', false);
-            $features = isset($features[0]) ? $features[0] : [];
+            $unit_features = get_post_meta($post->ID, 'sp_features', false);
+            $unit_features = isset($unit_features[0]) ? $unit_features[0] : [];
+
+            $feature_options = array_merge($feature_options, $unit_features);
+            $feature_options = array_unique($feature_options);
+
 
             foreach ($feature_options as $feature_option) {
                 
@@ -41,7 +45,7 @@ global $post; //get the post being edited
                     <input 
                         type="checkbox" id="sp_is_<?php echo $feature_option ?>" 
                         value="<?php echo $feature_option ?>" name="sp_features[]"
-                        <?php echo in_array($feature_option, $features) ? "checked" : ""?>
+                        <?php echo in_array($feature_option, $unit_features) ? "checked" : ""?>
                     >
                 </div>
                 <?php
