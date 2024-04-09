@@ -57,10 +57,17 @@
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|20","right":"var:preset|spacing|20"}},"border":{"width":"1px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 <div class="wp-block-group" style="border-width:1px;padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--20)"><!-- wp:post-title /-->
 
-<!-- wp:group {"style":{"spacing":{"padding":{"right":"0","left":"0","top":"0","bottom":"0"},"blockGap":"var:preset|spacing|40"},"border":{"width":"0px","style":"none"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group" style="border-style:none;border-width:0px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><!-- wp:post-featured-image {"width":"60%","style":{"border":{"radius":"0px"}}} /-->
+<!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column {"width":"35%"} -->
+<div class="wp-block-column" style="flex-basis:35%"><!-- wp:spacer {"height":"0.5rem"} -->
+<div style="height:0.5rem" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
 
-<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+<!-- wp:post-featured-image {"aspectRatio":"1","width":"100%","height":"","style":{"border":{"width":"0px","style":"none","radius":"0.25rem"},"layout":{"selfStretch":"fit","flexSize":null}}} /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":"65%"} -->
+<div class="wp-block-column" style="flex-basis:65%"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
 <div class="wp-block-group"><!-- wp:storagepress/storage-unit-meta-block {"key":"sp_size"} /-->
 
 <!-- wp:storagepress/storage-unit-meta-block {"key":"sp_price"} /-->
@@ -77,7 +84,8 @@
 <p class="wp-block-storagepress-storage-unit-reserve-block">Blocks Storage Unit Reserve Block – hello from the saved content!</p>
 <!-- /wp:storagepress/storage-unit-reserve-block --></div>
 <!-- /wp:group --></div>
-<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></div>
 <!-- /wp:group -->
 <!-- /wp:post-template -->
 
