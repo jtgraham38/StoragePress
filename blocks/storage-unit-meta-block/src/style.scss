@@ -5,17 +5,14 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-storage-unit-meta-block {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
-}
-
 .sp_feature_tag{
+	display: inline-block;	/* because inline doesn't repect margin */
 	padding: 0.25rem;
-	margin: 0.25rem;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 0.5rem;
 	font-size: smaller;
+	white-space: nowrap;
+	margin-bottom: 0.25rem;
+	margin-right: 0.125rem;
 }
