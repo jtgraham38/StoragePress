@@ -18,10 +18,10 @@ if ($post->post_type != 'sp_storage_units'){
 		$output = '';
 		switch($attributes['key']){
 			case 'sp_size':
-				$output = get_post_meta($post->ID, 'sp_length', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true) . ' &times; ' . get_post_meta($post->ID, 'sp_width', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true);
+				$output = esc_attr(get_post_meta($post->ID, 'sp_length', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'sp_unit', true)) . ' &times; ' . esc_attr(get_post_meta($post->ID, 'sp_width', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'sp_unit', true));
 				break;
 			case 'sp_price':
-				$output = '$' . ((int)get_post_meta($post->ID, 'sp_price', true) / 100) . "/mo.";
+				$output = '$' . (esc_attr((int)get_post_meta($post->ID, 'sp_price', true) / 100)) . "/mo.";
 				break;
 			case 'sp_available':
 				$tenant = get_post_meta($post->ID, 'sp_tenant', true);
@@ -41,7 +41,7 @@ if ($post->post_type != 'sp_storage_units'){
 					<?php
 					//display features
 					foreach($features[0] as $feature){
-						$output .= '<span class="sp_feature_tag">' . $feature . '</span> '; 
+						$output .= '<span class="sp_feature_tag">' . esc_attr($feature) . '</span> '; 
 					}
 				}
 				else{

@@ -41,10 +41,10 @@ global $post; //get the post being edited
                 
                 ?>
                 <div style="display: inline-flex; flex-direction: row; align-items: center; margin-right: 0.5rem;">
-                    <label class="storagepress_input_label" style="margin-right: 0.25rem;" for="sp_is_<?php echo $feature_option ?>">Is <?php echo $feature_option ?>?</label>
+                    <label class="storagepress_input_label" style="margin-right: 0.25rem;" for="sp_is_<?php echo esc_attr($feature_option) ?>">Is <?php echo esc_attr($feature_option) ?>?</label>
                     <input 
-                        type="checkbox" id="sp_is_<?php echo $feature_option ?>" 
-                        value="<?php echo $feature_option ?>" name="sp_features[]"
+                        type="checkbox" id="sp_is_<?php echo esc_attr($feature_option) ?>" 
+                        value="<?php echo esc_attr($feature_option) ?>" name="sp_features[]"
                         <?php echo in_array($feature_option, $unit_features) ? "checked" : ""?>
                     >
                 </div>
@@ -68,10 +68,12 @@ global $post; //get the post being edited
     </div>
     <div style="margin-right: 1rem;">
         <label class="storagepress_input_label" for="sp_last_vacant_date">Last Vacant Date:</label>
-        <input class="storagepress_settings_input" type="date" id="sp_last_vacant_date" name="sp_last_vacant_date" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_last_vacant_date', true) ? date('Y-m-d', strtotime(esc_attr(get_post_meta($post->ID, 'sp_last_vacant_date', true)))) : date("Y-m-d"); ?>" size="25" />
+        <?php if (isset($post->ID)){ $last_vacant_date = get_post_meta($post->ID, 'sp_last_vacant_date', true); } ?>
+        <input class="storagepress_settings_input" type="date" id="sp_last_vacant_date" name="sp_last_vacant_date" value="<?php echo isset($last_vacant_date) ? date('Y-m-d', strtotime(esc_attr($last_vacant_date))) : date("Y-m-d"); ?>" size="25" />
     </div>
     <div>
         <label class="storagepress_input_label" for="sp_last_rental_date">Last Rental Date:</label>
-        <input class="storagepress_settings_input" type="date" id="sp_last_rental_date" name="sp_last_rental_date" value="<?php echo isset($post->ID) && get_post_meta($post->ID, 'sp_last_rental_date', true) ? date('Y-m-d', strtotime(esc_attr(get_post_meta($post->ID, 'sp_last_rental_date', true)))) : ''; ?>" size="25" />
+        <?php if (isset($post->ID)){ $last_rental_date = get_post_meta($post->ID, 'sp_last_rental_date', true); } ?>
+        <input class="storagepress_settings_input" type="date" id="sp_last_rental_date" name="sp_last_rental_date" value="<?php echo isset($last_rental_date) ? date('Y-m-d', strtotime(esc_attr($last_rental_date))) : date("Y-m-d"); ?>" size="25" />
     </div>
 </div>

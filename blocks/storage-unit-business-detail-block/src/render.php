@@ -13,31 +13,31 @@ if (array_key_exists('key', $attributes)){
     $output = '';
     switch($attributes['key']){
         case 'storagepress_name':
-            $output = get_option('storagepress_name');
+            $output = esc_attr(get_option('storagepress_name'));
             break;
         case 'storagepress_address':
-            $output = get_option('storagepress_address');
+            $output = esc_attr(get_option('storagepress_address'));
             break;
         case 'storagepress_phone':
             $phone_number = get_option('storagepress_phone');
-            $output = '<a href="tel:' . $phone_number . '">' . $phone_number . '</a>';
+            $output = '<a href="tel:' . esc_attr($phone_number) . '">' . esc_attr($phone_number) . '</a>';
             break;
         case 'storagepress_email':
             $email = get_option('storagepress_email');
-            $output = '<a href="mailto:' . $email . '">' . $email . '</a>';
+            $output = '<a href="mailto:' . esc_attr($email) . '">' . esc_attr($email) . '</a>';
             break;
         case 'storagepress_rental_terms':
-            $output = get_option('storagepress_rental_terms');
+            $output = esc_attr(get_option('storagepress_rental_terms'));
             break;
         case 'storagepress_checks_payable_to':
-            $output = get_option('storagepress_checks_payable_to');
+            $output = esc_attr(get_option('storagepress_checks_payable_to'));
             break;
         case 'storagepress_listing_page':
             //get the url of the listing page
             $listing_page_id = get_option('storagepress_listing_page');
             $listing_page = get_post($listing_page_id);
             if ($listing_page){
-                $output = '<a href="' . get_permalink($listing_page) . '">' . $listing_page->post_title . '</a>';
+                $output = '<a href="' . esc_attr(get_permalink($listing_page)) . '">' . esc_attr($listing_page->post_title) . '</a>';
             }else{
                 $output = '<span>(No Listing Page Set)</span>';
             }
