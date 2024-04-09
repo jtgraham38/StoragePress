@@ -17,7 +17,7 @@ if ($post->post_type != 'sp_storage_units'){
 				$output = get_post_meta($post->ID, 'sp_length', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true) . ' &times; ' . get_post_meta($post->ID, 'sp_width', true) . ' ' . get_post_meta($post->ID, 'sp_unit', true);
 				break;
 			case 'sp_price':
-				$output = '$' . (get_post_meta($post->ID, 'sp_price', true) / 100) . "/mo.";
+				$output = '$' . ((int)get_post_meta($post->ID, 'sp_price', true) / 100) . "/mo.";
 				break;
 			case 'sp_available':
 				$tenant = get_post_meta($post->ID, 'sp_tenant', true);
