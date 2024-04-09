@@ -2,7 +2,16 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-global $posts;
-?>
-<h1>Storage Unit Post Type archive</h1>
-<?php var_dump($posts);
+
+//redirect to listing page
+$page_id = get_option('storagepress_listing_page');
+if (isset($page_id)  && !is_page($page_id)){
+    $page = get_permalink($page_id);
+    wp_redirect($page);
+    exit;
+}
+//otherwise, redirect to homepage
+else{
+    wp_redirect(home_url());
+    exit;
+}

@@ -107,8 +107,8 @@ class StoragePress extends JGWPPlugin{
         add_action( 'save_post', array($this, 'save_storage_unit_custom_fields'));
 
         //register templates for storage units frontend display
-        //add_filter('single_template', array($this, 'register_single_template'));
-        //add_filter('archive_template', array($this, 'register_archive_template'));
+        add_filter('single_template', array($this, 'register_single_template'));
+        add_filter('archive_template', array($this, 'register_archive_template'));
 
         //register custom blocks
         add_action('init', array($this, 'register_custom_blocks'));

@@ -3,23 +3,16 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-//init global post variable
-global $post;
 
-//include header
-get_header();
-?>
-
-<main id="main" class="site-main">
-    <h1>Storage Unit Post Type single</h1>
-    <?php var_dump($post); ?>
-</main
-
-
-<?php
-//include footer and sidebar
-get_sidebar();
-?>
-<footer>
-    <?php get_footer(); ?>
-</footer>
+//redirect to listing page
+$page_id = get_option('storagepress_listing_page');
+if (isset($page_id)  && !is_page($page_id)){
+    $page = get_permalink($page_id);
+    wp_redirect($page);
+    exit;
+}
+//otherwise, redirect to homepage
+else{
+    wp_redirect(home_url());
+    exit;
+}
