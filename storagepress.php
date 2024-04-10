@@ -118,6 +118,9 @@ class StoragePress extends JGWPPlugin{
 
         //rest api routes for getting business details
         add_action('rest_api_init', array($this, 'register_rest_routes'));
+
+        //let users register for accounts
+        add_action('init', array($this, 'allow_registration'));
     }
 
     //register rest api routes
@@ -560,6 +563,11 @@ class StoragePress extends JGWPPlugin{
         if (is_post_type_archive('sp_storage_units'))
             $archive_template = $this->get_base_dir() . 'elements/templates/archive_storage_unit.php';
         return $archive_template;
+    }
+
+    //allow users to register for accounts
+    public function allow_registration(){
+        update_option('users_can_register', 1);
     }
 }
 
