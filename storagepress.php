@@ -119,12 +119,28 @@ class StoragePress extends JGWPPlugin{
         //rest api routes for getting business details
         add_action('rest_api_init', array($this, 'register_rest_routes'));
 
+        //rest route to reserve a unit
+        add_action('rest_api_init', array($this, 'register_reserve_unit_route'));
+
         //let users register for accounts
         add_action('init', array($this, 'allow_registration'));
     }
 
+    //register rest route to reserve a unit
+    public function register_reserve_unit_route(){
+        register_rest_route('storagepress/v1', '/reserve-unit', array(
+            'methods' => 'POST',
+            'permission_callback' => function(){
+                return is_user_logged_in();
+            },
+            'callback' => function($request){
+                return json_encode($request->get_body_params());
+            }
+        ));
+    }
+
     //register rest api routes
-    function register_rest_routes(){
+    public function register_rest_routes(){
         register_rest_route('storagepress/v1', '/business-details', array(
             'methods' => 'GET',
             'permission_callback' => '__return_true', // this line was added to allow anyone to access the endpoint
@@ -144,7 +160,7 @@ class StoragePress extends JGWPPlugin{
         ));
     }
 
-    function create_storage_unit_listing_page(){
+    public function create_storage_unit_listing_page(){
         //see if there is currently a listing page set
         $listing_page_id = get_option( 'storagepress_listing_page', null);
         $listing_page = get_post($listing_page_id);
@@ -169,7 +185,7 @@ class StoragePress extends JGWPPlugin{
     }
 
     //register custom blocks
-    function register_custom_blocks(){
+    public function register_custom_blocks(){
         register_block_type($this->get_base_dir() . '/blocks/storage-unit-business-detail-block/build');
         register_block_type($this->get_base_dir() . '/blocks/storage-unit-meta-block/build');
         register_block_type($this->get_base_dir() . '/blocks/storage-unit-reserve-block/build');

@@ -28,6 +28,9 @@ if (!defined('ABSPATH')) {
             $current_user = wp_get_current_user();
             ?>
             <form action="<?php echo $api_route; ?>" method="POST">
+                <?php //wp_nonce_field('reserve_unit_' . get_the_ID(), 'reserve_unit_nonce'); ?>
+                <?php wp_nonce_field('wp_rest'); //must nonce with 'wp_rest' when making requests to api?>
+                <input type="hidden" name="unit_id" value="<?php the_ID(); ?>">
                 <div>
                     <label for="reserve_unit_<?php the_ID(); ?>_name_input" style="display: block;">Your Name</label>
                     <input name="name" value="<?php echo $current_user->display_name; ?>" type="text" id="reserve_unit_<?php the_ID(); ?>_name_input" placeholder="Name">
