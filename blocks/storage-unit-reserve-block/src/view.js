@@ -38,8 +38,8 @@ function submit_reserve_form(event) {
     }
 
     //send data to server
-    if (window['STORAGEPRESS_RESERVE_ROUTE']){
-        fetch(window['STORAGEPRESS_RESERVE_ROUTE'], {
+    if (window['storagepress'].reserve_unit_route){
+        fetch(window['storagepress'].reserve_unit_route, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

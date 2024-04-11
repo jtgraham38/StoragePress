@@ -1,0 +1,1 @@
+/* this script is enqueued on the frontend, t help facilitate interactions between storagepress blocks */

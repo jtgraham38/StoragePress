@@ -6,7 +6,8 @@ if (!defined('ABSPATH')) {
 ?>
 <div>
     <script>
-        window['STORAGEPRESS_RESERVE_ROUTE'] = "<?php echo rest_url('storagepress/v1/reserve-unit'); ?>"
+        window['storagepress'] = window['storagepress'] || {};
+        window['storagepress'].reserve_unit_route = "<?php echo rest_url('storagepress/v1/reserve-unit'); ?>"
     </script>
     <?php 
         $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);

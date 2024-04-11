@@ -126,7 +126,7 @@ class StoragePress extends JGWPPlugin{
         add_action('init', array($this, 'allow_registration'));
 
         //enqueue api script on the unit listing page
-        add_action('wp_enqueue_scripts', array($this, 'enqueue_api_script_on_listing_page'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_reserve_unit_scripts_on_listing_page'));
 
         //add inquiries list admin page
         add_action('admin_menu', array($this, 'add_inquiries_list_page'));
@@ -147,7 +147,7 @@ class StoragePress extends JGWPPlugin{
     }
 
     //enqueue api script on the unit listing page
-    public function enqueue_api_script_on_listing_page(){
+    public function enqueue_reserve_unit_scripts_on_listing_page(){
         //see if there is currently a listing page set
         $listing_page_id = get_option( 'storagepress_listing_page', null);
         $listing_page = get_post($listing_page_id);
@@ -155,6 +155,7 @@ class StoragePress extends JGWPPlugin{
         //if no listing page is set...
         if ($listing_page){
             wp_enqueue_script('wp-api');
+            wp_enqueue_script( 'storagepress_reserve_units', $this->get_base_url() . 'resources/js/reserve_unit_page.js');
         }
     }
 
