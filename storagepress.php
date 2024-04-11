@@ -124,6 +124,38 @@ class StoragePress extends JGWPPlugin{
 
         //let users register for accounts
         add_action('init', array($this, 'allow_registration'));
+
+        //enqueue api script on the unit listing page
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_api_script_on_listing_page'));
+
+        //add inquiries list admin page
+        add_action('admin_menu', array($this, 'add_inquiries_list_page'));
+    }
+
+    //add inquiries list admin page
+    public function add_inquiries_list_page(){
+        add_submenu_page(
+            'storagepress', // $parent_slug
+            'Reservation Inquiries', // $page_title
+            'Reservation Inquiries', // $menu_title
+            'manage_options', // $capability
+            'storagepress_reservation_inquiries_page', // $menu_slug
+            function(){
+                require_once plugin_dir_path(__FILE__) . 'elements/storagepress_reservation_inquiries_page.php';
+            } // $function
+        );
+    }
+
+    //enqueue api script on the unit listing page
+    public function enqueue_api_script_on_listing_page(){
+        //see if there is currently a listing page set
+        $listing_page_id = get_option( 'storagepress_listing_page', null);
+        $listing_page = get_post($listing_page_id);
+
+        //if no listing page is set...
+        if ($listing_page){
+            wp_enqueue_script('wp-api');
+        }
     }
 
     //register rest route to reserve a unit
@@ -134,7 +166,31 @@ class StoragePress extends JGWPPlugin{
                 return is_user_logged_in();
             },
             'callback' => function($request){
-                return json_encode($request->get_body_params());
+                //get the storage unit based on id
+                $unit_id = $request->get_param('unit_id');
+                $unit = get_post($unit_id);
+                if (!$unit || $unit->post_type != 'sp_storage_units'){
+                    return new WP_Error('invalid_unit_id', 'Invalid unit id', array('status' => 404));
+                }
+
+                //set the inquirer to the current user
+                if (get_post_meta($unit_id, "sp_reservation_inquirer", true)){
+                    return new WP_Error('unit_already_reserved', 'This unit has already been reserved', array('status' => 400));
+                }
+                $inquirer = wp_get_current_user();
+                update_post_meta( $unit_id, "sp_reservation_inquirer", $inquirer->ID);
+
+                //send an email to the business owner
+                $business_email = get_option('storagepress_email');
+                if ($business_email){
+                    $subject = 'Reservation Inquiry for ' . $unit->post_title;
+                    $message = 'A reservation inquiry has been made for the storage unit ' . $unit->post_title . ' by ' . $request->get_param('name') . ' (' . $request->get_param('email') . ')';
+                    wp_mail($business_email, $subject, $message);
+                }
+
+                //return successful redirect
+                return rest_ensure_response(array('message' => 'Reservation inquiry successful'));
+
             }
         ));
     }
@@ -339,6 +395,12 @@ class StoragePress extends JGWPPlugin{
             'type' => 'string',
             'object_subtype' => 'sp_storage_units'
         ));
+        register_post_meta('sp_storage_units', 'sp_reservation_inquirer', array(  //date of last payment
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => 'int',
+            'object_subtype' => 'sp_storage_units'
+        ));
     }
 
     //remove the metabox for settings post meta fields
@@ -498,8 +560,6 @@ class StoragePress extends JGWPPlugin{
                 break;
         }
     }
-
-
 
     //save data from those inputs
     function save_quick_edit_data($post_id){
