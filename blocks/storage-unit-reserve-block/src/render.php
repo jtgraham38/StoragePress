@@ -10,9 +10,13 @@ if (!defined('ABSPATH')) {
         window['storagepress'].reserve_unit_route = "<?php echo rest_url('storagepress/v1/reserve-unit'); ?>"
     </script>
     <?php 
+        $tenant_id = get_post_meta(get_the_ID(), "sp_tenant", true);
         $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);
 
-        if ($inquirer_id){
+        var_dump($tenant_id);
+        echo "<br>";
+        var_dump($inquirer_id);
+        if ($inquirer_id || $tenant_id){
     ?>
         <span <?php echo get_block_wrapper_attributes(array('class'=>'storagepress-reserve-button')) ?>>
             Not Available

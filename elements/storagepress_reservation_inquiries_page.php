@@ -4,13 +4,30 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+//handle reservation inquiry actions
+if (isset($_POST['approve'])) {
+    $reserver_id = $_POST['reserver_id'];
+    $unit_id = $_POST['unit_id'];
+    update_post_meta($unit_id, "sp_tenant", $reserver_id);
+    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
+} else if (isset($_POST['deny'])) {
+    $unit_id = $_POST['unit_id'];
+    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
+}
+
+
 //query for all storage units which have an inquirer
 $inquirer_query = new WP_Query(array(
     'post_type' => 'sp_storage_units',
     'meta_query' => array(
         array(
+            'relation' => 'AND',
+            array(
+                'key' => 'sp_reservation_inquirer',
+                'compare' => 'EXISTS'
+            ),
             'key' => 'sp_reservation_inquirer',
-            'value' => '',
+            'value' => '0',
             'compare' => '!='
         )
     )
@@ -68,15 +85,29 @@ if ($inquirer_query->have_posts()) {
                     Inquirer: <?php echo $inquirer->display_name; ?> (<a href="mailto:<?php echo $inquirer->user_email ?>">Contact</a>)
                 </div>
                 <div class="unit_detail">
-                    <button class="action_btn approve_btn">Approve</button>
-                    <button class="action_btn deny_btn">Deny</button>
+                    <form action="" method="POST">
+                        <input type="hidden" name="reserver_id" value="<?php echo $inquirer_id; ?>">
+                        <input type="hidden" name="unit_id" value="<?php echo get_the_ID(); ?>">
+                        <input name="approve" class="action_btn approve_btn" type="submit" value="Approve">
+                        <input name="deny" class="action_btn deny_btn" type="submit" value="Deny">
+                    </form>
                 </div>
             </div>
         </div>
         <?php
     }
+} else{
+    ?>
+    <div class="postbox postbox-card">
+        <h2>No Reservation Inquiries</h2>
+    </div>
+    <?php
+
 }
 ?>
+
+todo: notify user of successful reservation response
+todo: update reserve button and status meta block labels to match or at least correspond
 
 <style>
     .postbox-card{
