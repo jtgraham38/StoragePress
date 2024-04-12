@@ -6,11 +6,20 @@ if (!defined('ABSPATH')) {
 
 //handle reservation inquiry actions
 if (isset($_POST['approve'])) {
+    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
+    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+        die('Security check failed.');
+    }
+
     $reserver_id = $_POST['reserver_id'];
     $unit_id = $_POST['unit_id'];
     update_post_meta($unit_id, "sp_tenant", $reserver_id);
     update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
 } else if (isset($_POST['deny'])) {
+    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
+    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+        die('Security check failed.');
+    }
     $unit_id = $_POST['unit_id'];
     update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
 }
@@ -86,6 +95,7 @@ if ($inquirer_query->have_posts()) {
                 </div>
                 <div class="unit_detail">
                     <form action="" method="POST">
+                        <?php wp_nonce_field('approve_deny_reservation_inquiry', 'approve_deny_reservation_inquiry_nonce'); ?>
                         <input type="hidden" name="reserver_id" value="<?php echo $inquirer_id; ?>">
                         <input type="hidden" name="unit_id" value="<?php echo get_the_ID(); ?>">
                         <input name="approve" class="action_btn approve_btn" type="submit" value="Approve">
@@ -108,6 +118,7 @@ if ($inquirer_query->have_posts()) {
 
 todo: notify user of successful reservation response
 todo: update reserve button and status meta block labels to match or at least correspond
+todo: 1 active inquiry at a time?
 
 <style>
     .postbox-card{
