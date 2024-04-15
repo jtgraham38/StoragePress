@@ -32,18 +32,18 @@ import { useSelect } from '@wordpress/data';
  */
 export default function Edit(props) {
 
-	//get post data if the context we are in is that of a storage unit
-	const db_record = useSelect((select) => {
-		if (props.context.postType == 'sp_storage_units') {
-            const { getEditedEntityRecord } = select('core');
-			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
-			return record;
-        }
-        return {};
-	})
+	// //get post data if the context we are in is that of a storage unit
+	// const db_record = useSelect((select) => {
+	// 	if (props.context.postType == 'sp_storage_units') {
+    //         const { getEditedEntityRecord } = select('core');
+	// 		const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
+	// 		return record;
+    //     }
+    //     return {};
+	// })
 
-	//format metadata for outputting
-	console.log(db_record)
+	// //format metadata for outputting
+	// console.log(db_record)
 
 	//jsx body
 	return (
