@@ -13,13 +13,19 @@ if (!defined('ABSPATH')) {
         $tenant_id = get_post_meta(get_the_ID(), "sp_tenant", true);
         $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);
 
-        var_dump($tenant_id);
-        echo "<br>";
-        var_dump($inquirer_id);
+        // var_dump($tenant_id);
+        // echo "<br>";
+        // var_dump($inquirer_id);
         if ($inquirer_id || $tenant_id){
     ?>
         <span <?php echo get_block_wrapper_attributes(array('class'=>'storagepress-reserve-button')) ?>>
-            Not Available
+            <?php
+                if ($inquirer_id){
+                    echo "Pending";
+                }else{
+                    echo "Occupied";
+                }
+            ?>
         </span>
     <?php
         } else {

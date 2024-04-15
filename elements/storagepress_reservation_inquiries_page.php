@@ -157,8 +157,6 @@ if ($inquirer_query->have_posts()) {
 }
 ?>
 
-todo: notify user of successful reservation response
-todo: update reserve button and status meta block labels to match or at least correspond
 todo: 1 active inquiry at a time?
 
 <style>
