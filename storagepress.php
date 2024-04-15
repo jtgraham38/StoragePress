@@ -192,6 +192,16 @@ class StoragePress extends JGWPPlugin{
                     return new WP_Error('invalid_unit_id', 'Invalid unit id', array('status' => 404));
                 }
 
+                //ensure this user has no other active inquiries
+                $inquiries = get_posts(array(
+                    'post_type' => 'sp_storage_units',
+                    'meta_key' => 'sp_reservation_inquirer',
+                    'meta_value' => get_current_user_id()
+                ));
+                if (count($inquiries) > 0){
+                    return new WP_Error('user_has_active_inquiries', 'You already have an active inquiry', array('status' => 400));
+                }
+
                 //set the inquirer to the current user
                 if (get_post_meta($unit_id, "sp_reservation_inquirer", true)){
                     return new WP_Error('unit_already_reserved', 'This unit has already been reserved', array('status' => 400));

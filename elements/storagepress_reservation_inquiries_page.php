@@ -157,8 +157,6 @@ if ($inquirer_query->have_posts()) {
 }
 ?>
 
-todo: 1 active inquiry at a time?
-
 <style>
     .postbox-card{
         padding: 1.25rem;

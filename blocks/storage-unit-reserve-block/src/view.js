@@ -62,6 +62,9 @@ function submit_reserve_form(event) {
             if (response_data.code && response_data.code === 'rest_forbidden_context') {
                 console.error('You do not have permission to perform this action.');
             }
+            else if (response_data.code && response_data.code === 'user_has_active_inquiries') {
+                window.alert(`You already have an active inquiry!`);
+            }
             else if (response_data.code && response_data.code === 'unit_already_reserved'){
                 window.alert(`This unit is already reserved!`);
             }
