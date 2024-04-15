@@ -65,15 +65,18 @@ global $post; //get the post being edited
     <div style="margin-right: 1rem;">
         <label class="storagepress_input_label" for="sp_tenant">Tenant:</label>
         <?php require_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
+        
     </div>
     <div style="margin-right: 1rem;">
         <label class="storagepress_input_label" for="sp_last_vacant_date">Last Vacant Date:</label>
         <?php if (isset($post->ID)){ $last_vacant_date = get_post_meta($post->ID, 'sp_last_vacant_date', true); } ?>
         <input class="storagepress_settings_input" type="date" id="sp_last_vacant_date" name="sp_last_vacant_date" value="<?php echo isset($last_vacant_date) ? date('Y-m-d', strtotime(esc_attr($last_vacant_date))) : date("Y-m-d"); ?>" size="25" />
+        <div>TODO: set this when a reservation request is approved</div>
     </div>
     <div>
         <label class="storagepress_input_label" for="sp_last_rental_date">Last Rental Date:</label>
         <?php if (isset($post->ID)){ $last_rental_date = get_post_meta($post->ID, 'sp_last_rental_date', true); } ?>
         <input class="storagepress_settings_input" type="date" id="sp_last_rental_date" name="sp_last_rental_date" value="<?php echo isset($last_rental_date) ? date('Y-m-d', strtotime(esc_attr($last_rental_date))) : date("Y-m-d"); ?>" size="25" />
+        <div>TODO: set last vacant date if the tenant is unselected</div>
     </div>
 </div>

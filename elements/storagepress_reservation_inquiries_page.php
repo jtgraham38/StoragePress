@@ -3,6 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+?> <h2>Lease Inquirees</h2> <?php
 
 //handle reservation inquiry actions
 if (isset($_POST['approve'])) {

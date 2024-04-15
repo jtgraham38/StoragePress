@@ -27,4 +27,3 @@ if ($unit) {
     }
     ?>
 </select>
-<div>TODO: select user</div>

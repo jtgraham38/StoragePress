@@ -131,6 +131,7 @@ class StoragePress extends JGWPPlugin{
         //add inquiries list admin page
         add_action('admin_menu', array($this, 'add_inquiries_list_page'));
         add_action('admin_notices', array($this, 'show_reservation_notices'));
+
     }
 
     //show notices for reservation inquiries
@@ -208,6 +209,7 @@ class StoragePress extends JGWPPlugin{
                 }
                 $inquirer = wp_get_current_user();
                 update_post_meta( $unit_id, "sp_reservation_inquirer", $inquirer->ID);
+                update_post_meta( $unit_id, "sp_last_rental_date", date('Y-m-d H:i:s'));
 
                 //send an email to the business owner
                 $business_email = get_option('storagepress_email');
