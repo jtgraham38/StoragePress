@@ -130,6 +130,24 @@ class StoragePress extends JGWPPlugin{
 
         //add inquiries list admin page
         add_action('admin_menu', array($this, 'add_inquiries_list_page'));
+        add_action('admin_notices', array($this, 'show_reservation_notices'));
+    }
+
+    //show notices for reservation inquiries
+    public function show_reservation_notices(){
+        if (isset($_POST['approve'])){
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p>Reservation Inquiry Approved!</p>
+            </div>
+            <?php
+        } else if (isset($_POST['deny'])){
+            ?>
+            <div class="notice notice-error is-dismissible">
+                <p>Reservation Inquiry Denied!</p>
+            </div>
+            <?php
+        }
     }
 
     //add inquiries list admin page
