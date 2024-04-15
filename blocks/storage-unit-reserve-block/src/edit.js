@@ -20,8 +20,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
 import './editor.scss';
-import { useState } from '@wordpress/element';
-import { Modal } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -32,27 +31,27 @@ import { Modal } from '@wordpress/components';
  * @return {Element} Element to render.
  */
 export default function Edit(props) {
-	const [ is_open, set_is_open ] = useState(false);
-	const open_modal = () => set_is_open(true);
-	const close_modal = () => set_is_open(false);
 
+	//get post data if the context we are in is that of a storage unit
+	const db_record = useSelect((select) => {
+		if (props.context.postType == 'sp_storage_units') {
+            const { getEditedEntityRecord } = select('core');
+			const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
+			return record;
+        }
+        return {};
+	})
+
+	//format metadata for outputting
+	console.log(db_record)
+
+	//jsx body
 	return (
 		<>
 			<div>
-				<span { ...useBlockProps() } onClick={open_modal} className='storagepress-reserve-button'>
+				<span { ...useBlockProps() } className='storagepress-reserve-button'>
 					Reserve
 				</span>
-
-				{ is_open && (
-					<Modal
-						title="Reserve"
-						onRequestClose={close_modal}
-					>
-						<div>
-							// Your modal content goes here!!!
-						</div>
-					</Modal>
-				)}
 			</div>
 		</>
 	);
