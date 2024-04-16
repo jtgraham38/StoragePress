@@ -1,8 +1,8 @@
 {
 	"name": "storage-unit-reserve-block",
 	"version": "0.1.0",
-	"description": "Example block scaffolded with Create Block tool.",
-	"author": "The WordPress Contributors",
+	"description": "A block that allows site visitors to book a storage unit.",
+	"author": "Jacob Graham",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
