@@ -189,13 +189,13 @@ class StoragePress extends JGWPPlugin{
                 //get the storage unit based on id
                 $unit_id = $request->get_param('unit_id');
                 $unit = get_post($unit_id);
-                if (!$unit || $unit->post_type != 'sp_storage_units'){
+                if (!$unit || $unit->post_type != 'storage_unit'){
                     return new WP_Error('invalid_unit_id', 'Invalid unit id', array('status' => 404));
                 }
 
                 //ensure this user has no other active inquiries
                 $inquiries = get_posts(array(
-                    'post_type' => 'sp_storage_units',
+                    'post_type' => 'storage_unit',
                     'meta_key' => 'sp_reservation_inquirer',
                     'meta_value' => get_current_user_id()
                 ));
@@ -373,28 +373,28 @@ class StoragePress extends JGWPPlugin{
                 'item_updated' => 'Storage unit updated.',
             )
         );
-        register_post_type('sp_storage_units', $args);
+        register_post_type('storage_unit', $args);
 
         //add attributes to storage unit post type
-        register_post_meta('sp_storage_units', 'sp_length', array(  //length
+        register_post_meta('storage_unit', 'sp_length', array(  //length
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_width', array(  //width
+        register_post_meta('storage_unit', 'sp_width', array(  //width
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_unit', array(  //unit
+        register_post_meta('storage_unit', 'sp_unit', array(  //unit
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_features', array(  //type
+        register_post_meta('storage_unit', 'sp_features', array(  //type
             'show_in_rest' => array(
                 'schema' => array(  //schema for the rest api
                     'type' => 'array',
@@ -405,43 +405,43 @@ class StoragePress extends JGWPPlugin{
             ),
             'single' => true,
             'type' => 'array',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_price', array(  //price
+        register_post_meta('storage_unit', 'sp_price', array(  //price
             'show_in_rest' => true,
             'single' => true,
             'type' => 'number',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_tenant', array(  //status
+        register_post_meta('storage_unit', 'sp_tenant', array(  //status
             'show_in_rest' => true,
             'single' => true,
             'type' => 'int',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_last_rental_date', array(  //date the last rental began
+        register_post_meta('storage_unit', 'sp_last_rental_date', array(  //date the last rental began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date the last vacancy began
+        register_post_meta('storage_unit', 'sp_last_vacant_date', array(  //date the last vacancy began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
-        register_post_meta('sp_storage_units', 'sp_reservation_inquirer', array(  //date of last payment
+        register_post_meta('storage_unit', 'sp_reservation_inquirer', array(  //date of last payment
             'show_in_rest' => true,
             'single' => true,
             'type' => 'int',
-            'object_subtype' => 'sp_storage_units'
+            'object_subtype' => 'storage_unit'
         ));
     }
 
     //remove the metabox for settings post meta fields
     public function remove_unit_meta_metabox(){
-        remove_meta_box('postcustom', 'sp_storage_units', 'normal');    //id (in html), post type, context
+        remove_meta_box('postcustom', 'storage_unit', 'normal');    //id (in html), post type, context
     }
 
     public function create_unit_default_thumbnail(){
@@ -491,7 +491,7 @@ class StoragePress extends JGWPPlugin{
 
     //set default thumbnail for storage units
     public function set_unit_default_thumbnail($value, $post_id, $meta_key, $single){
-        if (get_post_type($post_id) == 'sp_storage_units' && $meta_key == '_thumbnail_id' && !$value){
+        if (get_post_type($post_id) == 'storage_unit' && $meta_key == '_thumbnail_id' && !$value){
             return get_option('storagepress_default_thumbnail_id', null);
         }
         return $value;
@@ -501,7 +501,7 @@ class StoragePress extends JGWPPlugin{
     //change the label of the title field for storage units
     public function change_title_label($title){
         $screen = get_current_screen();
-        if('sp_storage_units' == $screen->post_type){
+        if('storage_unit' == $screen->post_type){
             $title = 'Enter storage unit label...';
         }
         return $title;
@@ -514,7 +514,7 @@ class StoragePress extends JGWPPlugin{
 
     //save custom fields for storage units
     function save_storage_unit_custom_fields($post_id){
-        if(isset($_POST['post_type']) && $_POST['post_type'] == 'sp_storage_units'){
+        if(isset($_POST['post_type']) && $_POST['post_type'] == 'storage_unit'){
             // save length
             if(isset($_POST['sp_length'])){
                 $length = floatval($_POST['sp_length']);
@@ -532,9 +532,14 @@ class StoragePress extends JGWPPlugin{
             }
 
             // get features from request, and save them
+            
             if(isset($_POST['sp_features'])){
                 $sp_features = array_map('sanitize_text_field', $_POST['sp_features']);
                 update_post_meta($post_id, 'sp_features', $sp_features, false);
+            }
+            else{
+                //if no value was sent, set the features to empty
+                update_post_meta($post_id, 'sp_features', []);
             }
 
             // save price
@@ -553,6 +558,10 @@ class StoragePress extends JGWPPlugin{
             if (isset($_POST['sp_tenant']) && $_POST['sp_tenant'] == "null"){
                 //if the tenant is not set, set the last vacant date to today
                 update_post_meta($post_id, 'sp_last_vacant_date', date('Y-m-d H:i:s'));
+            }
+            else if (isset($_POST['sp_tenant'])){
+                //if the tenant is set, set the last rental date to today
+                update_post_meta($post_id, 'sp_last_rental_date', date('Y-m-d H:i:s'));
             }
 
             // // save last rental date
@@ -573,7 +582,7 @@ class StoragePress extends JGWPPlugin{
     function display_quick_edit_custom($column_name, $post_type){
         
         //require_once plugin_dir_path(__FILE__) . 'elements/quick_edit_custom.php';
-        if ($post_type != 'sp_storage_units') return;
+        if ($post_type != 'storage_unit') return;
 
         switch ($column_name) {
             case 'price': ?> 
@@ -614,7 +623,7 @@ class StoragePress extends JGWPPlugin{
 
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {
-        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'storage_unit') {
             unset($columns['date']); // remove date column
             $columns['size'] = 'Size'; // add custom field column
             $columns['price'] = 'Price'; // add custom field column
@@ -625,7 +634,7 @@ class StoragePress extends JGWPPlugin{
 
     // populate custom fields columns in storage units table
     public function storage_units_custom_column($column, $post_id) {
-        if (isset($_GET['post_type']) && $_GET['post_type'] === 'sp_storage_units') {
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'storage_unit') {
             switch ($column) {
                 case 'price':
                     // get the custom field value and echo it
@@ -671,14 +680,14 @@ class StoragePress extends JGWPPlugin{
     //register custom templates to display storage units in
     public function register_single_template($single_template){
         global $post;
-        if ($post->post_type == 'sp_storage_units')
+        if ($post->post_type == 'storage_unit')
             $single_template = $this->get_base_dir() . 'elements/templates/single_storage_unit.php';
         return $single_template;
 
     }
     public function register_archive_template($archive_template){
         global $post;
-        if (is_post_type_archive('sp_storage_units'))
+        if (is_post_type_archive('storage_unit'))
             $archive_template = $this->get_base_dir() . 'elements/templates/archive_storage_unit.php';
         return $archive_template;
     }
