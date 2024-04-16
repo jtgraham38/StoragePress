@@ -33,7 +33,8 @@ if (isset($_POST['approve'])) {
 
     //update storage unit post meta to reflect reservation inquiry approval
     update_post_meta($unit_id, "sp_tenant", $reserver_id);
-    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null\
+    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
+    update_post_meta($unit_id, "sp_last_rental_date", date("Y-m-d H:i:s"));   //update the last rental date (this represents the last date that a rental began)
 
     
 

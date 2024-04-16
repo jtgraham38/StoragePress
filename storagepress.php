@@ -414,13 +414,13 @@ class StoragePress extends JGWPPlugin{
             'type' => 'int',
             'object_subtype' => 'sp_storage_units'
         ));
-        register_post_meta('sp_storage_units', 'sp_last_rental_date', array(  //date of last rental
+        register_post_meta('sp_storage_units', 'sp_last_rental_date', array(  //date the last rental began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'sp_storage_units'
         ));
-        register_post_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date of last payment
+        register_post_meta('sp_storage_units', 'sp_last_vacant_date', array(  //date the last vacancy began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
@@ -543,18 +543,24 @@ class StoragePress extends JGWPPlugin{
                 $tenant = intval($_POST['sp_tenant']);
                 update_post_meta($post_id, 'sp_tenant', $tenant);
             }
-
-            // save last rental date
-            if(isset($_POST['sp_last_rental_date'])){
-                $last_rental_date = sanitize_text_field($_POST['sp_last_rental_date']);
-                update_post_meta($post_id, 'sp_last_rental_date', $last_rental_date);
+            
+            //update if now vacant
+            if (isset($_POST['sp_tenant']) && $_POST['sp_tenant'] == "null"){
+                //if the tenant is not set, set the last vacant date to today
+                update_post_meta($post_id, 'sp_last_vacant_date', date('Y-m-d H:i:s'));
             }
 
-            // save last payment date
-            if(isset($_POST['sp_last_vacant_date'])){
-                $last_payment_date = sanitize_text_field($_POST['sp_last_vacant_date']);
-                update_post_meta($post_id, 'sp_last_vacant_date', $last_payment_date);
-            }
+            // // save last rental date
+            // if(isset($_POST['sp_last_rental_date'])){
+            //     $last_rental_date = sanitize_text_field($_POST['sp_last_rental_date']);
+            //     update_post_meta($post_id, 'sp_last_rental_date', $last_rental_date);
+            // }
+
+            // // save last payment date
+            // if(isset($_POST['sp_last_vacant_date'])){
+            //     $last_payment_date = sanitize_text_field($_POST['sp_last_vacant_date']);
+            //     update_post_meta($post_id, 'sp_last_vacant_date', $last_payment_date);
+            // }
         }
     }
 
