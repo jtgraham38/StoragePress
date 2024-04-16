@@ -1,9 +1,10 @@
-<?php
+<p><?php
 // exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
-?>
+?></p>
+
 <!-- wp:storagepress/storage-unit-business-detail-block {"key":"storagepress_name","fontSize":"large"} /-->
 
 <!-- wp:columns -->
@@ -58,7 +59,7 @@ if (!defined('ABSPATH')) {
 <h3 class="wp-block-heading">Storage Units:</h3>
 <!-- /wp:heading -->
 
-<!-- wp:query {"queryId":9,"query":{"perPage":3,"pages":0,"offset":0,"postType":"sp_storage_units","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"parents":[]}} -->
+<!-- wp:query {"queryId":9,"query":{"perPage":5,"pages":0,"offset":0,"postType":"sp_storage_units","order":"asc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"parents":[]},"layout":{"type":"default"}} -->
 <div class="wp-block-query"><!-- wp:post-template -->
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|20","right":"var:preset|spacing|20"}},"border":{"width":"1px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 <div class="wp-block-group" style="border-width:1px;padding-top:var(--wp--preset--spacing--10);padding-right:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--20)"><!-- wp:post-title /-->
