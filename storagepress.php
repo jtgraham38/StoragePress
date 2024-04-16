@@ -203,6 +203,11 @@ class StoragePress extends JGWPPlugin{
                     return new WP_Error('user_has_active_inquiries', 'You already have an active inquiry', array('status' => 400));
                 }
 
+                //see if the unit is already rented
+                if (get_post_meta($unit_id, "sp_tenant", true)){
+                    return new WP_Error('unit_already_rented', 'This unit is already rented', array('status' => 400));
+                }
+
                 //set the inquirer to the current user
                 if (get_post_meta($unit_id, "sp_reservation_inquirer", true)){
                     return new WP_Error('unit_already_reserved', 'This unit has already been reserved', array('status' => 400));

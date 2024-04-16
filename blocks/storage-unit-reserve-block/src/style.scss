@@ -5,6 +5,7 @@
  * Replace them with your own styles or remove the file completely.
  */
 
+ /* reserve button */
 .storagepress-reserve-button {
 	background-color: black;
 	color: #ffffff;
@@ -19,6 +20,7 @@
     }
 }
 
+/* reserve modal close button */
 .storagepress-reserve-modal-close-button{
 	position: absolute;
     top: 0;
@@ -42,6 +44,7 @@
     }
 }
 
+/* modal text inputs */
 .storagepress_text_input {
     width: 100%;
     padding: 10px;
@@ -50,4 +53,37 @@
     border: 1px solid #ccc;
     box-sizing: border-box;
     font-size: larger;
+}
+
+/* notification for success or failure of reservation */
+#storage_unit_reserve_notification{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    padding-right: 2rem;
+    font-size: larger;
+
+    border: 1px solid var(--wp--preset--color--contrast-3);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem var(--wp--preset--color--accent);
+    
+    button{
+        border: none;
+        background: none;
+        font-size: 1.75rem;
+        margin-left: 0.5rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+        &:hover{
+            color: red;
+        }
+    }
+}
+
+.storagepress_notification_hidden{
+    display: none;
 }
