@@ -126,6 +126,9 @@ if ($inquirer_query->have_posts()) {
                                 <?php
                             }
                         }
+                        else{
+                            ?> <span>No features for this unit!</span><?php
+                        }
                         ?>
                     </span>
                 </div>
