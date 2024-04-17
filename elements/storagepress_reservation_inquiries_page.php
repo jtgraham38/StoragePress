@@ -104,7 +104,7 @@ if ($inquirer_query->have_posts()) {
                     $width = get_post_meta(get_the_ID(), "sp_width", true);
                     $unit = get_post_meta(get_the_ID(), "sp_unit", true);
                     ?>
-                    Size: <?php echo $length; ?> <?php echo esc_attr($unit); ?> &times; <?php echo esc_attr($width); ?> <?php echo esc_attr($unit); ?>
+                    Size: <?php echo esc_attr($length); ?> <?php echo esc_attr($unit); ?> &times; <?php echo esc_attr($width); ?> <?php echo esc_attr($unit); ?>
                 </div>
                 <div class="unit_detail">
                     Price: $<?php echo esc_attr(((int)get_post_meta(get_the_ID(), "sp_price", true)) / 100); ?> / mo.
@@ -137,13 +137,13 @@ if ($inquirer_query->have_posts()) {
             
             <div class="unit_detail_box" style="float: right;">
                 <div class="unit_detail">
-                    Inquirer: <?php echo esc_attr($inquirer->display_name); ?> (<a href="mailto:<?php echo $inquirer->user_email ?>">Contact</a>)
+                    Inquirer: <?php echo esc_attr($inquirer->display_name); ?> (<a href="mailto:<?php echo esc_attr($inquirer->user_email) ?>">Contact</a>)
                 </div>
                 <div class="unit_detail">
                     <form action="" method="POST">
                         <?php wp_nonce_field('approve_deny_reservation_inquiry', 'approve_deny_reservation_inquiry_nonce'); ?>
                         <input type="hidden" name="reserver_id" value="<?php echo esc_attr($inquirer_id); ?>">
-                        <input type="hidden" name="unit_id" value="<?php echo get_the_ID(); ?>">
+                        <input type="hidden" name="unit_id" value="<?php echo esc_attr(get_the_ID()); ?>">
                         <input name="approve" class="action_btn approve_btn" type="submit" value="Approve">
                         <input name="deny" class="action_btn deny_btn" type="submit" value="Deny">
                     </form>

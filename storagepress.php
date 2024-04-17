@@ -661,7 +661,7 @@ class StoragePress extends JGWPPlugin{
                     if (isset($user)){
                         if (isset($user->display_name)){
                             if (isset($user->user_email)){
-                                $custom_field_value = '<a href="mailto:' . $user->user_email .'">' . $user->display_name . '</a>';
+                                $custom_field_value = '<a href="mailto:' . esc_attr($user->user_email) .'">' . esc_attr($user->display_name) . '</a>';
                             }else{
                                 $custom_field_value = $user->display_name;
                             }
