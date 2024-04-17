@@ -50,7 +50,6 @@ if (!defined('ABSPATH')) {
                 <?php
             }else{
                 //get reserve request api route
-                $api_route = get_rest_url(null, 'storagepress/v1/reserve-unit');
                 $current_user = wp_get_current_user();
                 ?>
                 <form class="storage-unit-reserve-form">
@@ -69,6 +68,14 @@ if (!defined('ABSPATH')) {
                 <?php
             }
             ?>
+
+            <?php
+                if (get_option('storagepress_display_credit_link')){
+                    ?>
+                    <a target="#blank" href="https://jacob-t-graham.com/category/wordpress-development/storagepress/" style="float: right;">JG</a>
+                    
+                <?php } ?>
+
         </dialog>
 
     <?php

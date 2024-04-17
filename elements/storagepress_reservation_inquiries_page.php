@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-?> <h2>Lease Inquirees</h2> <?php
+?> <h2>Rental Inquirees</h2> <?php
 
 //handle reservation inquiry actions
 if (isset($_POST['approve'])) {
@@ -104,10 +104,10 @@ if ($inquirer_query->have_posts()) {
                     $width = get_post_meta(get_the_ID(), "sp_width", true);
                     $unit = get_post_meta(get_the_ID(), "sp_unit", true);
                     ?>
-                    Size: <?php echo $length; ?> <?php echo $unit; ?> &times; <?php echo $width; ?> <?php echo $unit; ?>
+                    Size: <?php echo $length; ?> <?php echo esc_attr($unit); ?> &times; <?php echo esc_attr($width); ?> <?php echo esc_attr($unit); ?>
                 </div>
                 <div class="unit_detail">
-                    Price: $<?php echo ((int)get_post_meta(get_the_ID(), "sp_price", true)) / 100; ?> / mo.
+                    Price: $<?php echo esc_attr(((int)get_post_meta(get_the_ID(), "sp_price", true)) / 100); ?> / mo.
                 </div>
             </div>
 
@@ -121,7 +121,7 @@ if ($inquirer_query->have_posts()) {
                             foreach ($features as $feature) {
                                 ?>
                                 <div class="feature_option">
-                                    <?php echo $feature; ?>
+                                    <?php echo esc_attr($feature); ?>
                                 </div>
                                 <?php
                             }
@@ -137,12 +137,12 @@ if ($inquirer_query->have_posts()) {
             
             <div class="unit_detail_box" style="float: right;">
                 <div class="unit_detail">
-                    Inquirer: <?php echo $inquirer->display_name; ?> (<a href="mailto:<?php echo $inquirer->user_email ?>">Contact</a>)
+                    Inquirer: <?php echo esc_attr($inquirer->display_name); ?> (<a href="mailto:<?php echo $inquirer->user_email ?>">Contact</a>)
                 </div>
                 <div class="unit_detail">
                     <form action="" method="POST">
                         <?php wp_nonce_field('approve_deny_reservation_inquiry', 'approve_deny_reservation_inquiry_nonce'); ?>
-                        <input type="hidden" name="reserver_id" value="<?php echo $inquirer_id; ?>">
+                        <input type="hidden" name="reserver_id" value="<?php echo esc_attr($inquirer_id); ?>">
                         <input type="hidden" name="unit_id" value="<?php echo get_the_ID(); ?>">
                         <input name="approve" class="action_btn approve_btn" type="submit" value="Approve">
                         <input name="deny" class="action_btn deny_btn" type="submit" value="Deny">

@@ -54,7 +54,8 @@ class StoragePress extends JGWPPlugin{
             new JGWPSetting($this, 'default_thumbnail_id', array('default' => null, 'sanitize_callback' => function($input){
                 $value = absint($input);
                 return $value > 0 ? $value : null;
-            }), null, 'Default Thumbnail ID', null)
+            }), null, 'Default Thumbnail ID', null),
+            new JGWPSetting($this, 'display_credit_link', array('default' => "false", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Display Credit Link:', 'storagepress_settings_section'),
         ];
 
         $admin_resources = [
