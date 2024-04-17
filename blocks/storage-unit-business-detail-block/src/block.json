@@ -6,7 +6,7 @@
     "icon": "vault",
     "category": "storagepress",
     "description": "A block to display the details of the storage unit business.",
-    "keywords": ["storagepress", "storage unit", "business", "detail", "name", "address", "phone", "email", "terms", "checks", "page"],
+    "keywords": ["storagepress", "storage unit", "business", "detail", "details", "name", "address", "phone", "email", "terms", "checks", "page"],
     "version": "1.0.0",
     "textdomain": "storagepress",
     "attributes": {

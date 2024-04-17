@@ -2,11 +2,11 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "storagepress/storage-unit-meta-block",
-    "title": "Storage Unit Meta",
+    "title": "Storage Unit Detail",
     "icon": "vault",
     "category": "storagepress",
     "description": "A block to display the details of one of your storage units.",
-    "keywords": ["storagepress", "storage unit", "storage", "unit", "meta", "price", "size", "available", "features"],
+    "keywords": ["storagepress", "storage unit", "storage", "unit", "meta", "price", "size", "available", "features", "detail", "details"],
     "version": "1.0.0",
     "textdomain": "storagepress",
     "attributes": {
