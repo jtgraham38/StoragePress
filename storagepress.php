@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: StoragePress
-Plugin URI: https://jacob-t-graham.com/category/wordpress-development/storagepress/
+Plugin URI: https://jacob-t-graham.com/storagepress/
 Description: StoragePress is a plugin to manage your self-storage business.
 Version: 1.0.0
 Author: Jacob Graham
