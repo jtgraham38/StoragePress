@@ -11,7 +11,10 @@ if (!defined('ABSPATH')) {
 //if an option was chosen in the input...
 global $post;
 if ($post->post_type != 'storage_unit'){
-	echo '<div>Post of type "' . $post->post_type . '" is not a Storage Unit.</div> ';
+	echo wp_kses(
+		'<div>Post of type "' . $post->post_type . '" is not a Storage Unit.</div> ',
+		array('div' => array())
+	);
 } else{
 	//for some reason, the key attr will not be set if the input is not changed
 	if (array_key_exists('key', $attributes)){

@@ -656,7 +656,7 @@ class StoragePress extends JGWPPlugin{
                 case 'price':
                     // get the custom field value and echo it
                     $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'sp_price', true)) / 100);
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo $custom_field_value != "" ? $custom_field_value : "None";
                     break;
                 case 'size':
                     // get the custom field value and echo it
@@ -666,9 +666,9 @@ class StoragePress extends JGWPPlugin{
                     if ($length != "" && $width != "" && $unit != "") {
                         $custom_field_value = $length . " " . $unit . " &times; " . $width . " " . $unit;
                     } else {
-                        $custom_field_value = "N/A";
+                        $custom_field_value = "None";
                     }
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo $custom_field_value != "" ? $custom_field_value : "None";
                     break;
                 case 'tenant':
                     // get the custom field value and echo it
@@ -683,12 +683,12 @@ class StoragePress extends JGWPPlugin{
                             }
                         }
                         else{
-                            $custom_field_value = "N/A";
+                            $custom_field_value = "None";
                         }
                     }else{
-                        $custom_field_value = "N/A";
+                        $custom_field_value = "None";
                     }
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo wp_kses($custom_field_value != "" ? $custom_field_value : "None", array('a' => array('href' => array())));
                     break;
             }
         }

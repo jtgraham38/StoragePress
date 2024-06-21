@@ -42,7 +42,7 @@ if (!defined('ABSPATH')) {
                 $login_url = wp_login_url(get_permalink());
                 
                 ?>
-                <p>You need to be logged in to reserve a storage unit. <a href="<?php echo $login_url; ?>">Login</a> or <a href="<?php echo $register_url?>">Sign Up</a> </p>
+                <p>You need to be logged in to reserve a storage unit. <a href="<?php echo esc_url($login_url); ?>">Login</a> or <a href="<?php echo esc_url($register_url) ?>">Sign Up</a> </p>
                 <?php
             }else{
                 //get reserve request api route
@@ -53,11 +53,11 @@ if (!defined('ABSPATH')) {
                     <input type="hidden" name="unit_id" value="<?php the_ID(); ?>">
                     <div>
                         <label for="reserve_unit_<?php the_ID(); ?>_name_input" style="display: block;">Your Name</label>
-                        <input name="name" value="<?php echo $current_user->display_name; ?>" class="storagepress_text_input" type="text" id="reserve_unit_<?php the_ID(); ?>_name_input" placeholder="Name">
+                        <input name="name" value="<?php echo esc_attr($current_user->display_name); ?>" class="storagepress_text_input" type="text" id="reserve_unit_<?php the_ID(); ?>_name_input" placeholder="Name">
                     </div>
                     <div style="margin-bottom: 0.25rem;">
                         <label for="reserve_unit_<?php the_ID(); ?>_email_input" style="display: block;">Your Email</label>
-                        <input name="email" value="<?php echo $current_user->user_email; ?>" class="storagepress_text_input" type="email" id="reserve_unit_<?php the_ID(); ?>_email_input" placeholder="Email">
+                        <input name="email" value="<?php echo esc_email($current_user->user_email); ?>" class="storagepress_text_input" type="email" id="reserve_unit_<?php the_ID(); ?>_email_input" placeholder="Email">
                     </div>
                     <input type="submit" value="Submit" <?php echo get_block_wrapper_attributes(array('class'=>'storagepress-reserve-button')) ?>>
                 </form>
