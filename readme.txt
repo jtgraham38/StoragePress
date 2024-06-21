@@ -24,6 +24,9 @@ When you first install the plugin and configure it's settings, StoragePress will
 = Does your plugin use email notifications? =
 Yes, it does!  StoragePress sends emails when a number of different events occurs.  It sends an email to the business admin email address when a new request to use a storage unit is made, and an email to the person who requested to reserve the storage unit when the business owner decides whether to grant or deny their request.  Contact me if you would like email notifications when other events occur.
 
+== 3rd-Party Libraries ==
+This plugin makes use of one third party javascript library, AlpineJS, for reactivity on certain parts of the admin interface.  It is a lightweight library that makes it easy to sprinkle in reactive variables and client-side DOM rendering throughout an application.  View its source code here: https://github.com/alpinejs/alpine
+
 == Changelog ==
 = 1.0.0 =
 * Plugin released. 
