@@ -8,13 +8,12 @@ if (!defined('ABSPATH')) {
 //handle reservation inquiry actions
 if (isset($_POST['approve'])) {
     //verify nonce
-    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
-    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
         die('Security check failed.');
     }
 
     //get unit
-    $unit_id = $_POST['unit_id'];
+    $unit_id = intval($_POST['unit_id']);
     $unit = get_post($unit_id);
 
     //ensure unit exists
@@ -24,7 +23,7 @@ if (isset($_POST['approve'])) {
     }
 
     //send notification email to reserver
-    $reserver_id = $_POST['reserver_id'];
+    $reserver_id = intval($_POST['reserver_id']);
     $reserver = get_userdata($reserver_id);
     $unit = get_post($unit_id);
     $subject = "Reservation Inquiry Approved!";
@@ -41,13 +40,12 @@ if (isset($_POST['approve'])) {
 
 } else if (isset($_POST['deny'])) {
     //verify nonce
-    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
-    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
         die('Security check failed.');
     }
 
     //get unit
-    $unit_id = $_POST['unit_id'];
+    $unit_id = intval($_POST['unit_id']);
     $unit = get_post($unit_id);
 
     //ensure unit exists
@@ -57,7 +55,7 @@ if (isset($_POST['approve'])) {
     }
 
     //send notification email to reserver
-    $reserver_id = $_POST['reserver_id'];
+    $reserver_id = intval($_POST['reserver_id']);
     $reserver = get_userdata($reserver_id);
     $subject = "Reservation Inquiry Denied!";
     $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been denied.";

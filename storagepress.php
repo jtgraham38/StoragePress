@@ -630,13 +630,13 @@ class StoragePress extends JGWPPlugin{
     }
 
     //save data from those inputs
-    function save_quick_edit_data($post_id){
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-        if (!current_user_can('edit_post', $post_id)) return;
-        if (isset($_POST['my_custom_field'])) {
-            update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
-        }
-    }
+    // function save_quick_edit_data($post_id){
+    //     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    //     if (!current_user_can('edit_post', $post_id)) return;
+    //     if (isset($_POST['my_custom_field'])) {
+    //         update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
+    //     }
+    // }
 
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {
