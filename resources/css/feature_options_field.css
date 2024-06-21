@@ -1,0 +1,48 @@
+.feature_option {
+    display: inline-flex;
+    padding: 0.1rem 0 0.1rem 0.2rem;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem #ccc;
+    margin-top: 0.4rem;
+    margin-right: 0.2rem;
+}
+
+.feature_option button {
+    border: none;
+    margin-left: 1rem;
+    font-size: larger;
+    background-color: transparent;
+    display: grid;
+    place-items: center;
+    
+}
+.feature_option button:hover {
+    font-weight: bold;
+    color: red;
+}
+
+#storagepress_add_feature_option_container{
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #8c8f94;
+    border-radius: 0.5rem;
+    
+}
+#storagepress_add_feature_option_button {
+    border: none;
+    padding-left: 1rem;
+    font-size: larger;
+    background-color: transparent;
+    display: grid;
+    place-items: center;
+}
+#storagepress_add_feature_option_button:hover {
+    color: green;
+}
+#storagepress_add_feature_option {
+    border: none;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}

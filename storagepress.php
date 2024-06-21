@@ -64,6 +64,8 @@ class StoragePress extends JGWPPlugin{
             new JGWPResource($this, 'alpine.min.js'),
             new JGWPResource($this, 'settings.css'),
             new JGWPResource($this, 'reservation_inquiries.css'),
+            new JGWPResource($this, 'feature_options_field.css'),
+            new JGWPResource($this, 'storage_unit_meta_inputs.css'),
         ];
 
         //initialize the plugin
