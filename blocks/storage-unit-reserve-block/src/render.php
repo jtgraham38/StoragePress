@@ -5,10 +5,6 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div>
-    <script>
-        window['storagepress'] = window['storagepress'] || {};
-        window['storagepress'].reserve_unit_route = "<?php echo rest_url('storagepress/v1/reserve-unit'); ?>"
-    </script>
     <?php 
         $tenant_id = get_post_meta(get_the_ID(), "sp_tenant", true);
         $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);

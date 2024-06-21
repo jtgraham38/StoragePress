@@ -138,6 +138,17 @@ class StoragePress extends JGWPPlugin{
         add_action('admin_menu', array($this, 'add_inquiries_list_page'));
         add_action('admin_notices', array($this, 'show_reservation_notices'));
 
+        //register script to create the storagepress window object
+        add_action('wp_enqueue_scripts', array($this, 'register_storagepress_window_object'));
+
+    }
+
+    //register script to create the storagepress window object
+    public function register_storagepress_window_object(){
+        wp_enqueue_script('storagepress_window_object', $this->get_base_url() . 'resources/js/storagepress_global.js', array(), null, true);
+        wp_localize_script('storagepress_window_object', 'php_args', array(
+            'reserve_unit_rest_route' => rest_url('storagepress/v1/reserve-unit')
+        ));
     }
 
     //show notices for reservation inquiries
@@ -180,7 +191,7 @@ class StoragePress extends JGWPPlugin{
         //if no listing page is set...
         if ($listing_page){
             wp_enqueue_script('wp-api');
-            wp_enqueue_script( 'storagepress_reserve_units', $this->get_base_url() . 'resources/js/reserve_unit_page.js');
+            //wp_enqueue_script( 'storagepress_reserve_units', $this->get_base_url() . 'resources/js/reserve_unit_page.js');
         }
     }
 
