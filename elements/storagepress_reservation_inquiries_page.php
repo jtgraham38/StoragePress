@@ -8,13 +8,12 @@ if (!defined('ABSPATH')) {
 //handle reservation inquiry actions
 if (isset($_POST['approve'])) {
     //verify nonce
-    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
-    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
         die('Security check failed.');
     }
 
     //get unit
-    $unit_id = $_POST['unit_id'];
+    $unit_id = intval($_POST['unit_id']);
     $unit = get_post($unit_id);
 
     //ensure unit exists
@@ -24,7 +23,7 @@ if (isset($_POST['approve'])) {
     }
 
     //send notification email to reserver
-    $reserver_id = $_POST['reserver_id'];
+    $reserver_id = intval($_POST['reserver_id']);
     $reserver = get_userdata($reserver_id);
     $unit = get_post($unit_id);
     $subject = "Reservation Inquiry Approved!";
@@ -41,13 +40,12 @@ if (isset($_POST['approve'])) {
 
 } else if (isset($_POST['deny'])) {
     //verify nonce
-    $nonce = $_POST['approve_deny_reservation_inquiry_nonce'];
-    if (!wp_verify_nonce($nonce, 'approve_deny_reservation_inquiry')) {
+    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
         die('Security check failed.');
     }
 
     //get unit
-    $unit_id = $_POST['unit_id'];
+    $unit_id = intval($_POST['unit_id']);
     $unit = get_post($unit_id);
 
     //ensure unit exists
@@ -57,7 +55,7 @@ if (isset($_POST['approve'])) {
     }
 
     //send notification email to reserver
-    $reserver_id = $_POST['reserver_id'];
+    $reserver_id = intval($_POST['reserver_id']);
     $reserver = get_userdata($reserver_id);
     $subject = "Reservation Inquiry Denied!";
     $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been denied.";
@@ -161,65 +159,3 @@ if ($inquirer_query->have_posts()) {
 
 }
 ?>
-
-<style>
-    .postbox-card{
-        padding: 1.25rem;
-        margin: 1rem;
-
-    }
-
-    .unit_detail_box{
-        display: inline-block;
-        min-width: 8rem;
-        max-width: 45%;
-        padding: 0 2rem;
-    }   
-
-    .unit_detail{
-        margin-top: 0.75rem;
-        font-size: 1.25rem;
-    }
-    
-    .feature_option {
-        display: inline-flex;
-        padding: 0.2rem 0.4rem 0.2rem 0.4rem;
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 0.5rem;
-        box-shadow: 0 0.25rem 0.5rem #ccc;
-        margin-top: 0.4rem;
-        margin-right: 0.2rem;
-    }
-
-    .action_btn{
-        padding: 0.4rem 0.8rem;
-        border: none;
-        border-radius: 0.5rem;
-        color: white;
-        font-size: larger;
-    }
-
-    .approve_btn{
-        background-color: green;
-    }
-
-    .approve_btn:hover{
-        background-color: darkgreen;
-    }
-
-    .deny_btn{
-        background-color: red;
-    }
-
-    .deny_btn:hover{
-        background-color: darkred;
-    }
-
-    /* clearfix */
-    .clearfix::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-</style>

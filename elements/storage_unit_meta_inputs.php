@@ -7,11 +7,7 @@ if (!defined('ABSPATH')) {
 global $post; //get the post being edited 
 ?>
 
-<style>
-    .sp_input_group{
-        margin-bottom: 0.75rem;
-    }
-</style>
+
 
 <div class="sp_input_group">
     <label class="storagepress_input_label" for="sp_size">Size:</label>

@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     $pages = get_pages();
     foreach ($pages as $page) {
         $selected = get_option('storagepress_listing_page') == $page->ID ? 'selected' : '';
-        ?><option value="<?php echo esc_attr($page->ID)?>" <?php echo esc_attr($selected) ?>> <?php echo $page->post_title ?></option><?php
+        ?><option value="<?php echo esc_attr($page->ID)?>" <?php echo esc_attr($selected) ?>> <?php echo esc_html($page->post_title) ?></option><?php
     }
     ?>
 </select>

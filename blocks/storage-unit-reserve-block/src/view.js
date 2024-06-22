@@ -28,7 +28,7 @@
 document.addEventListener('DOMContentLoaded', (event) => {
 
     //get the message
-    message = window['storagepress'].reserve_status_notification;
+    message = window['storagepress']?.reserve_status_notification;
 
     //if message is not found, create it
     if (!message){

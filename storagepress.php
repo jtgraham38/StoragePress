@@ -7,6 +7,8 @@ Version: 1.0.0
 Author: Jacob Graham
 Author URI: https://jacob-t-graham.com
 Text Domain: storagepress
+License: GPL v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 */
 
 //
@@ -61,6 +63,9 @@ class StoragePress extends JGWPPlugin{
         $admin_resources = [
             new JGWPResource($this, 'alpine.min.js'),
             new JGWPResource($this, 'settings.css'),
+            new JGWPResource($this, 'reservation_inquiries.css'),
+            new JGWPResource($this, 'feature_options_field.css'),
+            new JGWPResource($this, 'storage_unit_meta_inputs.css'),
         ];
 
         //initialize the plugin
@@ -133,6 +138,17 @@ class StoragePress extends JGWPPlugin{
         add_action('admin_menu', array($this, 'add_inquiries_list_page'));
         add_action('admin_notices', array($this, 'show_reservation_notices'));
 
+        //register script to create the storagepress window object
+        add_action('wp_enqueue_scripts', array($this, 'register_storagepress_window_object'));
+
+    }
+
+    //register script to create the storagepress window object
+    public function register_storagepress_window_object(){
+        wp_enqueue_script('storagepress_window_object', $this->get_base_url() . 'resources/js/storagepress_global.js', array(), null, true);
+        wp_localize_script('storagepress_window_object', 'php_args', array(
+            'reserve_unit_rest_route' => rest_url('storagepress/v1/reserve-unit')
+        ));
     }
 
     //show notices for reservation inquiries
@@ -175,7 +191,7 @@ class StoragePress extends JGWPPlugin{
         //if no listing page is set...
         if ($listing_page){
             wp_enqueue_script('wp-api');
-            wp_enqueue_script( 'storagepress_reserve_units', $this->get_base_url() . 'resources/js/reserve_unit_page.js');
+            //wp_enqueue_script( 'storagepress_reserve_units', $this->get_base_url() . 'resources/js/reserve_unit_page.js');
         }
     }
 
@@ -614,13 +630,13 @@ class StoragePress extends JGWPPlugin{
     }
 
     //save data from those inputs
-    function save_quick_edit_data($post_id){
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
-        if (!current_user_can('edit_post', $post_id)) return;
-        if (isset($_POST['my_custom_field'])) {
-            update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
-        }
-    }
+    // function save_quick_edit_data($post_id){
+    //     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    //     if (!current_user_can('edit_post', $post_id)) return;
+    //     if (isset($_POST['my_custom_field'])) {
+    //         update_post_meta($post_id, 'my_custom_field', $_POST['my_custom_field']);
+    //     }
+    // }
 
     // add fields to listing of storage units table
     public function storage_units_columns($columns) {
@@ -640,7 +656,7 @@ class StoragePress extends JGWPPlugin{
                 case 'price':
                     // get the custom field value and echo it
                     $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'sp_price', true)) / 100);
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo $custom_field_value != "" ? $custom_field_value : "None";
                     break;
                 case 'size':
                     // get the custom field value and echo it
@@ -650,9 +666,9 @@ class StoragePress extends JGWPPlugin{
                     if ($length != "" && $width != "" && $unit != "") {
                         $custom_field_value = $length . " " . $unit . " &times; " . $width . " " . $unit;
                     } else {
-                        $custom_field_value = "N/A";
+                        $custom_field_value = "None";
                     }
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo $custom_field_value != "" ? $custom_field_value : "None";
                     break;
                 case 'tenant':
                     // get the custom field value and echo it
@@ -667,12 +683,12 @@ class StoragePress extends JGWPPlugin{
                             }
                         }
                         else{
-                            $custom_field_value = "N/A";
+                            $custom_field_value = "None";
                         }
                     }else{
-                        $custom_field_value = "N/A";
+                        $custom_field_value = "None";
                     }
-                    echo $custom_field_value != "" ? $custom_field_value : "N/A";
+                    echo wp_kses($custom_field_value != "" ? $custom_field_value : "None", array('a' => array('href' => array())));
                     break;
             }
         }
