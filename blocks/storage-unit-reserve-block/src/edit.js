@@ -34,7 +34,7 @@ export default function Edit(props) {
 
 	// //get post data if the context we are in is that of a storage unit
 	// const db_record = useSelect((select) => {
-	// 	if (props.context.postType == 'storage_unit') {
+	// 	if (props.context.postType == 'storagepress_unit') {
     //         const { getEditedEntityRecord } = select('core');
 	// 		const record = getEditedEntityRecord('postType', props.context.postType, props.context.postId);
 	// 		return record;

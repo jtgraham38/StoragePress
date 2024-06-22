@@ -50,7 +50,7 @@ export default function Edit(props) {
 
 	//get meta if the context we are in is that of a storage unit
 	let meta = {}
-	if (props.context.postType == 'storage_unit'){
+	if (props.context.postType == 'storagepress_unit'){
 		//get the unit record from the db, then return it's meta object
 		const db_meta = useSelect((select) => {
 			const { getEditedEntityRecord } = select('core');
@@ -90,7 +90,7 @@ export default function Edit(props) {
 				</PanelBody>
 			</InspectorControls>
 
-			{ props.context.postType != 'storage_unit' ? 
+			{ props.context.postType != 'storagepress_unit' ? 
 				<div { ...useBlockProps() }>No Storage Unit Found!</div>
 			:
 				<div { ...useBlockProps() }>

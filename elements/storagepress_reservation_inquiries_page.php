@@ -70,7 +70,7 @@ if (isset($_POST['approve'])) {
 
 //query for all storage units which have an inquirer
 $inquirer_query = new WP_Query(array(
-    'post_type' => 'storage_unit',
+    'post_type' => 'storagepress_unit',
     'meta_query' => array(
         array(
             'relation' => 'AND',
