@@ -5,8 +5,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 global $post; //get the post being edited 
-?>
 
+//add nonce field
+wp_nonce_field('storagepress_unit_meta_nonce', 'storagepress_unit_meta_fields_nonce_field');
+//^key of nonce, name of input field
+?>
 
 
 <div class="stpr_input_group">

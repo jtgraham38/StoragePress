@@ -162,6 +162,7 @@ class StoragePress extends Storagepress_JGWPPlugin{
             }
         }
 
+        //show the admin notices
         if (isset($_POST['approve'])){
             ?>
             <div class="notice notice-success is-dismissible">
@@ -540,6 +541,19 @@ class StoragePress extends Storagepress_JGWPPlugin{
 
     //save custom fields for storage units
     function save_storage_unit_custom_fields($post_id){
+        //verify the nonce
+        if (!isset($_POST['storagepress_unit_meta_fields_nonce_field']) || !wp_verify_nonce($_POST['storagepress_unit_meta_fields_nonce_field'], 'storagepress_unit_meta_nonce')) {
+            http_response_code(403);
+            die('Invalid nonce.');
+        }
+
+        //ensure the user has permission to edit the post
+        if (!current_user_can('edit_post', $post_id)) {
+            http_response_code(403);
+            die('You do not have permission to edit this post.');
+        }
+
+        //save the fields
         if(isset($_POST['post_type']) && $_POST['post_type'] == 'storagepress_unit'){
             // save length
             if(isset($_POST['stpr_length'])){
@@ -640,6 +654,8 @@ class StoragePress extends Storagepress_JGWPPlugin{
 
     //save data from those inputs
     // function save_quick_edit_data($post_id){
+    //      //TODO: add nonce verification
+    //    
     //     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     //     if (!current_user_can('edit_post', $post_id)) return;
     //     if (isset($_POST['my_custom_field'])) {
