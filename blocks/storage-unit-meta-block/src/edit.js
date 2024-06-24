@@ -42,10 +42,10 @@ export default function Edit(props) {
 	//set select input options
 	const options = {
 		'none': 'Choose a Unit Meta Detail...',
-		'sp_size': 'Size',
-		'sp_price': 'Price',
-		'sp_features': 'Features',
-		'sp_available': 'Availability',
+		'stpr_size': 'Size',
+		'stpr_price': 'Price',
+		'stpr_features': 'Features',
+		'stpr_available': 'Availability',
 	}
 
 	//get meta if the context we are in is that of a storage unit
@@ -61,10 +61,10 @@ export default function Edit(props) {
 		//format metadata for outputting
 		meta = {
 			'none': 'Choose a Storage Unit Meta Detail...',
-			'sp_size': db_meta['sp_length'] + db_meta['sp_unit'] + " × " + db_meta['sp_width'] + db_meta['sp_unit'],
-			'sp_price': "$" + Math.floor(db_meta['sp_price'] / 100).toFixed(2),
-			'sp_features': db_meta['sp_features'],
-			'sp_available': db_meta['sp_tenant'] ? "Rented" : "Available",
+			'stpr_size': db_meta['stpr_length'] + db_meta['stpr_unit'] + " × " + db_meta['stpr_width'] + db_meta['stpr_unit'],
+			'stpr_price': "$" + Math.floor(db_meta['stpr_price'] / 100).toFixed(2),
+			'stpr_features': db_meta['stpr_features'],
+			'stpr_available': db_meta['stpr_tenant'] ? "Rented" : "Available",
 		}
 	}
 
@@ -94,9 +94,9 @@ export default function Edit(props) {
 				<div { ...useBlockProps() }>No Storage Unit Found!</div>
 			:
 				<div { ...useBlockProps() }>
-					{ meta['sp_features'] && props.attributes.key == 'sp_features' ?
-						(meta['sp_features'].length > 0 ? meta[props.attributes.key].map((feature, index) => (
-							<span key={index} className="sp_feature_tag">{feature}</span>
+					{ meta['stpr_features'] && props.attributes.key == 'stpr_features' ?
+						(meta['stpr_features'].length > 0 ? meta[props.attributes.key].map((feature, index) => (
+							<span key={index} className="stpr_feature_tag">{feature}</span>
 						)) : 'No features assigned!')
 					:
 						(meta ? (meta[props.attributes.key] ? meta[props.attributes.key] : "No Meta for that Key!") : 'No Meta Found!')

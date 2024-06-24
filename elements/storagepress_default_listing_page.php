@@ -75,13 +75,13 @@ if (!defined('ABSPATH')) {
 
 <!-- wp:column {"width":"65%"} -->
 <div class="wp-block-column" style="flex-basis:65%"><!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
-<div class="wp-block-group"><!-- wp:storagepress/storage-unit-meta-block {"key":"sp_size"} /-->
+<div class="wp-block-group"><!-- wp:storagepress/storage-unit-meta-block {"key":"stpr_size"} /-->
 
-<!-- wp:storagepress/storage-unit-meta-block {"key":"sp_price"} /-->
+<!-- wp:storagepress/storage-unit-meta-block {"key":"stpr_price"} /-->
 
-<!-- wp:storagepress/storage-unit-meta-block {"key":"sp_available"} /-->
+<!-- wp:storagepress/storage-unit-meta-block {"key":"stpr_available"} /-->
 
-<!-- wp:storagepress/storage-unit-meta-block {"key":"sp_features"} /-->
+<!-- wp:storagepress/storage-unit-meta-block {"key":"stpr_features"} /-->
 
 <!-- wp:spacer {"height":"47px","style":{"layout":{"flexSize":"1rem","selfStretch":"fixed"}}} -->
 <div style="height:47px" aria-hidden="true" class="wp-block-spacer"></div>

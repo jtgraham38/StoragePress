@@ -20,22 +20,22 @@ if ($post->post_type != 'storagepress_unit'){
 	if (array_key_exists('key', $attributes)){
 		$output = '';
 		switch($attributes['key']){
-			case 'sp_size':
-				$output = esc_attr(get_post_meta($post->ID, 'sp_length', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'sp_unit', true)) . ' &times; ' . esc_attr(get_post_meta($post->ID, 'sp_width', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'sp_unit', true));
+			case 'stpr_size':
+				$output = esc_attr(get_post_meta($post->ID, 'stpr_length', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'stpr_unit', true)) . ' &times; ' . esc_attr(get_post_meta($post->ID, 'stpr_width', true)) . ' ' . esc_attr(get_post_meta($post->ID, 'stpr_unit', true));
 				break;
-			case 'sp_price':
-				$output = '$' . (esc_attr((int)get_post_meta($post->ID, 'sp_price', true) / 100)) . "/mo.";
+			case 'stpr_price':
+				$output = '$' . (esc_attr((int)get_post_meta($post->ID, 'stpr_price', true) / 100)) . "/mo.";
 				break;
-			case 'sp_available':
-				$tenant = get_post_meta($post->ID, 'sp_tenant', true);
+			case 'stpr_available':
+				$tenant = get_post_meta($post->ID, 'stpr_tenant', true);
 				if ($tenant == 0){
 					$output = 'Available';
 				}else{
 					$output = 'Rented';
 				}
 				break;
-			case 'sp_features':
-				$features = get_post_meta($post->ID, 'sp_features', false);
+			case 'stpr_features':
+				$features = get_post_meta($post->ID, 'stpr_features', false);
 				if (count($features) > 0){
 					//feature tag style
 
@@ -44,7 +44,7 @@ if ($post->post_type != 'storagepress_unit'){
 					<?php
 					//display features
 					foreach($features[0] as $feature){
-						$output .= '<span class="sp_feature_tag">' . esc_attr($feature) . '</span> '; 
+						$output .= '<span class="stpr_feature_tag">' . esc_attr($feature) . '</span> '; 
 					}
 				}
 				else{

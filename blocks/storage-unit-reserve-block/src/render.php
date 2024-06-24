@@ -6,8 +6,8 @@ if (!defined('ABSPATH')) {
 ?>
 <div>
     <?php 
-        $tenant_id = get_post_meta(get_the_ID(), "sp_tenant", true);
-        $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);
+        $tenant_id = get_post_meta(get_the_ID(), "stpr_tenant", true);
+        $inquirer_id = get_post_meta(get_the_ID(), "stpr_reservation_inquirer", true);
 
         // var_dump($tenant_id);
         // echo "<br>";
@@ -57,7 +57,7 @@ if (!defined('ABSPATH')) {
                     </div>
                     <div style="margin-bottom: 0.25rem;">
                         <label for="reserve_unit_<?php the_ID(); ?>_email_input" style="display: block;">Your Email</label>
-                        <input name="email" value="<?php echo esc_email($current_user->user_email); ?>" class="storagepress_text_input" type="email" id="reserve_unit_<?php the_ID(); ?>_email_input" placeholder="Email">
+                        <input name="email" value="<?php echo esc_attr($current_user->user_email); ?>" class="storagepress_text_input" type="email" id="reserve_unit_<?php the_ID(); ?>_email_input" placeholder="Email">
                     </div>
                     <input type="submit" value="Submit" <?php echo get_block_wrapper_attributes(array('class'=>'storagepress-reserve-button')) ?>>
                 </form>

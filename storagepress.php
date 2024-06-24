@@ -213,7 +213,7 @@ class StoragePress extends Storagepress_JGWPPlugin{
                 //ensure this user has no other active inquiries
                 $inquiries = get_posts(array(
                     'post_type' => 'storagepress_unit',
-                    'meta_key' => 'sp_reservation_inquirer',
+                    'meta_key' => 'stpr_reservation_inquirer',
                     'meta_value' => get_current_user_id()
                 ));
                 if (count($inquiries) > 0){
@@ -221,17 +221,17 @@ class StoragePress extends Storagepress_JGWPPlugin{
                 }
 
                 //see if the unit is already rented
-                if (get_post_meta($unit_id, "sp_tenant", true)){
+                if (get_post_meta($unit_id, "stpr_tenant", true)){
                     return new WP_Error('unit_already_rented', 'This unit is already rented', array('status' => 400));
                 }
 
                 //set the inquirer to the current user
-                if (get_post_meta($unit_id, "sp_reservation_inquirer", true)){
+                if (get_post_meta($unit_id, "stpr_reservation_inquirer", true)){
                     return new WP_Error('unit_already_reserved', 'This unit has already been reserved', array('status' => 400));
                 }
                 $inquirer = wp_get_current_user();
-                update_post_meta( $unit_id, "sp_reservation_inquirer", $inquirer->ID);
-                update_post_meta( $unit_id, "sp_last_rental_date", date('Y-m-d H:i:s'));
+                update_post_meta( $unit_id, "stpr_reservation_inquirer", $inquirer->ID);
+                update_post_meta( $unit_id, "stpr_last_rental_date", date('Y-m-d H:i:s'));
 
                 //send an email to the business owner
                 $business_email = get_option('storagepress_email');
@@ -393,25 +393,25 @@ class StoragePress extends Storagepress_JGWPPlugin{
         register_post_type('storagepress_unit', $args);
 
         //add attributes to storage unit post type
-        register_post_meta('storagepress_unit', 'sp_length', array(  //length
+        register_post_meta('storagepress_unit', 'stpr_length', array(  //length
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_width', array(  //width
+        register_post_meta('storagepress_unit', 'stpr_width', array(  //width
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_unit', array(  //unit
+        register_post_meta('storagepress_unit', 'stpr_unit', array(  //unit
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_features', array(  //type
+        register_post_meta('storagepress_unit', 'stpr_features', array(  //type
             'show_in_rest' => array(
                 'schema' => array(  //schema for the rest api
                     'type' => 'array',
@@ -424,31 +424,31 @@ class StoragePress extends Storagepress_JGWPPlugin{
             'type' => 'array',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_price', array(  //price
+        register_post_meta('storagepress_unit', 'stpr_price', array(  //price
             'show_in_rest' => true,
             'single' => true,
             'type' => 'number',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_tenant', array(  //status
+        register_post_meta('storagepress_unit', 'stpr_tenant', array(  //status
             'show_in_rest' => true,
             'single' => true,
             'type' => 'int',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_last_rental_date', array(  //date the last rental began
+        register_post_meta('storagepress_unit', 'stpr_last_rental_date', array(  //date the last rental began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_last_vacant_date', array(  //date the last vacancy began
+        register_post_meta('storagepress_unit', 'stpr_last_vacant_date', array(  //date the last vacancy began
             'show_in_rest' => true,
             'single' => true,
             'type' => 'string',
             'object_subtype' => 'storagepress_unit'
         ));
-        register_post_meta('storagepress_unit', 'sp_reservation_inquirer', array(  //date of last payment
+        register_post_meta('storagepress_unit', 'stpr_reservation_inquirer', array(  //date of last payment
             'show_in_rest' => true,
             'single' => true,
             'type' => 'int',
@@ -533,64 +533,64 @@ class StoragePress extends Storagepress_JGWPPlugin{
     function save_storage_unit_custom_fields($post_id){
         if(isset($_POST['post_type']) && $_POST['post_type'] == 'storagepress_unit'){
             // save length
-            if(isset($_POST['sp_length'])){
-                $length = floatval($_POST['sp_length']);
-                update_post_meta($post_id, 'sp_length', $length);
+            if(isset($_POST['stpr_length'])){
+                $length = floatval($_POST['stpr_length']);
+                update_post_meta($post_id, 'stpr_length', $length);
             }
             //save width
-            if(isset($_POST['sp_width'])){
-                $width = floatval($_POST['sp_width']);
-                update_post_meta($post_id, 'sp_width', $width);
+            if(isset($_POST['stpr_width'])){
+                $width = floatval($_POST['stpr_width']);
+                update_post_meta($post_id, 'stpr_width', $width);
             }
             // save unit
-            if(isset($_POST['sp_unit'])){
-                $unit = sanitize_text_field($_POST['sp_unit']);
-                update_post_meta($post_id, 'sp_unit', $unit);
+            if(isset($_POST['stpr_unit'])){
+                $unit = sanitize_text_field($_POST['stpr_unit']);
+                update_post_meta($post_id, 'stpr_unit', $unit);
             }
 
             // get features from request, and save them
             
-            if(isset($_POST['sp_features'])){
-                $sp_features = array_map('sanitize_text_field', $_POST['sp_features']);
-                update_post_meta($post_id, 'sp_features', $sp_features, false);
+            if(isset($_POST['stpr_features'])){
+                $stpr_features = array_map('sanitize_text_field', $_POST['stpr_features']);
+                update_post_meta($post_id, 'stpr_features', $stpr_features, false);
             }
             else{
                 //if no value was sent, set the features to empty
-                update_post_meta($post_id, 'sp_features', []);
+                update_post_meta($post_id, 'stpr_features', []);
             }
 
             // save price
-            if(isset($_POST['sp_price'])){
-                $price = floatval($_POST['sp_price']) * 100;
-                update_post_meta($post_id, 'sp_price', $price);
+            if(isset($_POST['stpr_price'])){
+                $price = floatval($_POST['stpr_price']) * 100;
+                update_post_meta($post_id, 'stpr_price', $price);
             }
 
             // save tenant
-            if(isset($_POST['sp_tenant'])){
-                $tenant = intval($_POST['sp_tenant']);
-                update_post_meta($post_id, 'sp_tenant', $tenant);
+            if(isset($_POST['stpr_tenant'])){
+                $tenant = intval($_POST['stpr_tenant']);
+                update_post_meta($post_id, 'stpr_tenant', $tenant);
             }
             
             //update if now vacant
-            if (isset($_POST['sp_tenant']) && $_POST['sp_tenant'] == "null"){
+            if (isset($_POST['stpr_tenant']) && $_POST['stpr_tenant'] == "null"){
                 //if the tenant is not set, set the last vacant date to today
-                update_post_meta($post_id, 'sp_last_vacant_date', date('Y-m-d H:i:s'));
+                update_post_meta($post_id, 'stpr_last_vacant_date', date('Y-m-d H:i:s'));
             }
-            else if (isset($_POST['sp_tenant'])){
+            else if (isset($_POST['stpr_tenant'])){
                 //if the tenant is set, set the last rental date to today
-                update_post_meta($post_id, 'sp_last_rental_date', date('Y-m-d H:i:s'));
+                update_post_meta($post_id, 'stpr_last_rental_date', date('Y-m-d H:i:s'));
             }
 
             // // save last rental date
-            // if(isset($_POST['sp_last_rental_date'])){
-            //     $last_rental_date = sanitize_text_field($_POST['sp_last_rental_date']);
-            //     update_post_meta($post_id, 'sp_last_rental_date', $last_rental_date);
+            // if(isset($_POST['stpr_last_rental_date'])){
+            //     $last_rental_date = sanitize_text_field($_POST['stpr_last_rental_date']);
+            //     update_post_meta($post_id, 'stpr_last_rental_date', $last_rental_date);
             // }
 
             // // save last payment date
-            // if(isset($_POST['sp_last_vacant_date'])){
-            //     $last_payment_date = sanitize_text_field($_POST['sp_last_vacant_date']);
-            //     update_post_meta($post_id, 'sp_last_vacant_date', $last_payment_date);
+            // if(isset($_POST['stpr_last_vacant_date'])){
+            //     $last_payment_date = sanitize_text_field($_POST['stpr_last_vacant_date']);
+            //     update_post_meta($post_id, 'stpr_last_vacant_date', $last_payment_date);
             // }
         }
     }
@@ -605,19 +605,19 @@ class StoragePress extends Storagepress_JGWPPlugin{
             case 'price': ?> 
                 <fieldset class="inline-edit-col-right" style="display: flex; flex-direction: column;">
                     <div class="inline-edit-col">
-                        <label for="sp_size">
+                        <label for="stpr_size">
                             <span class="title">Size</span>
                             <span class="input-text-wrap">
                                 <?php include_once $this->base_dir . 'elements/size_storage_unit_meta_field.php'; ?>
                             </span>
                         </label>
-                        <label for="sp_price">
+                        <label for="stpr_price">
                             <span class="title">Price</span>
                             <span class="input-text-wrap">
                                 <?php include_once $this->base_dir . 'elements/price_storage_unit_meta_field.php'; ?>
                             </span>
                         </label>
-                        <label for="sp_tenant_select">
+                        <label for="stpr_tenant_select">
                             <span class="title">Tenant</span>
                             <span class="input-text">
                                 <?php include_once $this->base_dir . 'elements/tenant_storage_unit_meta_field.php'; ?>
@@ -655,14 +655,14 @@ class StoragePress extends Storagepress_JGWPPlugin{
             switch ($column) {
                 case 'price':
                     // get the custom field value and echo it
-                    $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'sp_price', true)) / 100);
+                    $custom_field_value = "$" . esc_attr(floatval(get_post_meta($post_id, 'stpr_price', true)) / 100);
                     echo $custom_field_value != "" ? $custom_field_value : "None";
                     break;
                 case 'size':
                     // get the custom field value and echo it
-                    $unit = esc_attr(get_post_meta($post_id, 'sp_unit', true));
-                    $length = esc_attr(get_post_meta($post_id, 'sp_length', true));
-                    $width = esc_attr(get_post_meta($post_id, 'sp_width', true));
+                    $unit = esc_attr(get_post_meta($post_id, 'stpr_unit', true));
+                    $length = esc_attr(get_post_meta($post_id, 'stpr_length', true));
+                    $width = esc_attr(get_post_meta($post_id, 'stpr_width', true));
                     if ($length != "" && $width != "" && $unit != "") {
                         $custom_field_value = $length . " " . $unit . " &times; " . $width . " " . $unit;
                     } else {
@@ -672,7 +672,7 @@ class StoragePress extends Storagepress_JGWPPlugin{
                     break;
                 case 'tenant':
                     // get the custom field value and echo it
-                    $uid = esc_attr(get_post_meta($post_id, 'sp_tenant', true));
+                    $uid = esc_attr(get_post_meta($post_id, 'stpr_tenant', true));
                     $user = get_user_by('id', $uid);
                     if (isset($user)){
                         if (isset($user->display_name)){

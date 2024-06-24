@@ -34,7 +34,7 @@
     },
     "example": {
         "attributes": {
-            "key": "sp_size"
+            "key": "stpr_size"
         }
     },
     "editorScript": "file:./index.js",

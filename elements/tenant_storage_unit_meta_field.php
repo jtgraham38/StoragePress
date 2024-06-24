@@ -7,16 +7,16 @@ if (!defined('ABSPATH')) {
 //get unit
 $unit = get_post($post->ID);
 if ($unit) {
-    $tenant_id = get_post_meta($unit->ID, 'sp_tenant', true);
+    $tenant_id = get_post_meta($unit->ID, 'stpr_tenant', true);
 }
 ?>
-<select class="storagepress_settings_input" id="sp_tenant_select" name="sp_tenant">
+<select class="storagepress_settings_input" id="stpr_tenant_select" name="stpr_tenant">
     <option value="null">No Tenant</option>
     <?php 
     $users = get_users();
     foreach ($users as $user) {
         
-        //$selected = isset($post->ID) && get_post_meta($post->ID, 'sp_tenant', true) == $user->ID ? 'selected' : '';
+        //$selected = isset($post->ID) && get_post_meta($post->ID, 'stpr_tenant', true) == $user->ID ? 'selected' : '';
         ?>
         <option 
             value="<?php echo esc_attr($user->ID)?>"

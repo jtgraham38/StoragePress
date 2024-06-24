@@ -31,9 +31,9 @@ if (isset($_POST['approve'])) {
     wp_mail($reserver->user_email, $subject, $message);
 
     //update storage unit post meta to reflect reservation inquiry approval
-    update_post_meta($unit_id, "sp_tenant", $reserver_id);
-    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
-    update_post_meta($unit_id, "sp_last_rental_date", date("Y-m-d H:i:s"));   //update the last rental date (this represents the last date that a rental began)
+    update_post_meta($unit_id, "stpr_tenant", $reserver_id);
+    update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
+    update_post_meta($unit_id, "stpr_last_rental_date", date("Y-m-d H:i:s"));   //update the last rental date (this represents the last date that a rental began)
 
     
 
@@ -62,7 +62,7 @@ if (isset($_POST['approve'])) {
     wp_mail($reserver->user_email, $subject, $message);
 
     //update storage unit post meta to reflect reservation inquiry denial
-    update_post_meta($unit_id, "sp_reservation_inquirer", "0"); //must set it to 0, not "" or null
+    update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
 }
 
 
@@ -73,10 +73,10 @@ $inquirer_query = new WP_Query(array(
         array(
             'relation' => 'AND',
             array(
-                'key' => 'sp_reservation_inquirer',
+                'key' => 'stpr_reservation_inquirer',
                 'compare' => 'EXISTS'
             ),
-            'key' => 'sp_reservation_inquirer',
+            'key' => 'stpr_reservation_inquirer',
             'value' => '0',
             'compare' => '!='
         )
@@ -87,7 +87,7 @@ $inquirer_query = new WP_Query(array(
 if ($inquirer_query->have_posts()) {
     while ($inquirer_query->have_posts()) {
         $inquirer_query->the_post();
-        $inquirer_id = get_post_meta(get_the_ID(), "sp_reservation_inquirer", true);
+        $inquirer_id = get_post_meta(get_the_ID(), "stpr_reservation_inquirer", true);
         $inquirer = get_userdata($inquirer_id);
         ?>
         <div class="postbox postbox-card clearfix">
@@ -98,14 +98,14 @@ if ($inquirer_query->have_posts()) {
             <div class="unit_detail_box">
                 <div class="unit_detail">
                     <?php
-                    $length = get_post_meta(get_the_ID(), "sp_length", true);
-                    $width = get_post_meta(get_the_ID(), "sp_width", true);
-                    $unit = get_post_meta(get_the_ID(), "sp_unit", true);
+                    $length = get_post_meta(get_the_ID(), "stpr_length", true);
+                    $width = get_post_meta(get_the_ID(), "stpr_width", true);
+                    $unit = get_post_meta(get_the_ID(), "stpr_unit", true);
                     ?>
                     Size: <?php echo esc_attr($length); ?> <?php echo esc_attr($unit); ?> &times; <?php echo esc_attr($width); ?> <?php echo esc_attr($unit); ?>
                 </div>
                 <div class="unit_detail">
-                    Price: $<?php echo esc_attr(((int)get_post_meta(get_the_ID(), "sp_price", true)) / 100); ?> / mo.
+                    Price: $<?php echo esc_attr(((int)get_post_meta(get_the_ID(), "stpr_price", true)) / 100); ?> / mo.
                 </div>
             </div>
 
@@ -114,7 +114,7 @@ if ($inquirer_query->have_posts()) {
                     Unit Features: 
                     <span>
                         <?php
-                        $features = get_post_meta(get_the_ID(), "sp_features", true);
+                        $features = get_post_meta(get_the_ID(), "stpr_features", true);
                         if ($features) {
                             foreach ($features as $feature) {
                                 ?>
