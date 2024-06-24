@@ -32,7 +32,7 @@ class StoragePress extends Storagepress_JGWPPlugin{
         $base_dir = plugin_dir_path(__FILE__);
         $base_url = plugin_dir_url(__FILE__);
         $settings_groups = [
-            new Storagepress_Storagepress_JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
+            new Storagepress_JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
             })
         ];
