@@ -153,6 +153,15 @@ class StoragePress extends Storagepress_JGWPPlugin{
 
     //show notices for reservation inquiries
     public function show_reservation_notices(){
+
+        //verify the nonce
+        if (isset($_POST['approve']) || isset($_POST['deny'])) {
+            if (!isset($_POST['approve_deny_reservation_inquiry_nonce']) || !wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
+                http_response_code(403);
+                die('Invalid nonce.');
+            }
+        }
+
         if (isset($_POST['approve'])){
             ?>
             <div class="notice notice-success is-dismissible">

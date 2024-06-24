@@ -5,64 +5,67 @@ if (!defined('ABSPATH')) {
 }
 ?> <h2>Rental Inquirees</h2> <?php
 
+//verify nonce
+if (isset($_POST['approve']) || isset($_POST['deny'])) {
+    if (!isset($_POST['approve_deny_reservation_inquiry_nonce']) || !wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
+        http_response_code(403);
+        die('Invalid nonce.');
+    }
+}
+
+
 //handle reservation inquiry actions
-if (isset($_POST['approve'])) {
-    //verify nonce
-    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
-        die('Security check failed.');
-    }
-
-    //get unit
-    $unit_id = intval($_POST['unit_id']);
-    $unit = get_post($unit_id);
-
-    //ensure unit exists
-    if (!$unit) {
-        http_response_code(404);
-        die('Invalid unit id.');
-    }
-
-    //send notification email to reserver
-    $reserver_id = intval($_POST['reserver_id']);
-    $reserver = get_userdata($reserver_id);
-    $unit = get_post($unit_id);
-    $subject = "Reservation Inquiry Approved!";
-    $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been approved!";
-    wp_mail($reserver->user_email, $subject, $message);
-
-    //update storage unit post meta to reflect reservation inquiry approval
-    update_post_meta($unit_id, "stpr_tenant", $reserver_id);
-    update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
-    update_post_meta($unit_id, "stpr_last_rental_date", date("Y-m-d H:i:s"));   //update the last rental date (this represents the last date that a rental began)
-
+if (current_user_can('manage_options')) {
+    if (isset($_POST['approve'])) {
     
-
-
-} else if (isset($_POST['deny'])) {
-    //verify nonce
-    if (!wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
-        die('Security check failed.');
+        //get unit
+        $unit_id = intval($_POST['unit_id']);
+        $unit = get_post($unit_id);
+    
+        //ensure unit exists
+        if (!$unit) {
+            http_response_code(404);
+            die('Invalid unit id.');
+        }
+    
+        //send notification email to reserver
+        $reserver_id = intval($_POST['reserver_id']);
+        $reserver = get_userdata($reserver_id);
+        $unit = get_post($unit_id);
+        $subject = "Reservation Inquiry Approved!";
+        $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been approved!";
+        wp_mail($reserver->user_email, $subject, $message);
+    
+        //update storage unit post meta to reflect reservation inquiry approval
+        update_post_meta($unit_id, "stpr_tenant", $reserver_id);
+        update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
+        update_post_meta($unit_id, "stpr_last_rental_date", date("Y-m-d H:i:s"));   //update the last rental date (this represents the last date that a rental began)
+    
+        
+    
+    
+    } else if (isset($_POST['deny'])) {
+    
+        //get unit
+        $unit_id = intval($_POST['unit_id']);
+        $unit = get_post($unit_id);
+    
+        //ensure unit exists
+        if (!$unit) {
+            http_response_code(404);
+            die('Invalid unit id.');
+        }
+    
+        //send notification email to reserver
+        $reserver_id = intval($_POST['reserver_id']);
+        $reserver = get_userdata($reserver_id);
+        $subject = "Reservation Inquiry Denied!";
+        $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been denied.";
+        wp_mail($reserver->user_email, $subject, $message);
+    
+        //update storage unit post meta to reflect reservation inquiry denial
+        update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
     }
-
-    //get unit
-    $unit_id = intval($_POST['unit_id']);
-    $unit = get_post($unit_id);
-
-    //ensure unit exists
-    if (!$unit) {
-        http_response_code(404);
-        die('Invalid unit id.');
-    }
-
-    //send notification email to reserver
-    $reserver_id = intval($_POST['reserver_id']);
-    $reserver = get_userdata($reserver_id);
-    $subject = "Reservation Inquiry Denied!";
-    $message = "Your reservation inquiry for the storage unit \"" . $unit->post_title . "\" has been denied.";
-    wp_mail($reserver->user_email, $subject, $message);
-
-    //update storage unit post meta to reflect reservation inquiry denial
-    update_post_meta($unit_id, "stpr_reservation_inquirer", "0"); //must set it to 0, not "" or null
 }
 
 
