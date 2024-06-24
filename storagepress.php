@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 //init global post variable
 
-require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
+require_once plugin_dir_path(__FILE__) . 'jg_wp_plugin_kit/JGWPPlugin.php';
 
 class StoragePress extends Storagepress_JGWPPlugin{
 
