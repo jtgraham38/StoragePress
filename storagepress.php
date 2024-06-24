@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 
 require_once plugin_dir_path(__FILE__) . '_jg_wp_plugin_kit/JGWPPlugin.php';
 
-class StoragePress extends JGWPPlugin{
+class StoragePress extends Storagepress_JGWPPlugin{
 
     // constructor, set values to pass to parent constructor
     public function __construct(){
@@ -32,19 +32,19 @@ class StoragePress extends JGWPPlugin{
         $base_dir = plugin_dir_path(__FILE__);
         $base_url = plugin_dir_url(__FILE__);
         $settings_groups = [
-            new JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
+            new Storagepress_Storagepress_JGWPSettingsGroup($this, 'storagepress_settings_section', 'StoragePress Settings', 'storagepress_settings_page', function(){
                 echo 'Configure settings for your self-storage business.';
             })
         ];
         $settings = [
-            new JGWPSetting($this, 'name', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Name', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'address', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Address', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'email', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Email', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'phone', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Phone', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'rental_terms', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Rental Terms', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'checks_payable_to', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Checks Payable To:', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'listing_page', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Unit Listing Page:', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'feature_options', array('default' => array(), 'sanitize_callback' => function($input){ 
+            new Storagepress_JGWPSetting($this, 'name', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Name', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'address', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Address', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'email', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Email', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'phone', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Business Phone', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'rental_terms', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Rental Terms', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'checks_payable_to', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Checks Payable To:', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'listing_page', array('default' => "", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Unit Listing Page:', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'feature_options', array('default' => array(), 'sanitize_callback' => function($input){ 
                 if (isset($input) && is_array($input)){
                     foreach($input as $key => $value){
                         $input[$key] = sanitize_text_field($value);
@@ -53,11 +53,11 @@ class StoragePress extends JGWPPlugin{
                 }
                 return [];
              }), 'storagepress_settings_page', 'Storage Unit Features:', 'storagepress_settings_section'),
-            new JGWPSetting($this, 'default_thumbnail_id', array('default' => null, 'sanitize_callback' => function($input){
+            new Storagepress_JGWPSetting($this, 'default_thumbnail_id', array('default' => null, 'sanitize_callback' => function($input){
                 $value = absint($input);
                 return $value > 0 ? $value : null;
             }), null, 'Default Thumbnail ID', null),
-            new JGWPSetting($this, 'display_credit_link', array('default' => "false", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Display Credit Link:', 'storagepress_settings_section'),
+            new Storagepress_JGWPSetting($this, 'display_credit_link', array('default' => "false", 'sanitize_callback' => 'sanitize_text_field'), 'storagepress_settings_page', 'Display Credit Link:', 'storagepress_settings_section'),
         ];
 
         $admin_resources = [
