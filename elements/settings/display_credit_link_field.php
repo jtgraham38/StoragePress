@@ -11,3 +11,4 @@ if (!defined('ABSPATH')) {
 <br>
 
 <p>Visit <a href="https://jacob-t-graham.com" target="_blank">my website</a> for inquiries!</p>
+<p>Would online payment processing be useful to your business?  <a href="https://jacob-t-graham.com/contact" target="_blank">Send me an email</a> letting me know, and if there is enough interest, I will build a solution that integrates with this plugin!</p>
