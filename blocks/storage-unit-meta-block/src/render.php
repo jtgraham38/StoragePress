@@ -60,6 +60,9 @@ if ($post->post_type != 'storagepress_unit'){
 	}
 	//otherwise, display default content
 	else{
-		echo '<div>(No Storage Unit Meta Chosen)</div>';
+		echo wp_kses(
+			'<div>(No Storage Unit Meta Chosen)</div>',
+			array('div' => array())
+		);
 	}
 }
