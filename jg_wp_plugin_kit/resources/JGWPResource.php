@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-class JGWPResource extends Storagepress_JGWPPluginItem{
+class storagepress_JGWPResource extends Storagepress_JGWPPluginItem{
 
     protected $filename;
     protected $type;
