@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 
 //verify nonce
 if (isset($_POST['approve']) || isset($_POST['deny'])) {
-    if (!isset($_POST['approve_deny_reservation_inquiry_nonce']) || !wp_verify_nonce($_POST['approve_deny_reservation_inquiry_nonce'], 'approve_deny_reservation_inquiry')) {
+    if (!isset($_POST['approve_deny_reservation_inquiry_nonce']) || !wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['approve_deny_reservation_inquiry_nonce'] ) ), 'approve_deny_reservation_inquiry')) {
         http_response_code(403);
         die('Invalid nonce.');
     }
