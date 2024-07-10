@@ -542,7 +542,7 @@ class StoragePress extends Storagepress_JGWPPlugin{
     //save custom fields for storage units
     function save_storage_unit_custom_fields($post_id){
         //verify the nonce
-        if (!isset($_POST['storagepress_unit_meta_fields_nonce_field']) || !wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['storagepress_unit_meta_fields_nonce_field'] ) ), 'storagepress_unit_meta_nonce')) {
+        if ($_SERVER['REQUEST_METHOD'] != 'GET' && ( !isset($_POST['storagepress_unit_meta_fields_nonce_field']) || !wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['storagepress_unit_meta_fields_nonce_field'] ) ), 'storagepress_unit_meta_nonce') )) {
             http_response_code(403);
             die('Invalid nonce.');
         }
