@@ -25,7 +25,7 @@ import './editor.scss';
 other imports, by me
 */
 import apiFetch from '@wordpress/api-fetch';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 
 /**
@@ -53,14 +53,14 @@ export default function Edit(props) {
     const [settings, set_settings] = useState(options)
 
     //get settings to display in the editor
-    apiFetch( { path: '/storagepress/v1/business-details' } )
-    .then( (response) => {
-        delete response['storagepress_listing_page']
-        response['none'] = 'Choose a Business Detail...'
-        set_settings(response);
-    } )
-
-    
+    useEffect(() => {
+        apiFetch( { path: '/storagepress/v1/business-details' } )
+        .then( (response) => {
+            delete response['storagepress_listing_page']
+            response['none'] = 'Choose a Business Detail...'
+            set_settings(response);
+        } )
+    }, [])
 	
 
 	return (
