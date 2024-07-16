@@ -1,14 +1,14 @@
 === StoragePress ===
 Contributors: jtgraham38
 Donate link: https://jacob-t-graham.com/contact/
-Tags: self-storage, storage, storage-unit, mini-storage, storage-business
+Tags: self-storage, storage, storage-unit, mini-storage
 Requires at least: 4.7
 Tested up to: 6.5.2
 Stable Tag: 1.0.0
 Requires PHP: 7.0
 License: GNU GENERAL PUBLIC LICENSE, Version 3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
-A plugin designed to let owner's of self-storage businesses list their storage units for rent on their WordPress website.
+Short Description: A plugin designed to let owner's of self-storage businesses list their storage units for rent on their WordPress website.
 
 == Description ==
 StoragePress is a powerful new plugin for WordPress websites, designed to be a one-stop shop for owners of self-storage and mini-storage businesses to list their storage units for sale online. Easily installable on a business' existing WordPress website, it makes it easy for owners of storage businesses to connect their physical business to their online presence. StoragePress is fully compatible with the WordPress block editor, allowing business owners to customize their listing interface to their heart's content.  A series of premium add-ons allow business onwers who are serious aboput their online presence to extract even more value from their website.
