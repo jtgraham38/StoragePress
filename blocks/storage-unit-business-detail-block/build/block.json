@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "storagepress/storage-unit-business-detail-block",
+  "title": "Storage Unit Business Detail",
+  "icon": "vault",
+  "category": "storagepress",
+  "description": "A block to display the details of the storage unit business.",
+  "keywords": [
+    "storagepress",
+    "storage unit",
+    "business",
+    "detail",
+    "details",
+    "name",
+    "address",
+    "phone",
+    "email",
+    "terms",
+    "checks",
+    "page"
+  ],
+  "version": "1.0.0",
+  "textdomain": "storagepress",
+  "attributes": {
+    "key": {
+      "type": "string",
+      "default": "none"
+    }
+  },
+  "selectors": {
+    "text": ".storage-unit-business-detail-block"
+  },
+  "supports": {
+    "color": {
+      "background": false,
+      "text": true
+    },
+    "typography": {
+      "fontSize": true,
+      "fontSizeUnit": [
+        "px",
+        "em",
+        "rem"
+      ],
+      "fontStyle": true
+    },
+    "html": false,
+    "align": true
+  },
+  "example": {
+    "attributes": {
+      "key": "storagepress_checks_payable_to"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:./style-index.css",
+  "editorStyle": "file:./index.css"
+}
