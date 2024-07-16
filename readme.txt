@@ -1,7 +1,7 @@
 === StoragePress ===
 Contributors: jtgraham38
 Donate link: https://jacob-t-graham.com/contact/
-Tags: self-storage, storage, storage-unit, mini-storage
+Tags: self-storage, storage, storage-unit, mini-storage, storage-business
 Requires at least: 4.7
 Tested up to: 6.5.2
 Stable Tag: 1.0.0
