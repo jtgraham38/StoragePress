@@ -1,7 +1,7 @@
 # StoragePress
 A WordPress plugin designed to help owner's of self-storage and minni-storage businesses list their storage units for rent on their WordPress websites.
 
-Coming soon to the WordPress Plugin Directory.
+Get it on the Plugin Directory now: https://wordpress.org/plugins/storagepress-self-storage/
 
 **What is StoragePress** <br />
 StoragePress is a powerful new plugin for WordPress websites, designed to be a one-stop shop for owners of self-storage and mini-storage businesses to list their storage units for sale online. Easily installable on a business' existing WordPress website, it makes it easy for owners of storage businesses to connect their physical business to their online presence. StoragePress is fully compatible with the WordPress block editor, allowing business owners to customize their listing interface to their heart's content.  A series of premium add-ons allow business onwers who are serious about their online presence to extract even more value from their website.
