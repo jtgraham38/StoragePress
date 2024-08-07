@@ -1,9 +1,4 @@
-<p><?php
-// exit if accessed directly
-if (!defined('ABSPATH')) {
-    exit;
-}
-?></p>
+</p>
 
 <!-- wp:storagepress/storage-unit-business-detail-block {"key":"storagepress_name","fontSize":"large"} /-->
 
