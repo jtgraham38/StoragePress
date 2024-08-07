@@ -1,4 +1,3 @@
-</p>
 
 <!-- wp:storagepress/storage-unit-business-detail-block {"key":"storagepress_name","fontSize":"large"} /-->
 
