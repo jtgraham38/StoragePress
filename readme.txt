@@ -3,7 +3,7 @@ Contributors: jtgraham38
 Donate link: https://jacob-t-graham.com/contact/
 Tags: self-storage, storage, storage-unit, mini-storage, storage-business
 Requires at least: 4.7
-Tested up to: 6.5.2
+Tested up to: 6.8.3
 Stable Tag: 1.0.1
 Requires PHP: 7.0
 License: GNU GENERAL PUBLIC LICENSE, Version 3
