@@ -4,7 +4,7 @@ Donate link: https://jacob-t-graham.com/contact/
 Tags: self-storage, storage, storage-unit, mini-storage, storage-business
 Requires at least: 4.7
 Tested up to: 6.5.2
-Stable Tag: 1.0.0
+Stable Tag: 1.0.1
 Requires PHP: 7.0
 License: GNU GENERAL PUBLIC LICENSE, Version 3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -30,3 +30,5 @@ This plugin makes use of one third party javascript library, AlpineJS, for react
 == Changelog ==
 = 1.0.0 =
 * Plugin released. 
+= 1.0.1 =
+* Tested with WordPress version 6.8.3.
